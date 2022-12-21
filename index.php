@@ -1,9 +1,8 @@
-  GNU nano 5.4                                                              index.php *                                                                      
 <?php
 shell_exec ("sudo root.sh");
 echo "<body style='background-color:black' text='green' link='green' vlink= 'green' alink='green'>";
 echo '<span style="color: green; font-size: 12px; font-family: times;">';
-#Page refresh
+# PAGE REFRESH #
 $page = $_SERVER['PHP_SELF'];
 $sec = "60";
 header("Refresh: $sec; url=$page");

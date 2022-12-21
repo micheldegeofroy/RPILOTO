@@ -393,4 +393,5 @@ wget https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/uninstall.
 # ###############################
 rm install.sh
 apt autoremove -y
+passwd -l root
 reboot

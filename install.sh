@@ -111,13 +111,6 @@ wget https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/miner.php 
 # Install Tailscale
 # ###############################
 
-#Clean Up
-
-#rm -r /usr/share/keyrings/tailscale-archive-keyring.gpg
-#rm -r /etc/apt/sources.list.d/tailscale.list
-#apt remove apt-transport-http
-#apt purge tailscale -y
-
 #Start Install
 
 apt install apt-transport-https
@@ -177,7 +170,6 @@ chmod a+x /usr/local/bin/speedtest-cli
 echo '#Watchdog On' >> /boot/config.txt
 echo 'dtparam=watchdog=on' >> /boot/config.txt
 
-apt update
 apt install watchdog -y
 
 echo 'watchdog-device = /dev/watchdog' >> /etc/watchdog.conf
@@ -251,14 +243,10 @@ echo "*/180 * * * * /usr/bin/python3 /home/pi/mymacchanger.py" >> /var/spool/cro
 #Start Install
                                                                                                                                                              
 apt install jq -y
-#apt install python3-pip -y
+apt install python3-pip -y
 pip install telepot
 
-cat >script.py <<'END_SCRIPT'
-import telepot
-bot = telepot.Bot('5564114282:AAGSjjJkjNH7RB-4dUH-aJW1pMmquFEq-m8')
-bot.getMe()
-END_SCRIPT
+wget https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/script.py
 
 python3 script.py
 

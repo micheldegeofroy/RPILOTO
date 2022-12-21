@@ -14,7 +14,6 @@
 # ###########################################
 # ###########################################
 #
-#
 #ssh into your pi
 #ssh pi@YOURDEVICEIP 
 #
@@ -28,7 +27,7 @@
 #It is also possible that a host key has just been changed.
 #The fingerprint for the ECDSA key sent by the remote host is
 #
-# Use this below command and ssh again
+#Use this below command and ssh again
 #
 #ssh-keygen -R YOURDEVICEIP
 #
@@ -43,14 +42,11 @@
 #Then create a root password
 #sudo passwd root
 #
-#
 # ###############################
 # This needs to be run as root !
 # ###############################
 #
-#
 #su
-#
 #
 # ###############################
 # Execute basic install
@@ -68,8 +64,6 @@ apt upgrade -y
 # ###############################
 # Fix Language Local
 # ###############################
-
-#Start Install
 
 touch /etc/environment
 
@@ -90,8 +84,6 @@ localedef -f UTF-8 -i en_US en_US.UTF-8
 sed -i 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/g' /etc/locale.gen
 sed -i 's/en_GB.UTF-8 UTF-8/# en_GB.UTF-8 UTF-8/g' /etc/locale.gen 
 
-
-
 # ###############################
 # Web Interface
 # ###############################
@@ -104,14 +96,11 @@ sudo apt-get purge autoremove -y
 sudo apt-get install apache2 libapache2-mod-php7.4 php7.4 -y
 
 wget https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/index.php -P /var/www/html/
-
 wget https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/miner.php -P /var/www/html/
 
 # ###############################
 # Install Tailscale
 # ###############################
-
-#Start Install
 
 apt install apt-transport-https
 
@@ -121,19 +110,9 @@ curl -fsSL https://pkgs.tailscale.com/stable/raspbian/bullseye.tailscale-keyring
 apt update -y
 apt install tailscale -y
 
-#tailscale up
-
-
 # ###############################
 # Disable Swap
 # ###############################
-
-#Clean Up
-
-#swapon --all
-#apt install dphys-swapfile -y
-
-#Start Install
 
 swapoff --all
 apt remove dphys-swapfile -y
@@ -142,13 +121,6 @@ apt remove dphys-swapfile -y
 # Install glances
 # ###############################
 
-#Clean Up
-
-#pip uninstall glances -y
-#apt purge python3-pip -y
-
-#Start Install
-
 apt install python3-pip -y
 pip install glances
 
@@ -156,16 +128,12 @@ pip install glances
 # Install Speed Test
 # ###############################
 
-#Start Install
-
 wget -O /usr/local/bin/speedtest-cli https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/speedtest.py
 chmod a+x /usr/local/bin/speedtest-cli
 
 # ###############################
 # Install watchdog
 # ###############################
-
-#Start Install
 
 echo '#Watchdog On' >> /boot/config.txt
 echo 'dtparam=watchdog=on' >> /boot/config.txt
@@ -184,8 +152,6 @@ systemctl status watchdog
 # Stop IPV6
 # ###############################
 
-#Start Install
-
 echo net.ipv6.conf.all.disable_ipv6=1 | sudo tee /etc/sysctl.d/disable-ipv6.conf
 sysctl --system
 sed -i -e 's/$/ipv6.disable=1/' /boot/cmdline.txt
@@ -194,20 +160,15 @@ sed -i -e 's/$/ipv6.disable=1/' /boot/cmdline.txt
 # Disable BT
 # ###############################
 
-#Start Install
-
 echo '# Disable Bluetooth' >> /boot/config.txt
 echo 'dtoverlay=disable-bt' >> /boot/config.txt
 
 systemctl disable hciuart.service 
 systemctl disable bluetooth.service
 
-
 # ###############################
 # Install macchanger
 # ###############################
-
-#Start Install
 
 touch /home/pi/mymacchanger.py
 
@@ -224,23 +185,9 @@ touch /var/spool/cron/root
 /usr/bin/crontab /var/spool/cron/root
 echo "*/180 * * * * /usr/bin/python3 /home/pi/mymacchanger.py" >> /var/spool/cron/root
 
-
 # ###############################
 # Install telegram bot
 # ###############################
-
-#Clean Up
-
-#apt purge jq -y
-#apt purge python3-pip -y
-#pip uninstall telepot -y
-#rm -r /home/pi/Bots
-#systemctl stop bot.services
-#rm -r /etc/systemd/system/bot.service
-#systemctl disable bot.service
-#systemctl daemon-reload
-
-#Start Install
                                                                                                                                                              
 apt install jq -y
 apt install python3-pip -y
@@ -255,8 +202,6 @@ rm script.py
 mkdir /home/pi/Bots/
 
 wget https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/Bot.py -P /home/pi/Bots/
-
-
 wget https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/bot.service -P /etc/systemd/system/
 
 pip3 install --upgrade RPi.GPIO
@@ -268,25 +213,11 @@ systemctl start bot.service
 # Heartbeat Telegram
 # ###############################
 
-#Clean Up
-
-#sed -i '1d' /var/spool/cron/root
-#sed -i '2d' /var/spool/cron/root
-#sed -i '3d' /var/spool/cron/root
-
-#Start Install
-
 echo -e '30 8 * * * curl -s -X POST https://api.telegram.org/bot5564114282:AAGSjjJkjNH7RB-4dUH-aJW1pMmquFEq-m8/sendMessage -d chat_id=90423887 -d text="BTC Loto is Alive !"' >> /var/spool/cron/root
 
 # ###############################
 # SSH Custom Login Splash Screen
 # ###############################
-
-#Clean Up
-
-#rm /etc/motd
-
-#Start Install
 
 touch /etc/motd
 
@@ -323,16 +254,6 @@ echo '  ' >> /etc/motd
 # ###############################
 # SSH Welcome Interface
 # ###############################
-
-#Clean Up
-
-#rm -r /etc/update-motd.d/20-raspberry-bitcoin
-#rm -r /etc/update-motd.d/30-swap-warning
-#apt purge jq -y
-
-#Start Install
-
-#apt install -y jq
 
 wget -qO- https://gist.githubusercontent.com/meeDamian/0006c766340e0afd16936b13a0c7dbd8/raw/3b7ea819617f645ca4675f7351df70d1622863bd/na%25C3%25AFve-rbp-btc.sh | sudo sh
 
@@ -463,9 +384,6 @@ echo " " >> /etc/update-motd.d/20-raspberry-bitcoin
 chmod +x /etc/update-motd.d/20-raspberry-bitcoin
 chmod -x /etc/update-motd.d/30-swap-warning
 run-parts --lsbsysinit /etc/update-motd.d
-
-
-
 
 # ###############################
 # Uninstall Script

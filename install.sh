@@ -64,9 +64,48 @@
 
 apt update -y
 apt upgrade -y
-apt dist-upgrade
-apt full-upgrade -y 
-apt autoremove -y
+
+# ###############################
+# Fix Language Local
+# ###############################
+
+#Start Install
+
+touch /etc/environment
+
+echo "LANGUAGE=en_US" >> /etc/environment
+echo "LC_ALL=en_US" >> /etc/environment
+echo "LANG=en_US" >> /etc/environment
+echo "LC_TYPE=en_US" >> /etc/environment
+
+touch /etc/default/locale
+
+echo "LANG=en_US.UTF-8" >> /etc/default/locale
+echo "LC_CTYPE=en_US.UTF-8" >> /etc/default/locale
+echo "LC_MESSAGES=en_US.UTF-8" >> /etc/default/locale
+echo "LC_ALL=en_US.UTF-8" >> /etc/default/locale
+
+localedef -f UTF-8 -i en_US en_US.UTF-8 
+
+sed -i 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/g' /etc/locale.gen
+sed -i 's/en_GB.UTF-8 UTF-8/# en_GB.UTF-8 UTF-8/g' /etc/locale.gen 
+
+
+
+# ###############################
+# Web Interface
+# ###############################
+
+apt install php7.4 -y
+
+sudo apt-get purge apache2 -y
+sudo apt-get purge php7.4 libapache2-mod-php7.4 -y
+sudo apt-get purge autoremove -y
+sudo apt-get install apache2 libapache2-mod-php7.4 php7.4 -y
+
+wget https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/index.php -P /var/www/html/
+
+wget https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/miner.php -P /var/www/html/
 
 # ###############################
 # Install Tailscale
@@ -90,38 +129,6 @@ apt update -y
 apt install tailscale -y
 
 #tailscale up
-
-# ###############################
-# Fix Language Local
-# ###############################
-
-#Clean Up
-
-rm -r /etc/environment
-rm -r /etc/default/locale
-#sed -i 's/en_US.UTF-8 UTF-8/# en_US.UTF-8 UTF-8/g' /etc/locale.gen 
-
-#Start Install
-
-touch /etc/environment
-
-echo "LANGUAGE=en_US" >> /etc/environment
-echo "LC_ALL=en_US" >> /etc/environment
-echo "LANG=en_US" >> /etc/environment
-echo "LC_TYPE=en_US" >> /etc/environment
-
-touch /etc/default/locale
-
-echo "LANG=en_US.UTF-8" >> /etc/default/locale
-echo "LC_CTYPE=en_US.UTF-8" >> /etc/default/locale
-echo "LC_MESSAGES=en_US.UTF-8" >> /etc/default/locale
-echo "LC_ALL=en_US.UTF-8" >> /etc/default/locale
-
-localedef -f UTF-8 -i en_US en_US.UTF-8 
-
-#########Code here to hash old value
-
-sed -i 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/g' /etc/locale.gen 
 
 
 # ###############################
@@ -156,27 +163,14 @@ pip install glances
 # Install Speed Test
 # ###############################
 
-#Clean Up
-
-#rm -r /usr/local/bin/speedtest-cli
-
 #Start Install
 
-wget -O /usr/local/bin/speedtest-cli https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py
+wget -O /usr/local/bin/speedtest-cli https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/speedtest.py
 chmod a+x /usr/local/bin/speedtest-cli
 
 # ###############################
 # Install watchdog
 # ###############################
-
-#Clean Up
-
-#sed -i 's/#Watchdog On/ /g' /boot/config.txt
-#sed -i 's/dtparam=watchdog=on/ /g' /boot/config.txt
-#systemctl stop watchdog
-#systemctl disable watchdog
-#rm -r /etc/watchdog.conf
-#apt purge watchdog
 
 #Start Install
 
@@ -198,11 +192,6 @@ systemctl status watchdog
 # Stop IPV6
 # ###############################
 
-#Clean Up
-
-#rm -r /etc/sysctl.d/disable-ipv6.conf
-#sed -i 's/ipv6.disable=1/ /g' /boot/cmdline.txt
-
 #Start Install
 
 echo net.ipv6.conf.all.disable_ipv6=1 | sudo tee /etc/sysctl.d/disable-ipv6.conf
@@ -212,15 +201,6 @@ sed -i -e 's/$/ipv6.disable=1/' /boot/cmdline.txt
 # ###############################
 # Disable BT
 # ###############################
-
-#Clean Up
-
-#systemctl enable hciuart.service 
-#systemctl enable bluetooth.service
-
-#sed -i 's/# Disable Bluetooth/ /g' /boot/config.txt
-#sed -i 's/dtoverlay=disable-bt/ /g' /boot/config.txt
-
 
 #Start Install
 
@@ -234,14 +214,6 @@ systemctl disable bluetooth.service
 # ###############################
 # Install macchanger
 # ###############################
-
-#Clean Up
-
-#rm -r /home/pi/mymacchanger.py
-#sed -i '1d' /var/spool/cron/root
-#sed -i '2d' /var/spool/cron/root
-#sed -i '3d' /var/spool/cron/root
-#rm -r /var/spool/cron/root
 
 #Start Install
 
@@ -294,129 +266,7 @@ rm script.py
 
 mkdir /home/pi/Bots/
 
-touch /home/pi/Bots/Bot.py
-
-echo 'import time' >> /home/pi/Bots/Bot.py
-echo 'import time' >> /home/pi/Bots/Bot.py
-echo 'import random' >> /home/pi/Bots/Bot.py
-echo 'import datetime' >> /home/pi/Bots/Bot.py
-echo 'import telepot' >> /home/pi/Bots/Bot.py
-echo 'from telepot.loop import MessageLoop' >> /home/pi/Bots/Bot.py
-echo 'import subprocess' >> /home/pi/Bots/Bot.py
-echo 'import RPi.GPIO as GPIO' >> /home/pi/Bots/Bot.py
-echo 'import re' >> /home/pi/Bots/Bot.py
-echo 'import os' >> /home/pi/Bots/Bot.py
-echo 'os.system("pwd")' >> /home/pi/Bots/Bot.py
-echo "os.system('cd ~')" >> /home/pi/Bots/Bot.py
-echo "os.system('df -h')" >> /home/pi/Bots/Bot.py
-echo "os.system('ls -la')" >> /home/pi/Bots/Bot.py
-echo "stream = os.popen('ls -la')" >> /home/pi/Bots/Bot.py
-echo "stream = os.popen('df -h')" >> /home/pi/Bots/Bot.py
-echo "output = stream.readlines()" >> /home/pi/Bots/Bot.py
-echo "def on(pin):" >> /home/pi/Bots/Bot.py
-echo '        GPIO.output(pin,GPIO.HIGH)' >> /home/pi/Bots/Bot.py
-echo '        return' >> /home/pi/Bots/Bot.py
-echo 'def off(pin):' >> /home/pi/Bots/Bot.py
-echo '        GPIO.output(pin,GPIO.LOW)' >> /home/pi/Bots/Bot.py
-echo '        return' >> /home/pi/Bots/Bot.py
-echo 'GPIO.setmode(GPIO.BOARD)' >> /home/pi/Bots/Bot.py
-echo 'GPIO.setwarnings(False)' >> /home/pi/Bots/Bot.py
-echo 'GPIO.setup(11, GPIO.OUT)' >> /home/pi/Bots/Bot.py
-echo 'GPIO.setup(12, GPIO.OUT)' >> /home/pi/Bots/Bot.py
-echo 'def handle(msg):' >> /home/pi/Bots/Bot.py
-echo "    chat_id = msg['chat']['id']" >> /home/pi/Bots/Bot.py
-echo "    command = msg['text']" >> /home/pi/Bots/Bot.py
-echo "    print('Got command: %s' % command)" >> /home/pi/Bots/Bot.py
-echo "    if command == '/who':" >> /home/pi/Bots/Bot.py
-echo '        run = subprocess.run(["whoami"], capture_output=True)' >> /home/pi/Bots/Bot.py
-echo '        bot.sendMessage(chat_id, run.stdout)' >> /home/pi/Bots/Bot.py
-echo "    elif command == '/ledon':" >> /home/pi/Bots/Bot.py
-echo '       bot.sendMessage(chat_id, on(11))' >> /home/pi/Bots/Bot.py
-echo "    elif command =='/ledoff':" >> /home/pi/Bots/Bot.py
-echo '       bot.sendMessage(chat_id, off(11))' >> /home/pi/Bots/Bot.py
-echo "    elif command == '/fanon':" >> /home/pi/Bots/Bot.py
-echo "       bot.sendMessage(chat_id, on(12))" >> /home/pi/Bots/Bot.py
-echo "    elif command =='/fanoff':" >> /home/pi/Bots/Bot.py
-echo '       bot.sendMessage(chat_id, off(12))' >> /home/pi/Bots/Bot.py
-echo "    elif command == '/model':" >> /home/pi/Bots/Bot.py
-echo '       run = subprocess.run(["cat", "/proc/device-tree/model"], capture_output= True)' >> /home/pi/Bots/Bot.py
-echo '       bot.sendMessage(chat_id, run.stdout)' >> /home/pi/Bots/Bot.py
-echo "    elif command == '/uptime':" >> /home/pi/Bots/Bot.py
-echo '       run = subprocess.run(["uptime","-p"], capture_output= True)' >> /home/pi/Bots/Bot.py
-echo '       bot.sendMessage(chat_id, run.stdout[2:])' >> /home/pi/Bots/Bot.py
-echo "    elif command == '/where':" >> /home/pi/Bots/Bot.py
-echo -e '       run = subprocess.run(["""curl https://extreme-ip-lookup.com/json/?key=ACJdcEKqljZrmlXp1GZA | jq -r \u0027.country\u0027 | tr \u0027[:lower:]\u0027 \u0027[:upper:]\u0027"""],shell=True,capture_output= True)' >> /home/pi/Bots/Bot.py
-echo '       bot.sendMessage(chat_id, run.stdout)' >> /home/pi/Bots/Bot.py
-echo "    elif command == '/hd':" >> /home/pi/Bots/Bot.py
-echo -e '       run = subprocess.run(["""df -h | grep "\u0024" | awk \u0027{ print \u00245 }\u0027"""], shell=True, capture_output= True)' >> /home/pi/Bots/Bot.py
-echo "       bot.sendMessage(chat_id, text = 'SD HD Used: '+ run.stdout.decode('utf-8'))" >> /home/pi/Bots/Bot.py
-echo "    elif command == '/volts':" >> /home/pi/Bots/Bot.py
-echo -e '        run = subprocess.run(["""vcgencmd measure_volts \u0024id | awk \u0027{print substr(\u00240, 6, length(\u00240) - 9),"V"}\u0027"""], shell=True, capture_output= True)' >> /home/pi/Bots/Bot.py
-echo -e '        bot.sendMessage(chat_id, text = "Volts Used: "+run.stdout.decode(\u0027utf-8\u0027))' >> /home/pi/Bots/Bot.py
-echo "    elif command == '/speed':" >> /home/pi/Bots/Bot.py
-echo "        run = subprocess.run(['speedtest-cli --simple'], shell=True, capture_output= True)" >> /home/pi/Bots/Bot.py
-echo -e '        bot.sendMessage(chat_id, text = "Speed Test: "+run.stdout.decode(\u0027utf-8\u0027))' >> /home/pi/Bots/Bot.py
-echo "    elif command == '/cpughz':" >> /home/pi/Bots/Bot.py
-echo -e '        run = subprocess.run(["""vcgencmd measure_clock arm | awk \u0027 BEGIN { FS="=" } ; { printf( \u00242 / 1000000000) } \u0027"""], shell=True, capture_output= True)' >> /home/pi/Bots/Bot.py
-echo -e '        bot.sendMessage(chat_id,text = "CPU : " + run.stdout.decode(\u0027utf-8\u0027)[:3] + "GHz")' >> /home/pi/Bots/Bot.py
-echo "    elif command == '/cpu':" >> /home/pi/Bots/Bot.py
-echo -e '        run = subprocess.run(["""vmstat 1 2 | tail -1 | awk \u0027{print \u002413}\u0027"""], shell=True, capture_output= True)' >> /home/pi/Bots/Bot.py
-echo -e '        bot.sendMessage(chat_id,text = "CPU% : " + run.stdout.decode(\u0027utf-8\u0027)[:3] + "%")' >> /home/pi/Bots/Bot.py
-echo "    elif command == '/wanip':" >> /home/pi/Bots/Bot.py
-echo "        run = subprocess.run(['curl ifconfig.co'], shell=True, capture_output= True)" >> /home/pi/Bots/Bot.py
-echo -e '        bot.sendMessage(chat_id,text = "Public IP: "+run.stdout.decode(\u0027utf-8\u0027))' >> /home/pi/Bots/Bot.py
-echo "    elif command == '/lanip':" >> /home/pi/Bots/Bot.py
-echo "        run = subprocess.run(['hostname -I'], shell=True, capture_output= True)" >> /home/pi/Bots/Bot.py
-echo -e '        bot.sendMessage(chat_id,text = "Local IP: "+run.stdout.decode(\u0027utf-8\u0027))' >> /home/pi/Bots/Bot.py
-echo "    elif command == '/hdex':" >> /home/pi/Bots/Bot.py
-echo -e '        run = subprocess.run(["""df -h | grep "/dev/sd" | awk \u0027{print\u00245}\u0027"""], shell=True, capture_output= True)' >> /home/pi/Bots/Bot.py
-echo -e '        bot.sendMessage(chat_id, text = "External HD Used: "+ run.stdout.decode(\u0027utf-8\u0027))' >> /home/pi/Bots/Bot.py
-echo "    elif command == '/htop':" >> /home/pi/Bots/Bot.py
-echo "        run = subprocess.run(['ps -e --sort -%mem | head -10'], shell=True, capture_output= True)" >> /home/pi/Bots/Bot.py
-echo '        bot.sendMessage(chat_id,text = "Proccese Running: "+run.stdout.decode("utf-8"))' >> /home/pi/Bots/Bot.py
-echo "    elif command == '/temp':" >> /home/pi/Bots/Bot.py
-echo '        run = subprocess.run(["cat /sys/class/thermal/thermal_zone0/temp"], shell=True, capture_output= True)' >> /home/pi/Bots/Bot.py
-echo -e '        bot.sendMessage(chat_id,text = "Temperature: " + str(int(run.stdout.decode(\u0027utf-8\u0027))/1000)[:-4] + "C")' >> /home/pi/Bots/Bot.py
-echo "    elif command == '/sync':" >> /home/pi/Bots/Bot.py
-echo -e '        run = subprocess.run(["""bitcoin-cli -rpcuser=USER -rpcpassword=PASS getblockchaininfo 2> /dev/null  | jq -r \u0027.verificationprogress\u0027 | awk \u0027{print 100 * \u00241}\u0027"""], shell=True, capture_output= True)' >> /home/pi/Bots/Bot.py
-echo -e '        bot.sendMessage(chat_id,text = "Blockchain Sync is at: " + run.stdout.decode(\u0027utf-8\u0027)[:4] + "%")' >> /home/pi/Bots/Bot.py
-echo '    elif re.search("magnet:", command):' >> /home/pi/Bots/Bot.py
-echo -e '        run = subprocess.run(["transmission-remote -a \u0027%s\u0027  " %  command  ], shell=True, capture_output = True)' >> /home/pi/Bots/Bot.py
-echo '        print(run.stdout)' >> /home/pi/Bots/Bot.py
-echo '        bot.sendMessage(chat_id, "Well, something happened, maybe good, maybe shit")' >> /home/pi/Bots/Bot.py
-echo '    elif re.search("ping", command):' >> /home/pi/Bots/Bot.py
-echo -e '        run = subprocess.run([ command + """ -c 3 | awk -F \u0027 \u0027 \u0027{print substr(\u00247, 1, length(\u00241) 0)}\u0027 | sed -e \u0027s/\(data.\|packet\)//\u0027"""], shell=True, capture_output = True)' >> /home/pi/Bots/Bot.py
-echo -e '        bot.sendMessage(chat_id, "Ping" + run.stdout.decode(\u0027utf-8\u0027))' >> /home/pi/Bots/Bot.py
-echo '        print(run.stdout)' >> /home/pi/Bots/Bot.py
-echo '    elif re.search("sudo", command):' >> /home/pi/Bots/Bot.py
-echo '        run = subprocess.run([command], shell=True, capture_output = True)' >> /home/pi/Bots/Bot.py
-echo -e '        bot.sendMessage(chat_id, "Sudo " + run.stdout.decode(\u0027utf-8\u0027))' >> /home/pi/Bots/Bot.py
-echo '        print(run.stdout)' >> /home/pi/Bots/Bot.py
-echo "    elif command == '/Fuck':" >> /home/pi/Bots/Bot.py
-echo '        bot.sendMessage(chat_id, "Are you from NYC ?")' >> /home/pi/Bots/Bot.py
-echo "    elif command == '/help':" >> /home/pi/Bots/Bot.py
-echo '        bot.sendMessage(chat_id, "/start /shutdown /startminer /stopminer /fanon /fanoff /ledon /ledoff /ping /sudo /help /htop /sync /model /uptime /where /who /hd /hdex /volts /speed /cpughz /cpu /wanip /lanip /temp /reboot ")' >> /home/pi/Bots/Bot.py
-echo "    elif command == '/start':" >> /home/pi/Bots/Bot.py
-echo '        bot.sendMessage(chat_id, "/start /shutdown /startminer /stopminer /fanon /fanoff /ledon /ledoff /ping /sudo /help /htop /sync /model /uptime /where /who /hd /hdex /volts /speed /cpughz /cpu /wanip /lanip /temp /reboot ")' >> /home/pi/Bots/Bot.py
-echo "    elif command == '/reboot':" >> /home/pi/Bots/Bot.py
-echo "        bot.sendMessage(chat_id,'Rebooting Now ')" >> /home/pi/Bots/Bot.py
-echo "        os.system('sudo reboot')" >> /home/pi/Bots/Bot.py
-echo "    elif command == '/shutdown':" >> /home/pi/Bots/Bot.py
-echo "        bot.sendMessage(chat_id,'Shutting Down Now !')" >> /home/pi/Bots/Bot.py
-echo "        os.system('sudo shutdown')" >> /home/pi/Bots/Bot.py
-echo "    elif command == '/startminer':" >> /home/pi/Bots/Bot.py
-echo "        bot.sendMessage(chat_id,'Miner Started')" >> /home/pi/Bots/Bot.py
-echo "        os.system('sudo systemctl start bfgminer.service')" >> /home/pi/Bots/Bot.py
-echo "    elif command == '/stopminer':" >> /home/pi/Bots/Bot.py
-echo "        bot.sendMessage(chat_id,'Miner Stopped')" >> /home/pi/Bots/Bot.py
-echo "        os.system('sudo systemctl stop bfgminer.service')" >> /home/pi/Bots/Bot.py
-echo "    else: bot.sendMessage(chat_id,'Try /help')" >> /home/pi/Bots/Bot.py
-echo "bot = telepot.Bot('5564114282:AAGSjjJkjNH7RB-4dUH-aJW1pMmquFEq-m8')" >> /home/pi/Bots/Bot.py
-echo 'bot.sendMessage(90423887, "BTC Loto BOT  is back online")' >> /home/pi/Bots/Bot.py
-echo "MessageLoop(bot, handle).run_as_thread()" >> /home/pi/Bots/Bot.py
-echo "print('I am listening ...')" >> /home/pi/Bots/Bot.py
-echo 'while 1:' >> /home/pi/Bots/Bot.py
-echo '    time.sleep(10)' >> /home/pi/Bots/Bot.py
+wget https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/Bot.py -P /home/pi/Bots/
 
 touch /etc/systemd/system/bot.service
 
@@ -633,193 +483,17 @@ chmod +x /etc/update-motd.d/20-raspberry-bitcoin
 chmod -x /etc/update-motd.d/30-swap-warning
 run-parts --lsbsysinit /etc/update-motd.d
 
-# ###############################
-# Web Interface
-# ###############################
 
-#Clean Up
-
-
-apt purge php -y
-apt purge apache2 -y
-rm -rf /etc/apache2
-rm /var/www/html/index.php
-
-
-#Start Install
-
-apt install php -y
-
-touch /var/www/html/index.php
-
-echo "<?php" >> /var/www/html/index.php
-echo -e "echo \u0022<body style='background-color:black' text='green' link='green' vlink= 'green' alink='green'>\u0022;" >> /var/www/html/index.php
-echo -e "echo '<span style=\u0022color: green; font-size: 12px; font-family: times;\u0022>';" >> /var/www/html/index.php
-echo -e "\u0024page = \u0024_SERVER['PHP_SELF'];" >> /var/www/html/index.php
-echo -e "\u0024sec = \u002260\u0022;" >> /var/www/html/index.php
-echo -e "header(\u0022Refresh: \u0024sec; url=\u0024page\u0022);" >> /var/www/html/index.php
-echo -e "\u0024ver = shell_exec(\u0022sudo -u bitcoin /usr/local/bin/bitcoin-cli getnetworkinfo 2> /dev/null | jq -r '.subversion'\u0022);" >> /var/www/html/index.php
-echo -e "\u0024chain1 = shell_exec(\u0022sudo -u bitcoin /usr/local/bin/bitcoin-cli getblockchaininfo 2> /dev/null | jq -r '.chain'\u0022);" >> /var/www/html/index.php
-echo -e "\u0024chain2 = \u0022Net \u0022;" >> /var/www/html/index.php
-echo -e "\u0024chain3 = \u0022Bitcoin Core \u0022;" >> /var/www/html/index.php
-echo -e "\u0024chain4 = substr(\u0024chain1, 0, -1);" >> /var/www/html/index.php
-echo -e "\u0024chain5 = str_replace(str_split('/:Satoshi'),'',\u0024ver);" >> /var/www/html/index.php
-echo -e "\u0024chain = \u0024chain3.ucfirst(\u0024chain4).\u0024chain2.\u0022V\u0022.\u0024chain5;" >> /var/www/html/index.php
-echo -e "\u0024diff = shell_exec(\u0022sudo -u bitcoin /usr/local/bin/bitcoin-cli getblockchaininfo 2> /dev/null | jq -r '.difficulty'\u0022);" >> /var/www/html/index.php
-echo -e "\u0024mempool = shell_exec(\u0022sudo -u bitcoin /usr/local/bin/bitcoin-cli getmempoolinfo 2> /dev/null | jq -r '.size'\u0022);" >> /var/www/html/index.php
-echo -e "\u0024balance = shell_exec(\u0024sudo -u bitcoin /usr/local/bin/bitcoin-cli getbalance 2> /dev/null\u0024);" >> /var/www/html/index.php
-echo -e "\u0024balance = shell_exec(\u0024sudo -u bitcoin /usr/local/bin/bitcoin-cli getbalance 2> /dev/null\u0024);" >> /var/www/html/index.php
-echo -e "\u0024btcblock = shell_exec(\u0024sudo -u bitcoin /usr/local/bin/bitcoin-cli getblockchaininfo 2> /dev/null | jq -r '.blocks'\u0024);" >> /var/www/html/index.php
-echo -e "\u0024btcpeers = shell_exec(\u0024sudo -u bitcoin /usr/local/bin/bitcoin-cli getpeerinfo 2> /dev/null | jq 'length'\u0024);" >> /var/www/html/index.php
-echo -e "\u0024btcsync = shell_exec(\u0024sudo -u bitcoin /usr/local/bin/bitcoin-cli getblockchaininfo 2> /dev/null | jq -r '.verificationprogress' | awk '{print 100 * $1}'\u0024);" >> /var/www/html/index.php
-echo -e "\u0024cpu = shell_exec(\u0022vcgencmd measure_clock arm | sed 's/frequency(48)=//g' | awk  '{ printf(\u00241 / 1000000000)}'\u0022);" >> /var/www/html/index.php
-echo -e "\u0024exstoragepercentused = shell_exec(\u0022df -h | grep '/dev/sd' | awk '{print(\u00245)}'\u0022);" >> /var/www/html/index.php
-echo -e "\u0024exstoragefree = shell_exec(\u0022df -h | grep '/dev/sd' | awk '{print(\u00244)}'\u0022);" >> /var/www/html/index.php
-echo -e "\u0024exstoragesize = shell_exec(\u0022df -h | grep '/dev/sd' | awk '{print(\u00242)}'\u0022);" >> /var/www/html/index.php
-echo -e "\u0024exstorageused = shell_exec(\u0022df -h | grep '/dev/sd' | awk '{print(\u00243)}'\u0022);" >> /var/www/html/index.php
-echo -e "\u0024ip = shell_exec(\u0022hostname -I\u0022);" >> /var/www/html/index.php
-echo -e "\u0024temp = round(shell_exec('cat /sys/class/thermal/thermal_zone*/temp')/1000, 1);" >> /var/www/html/index.php
-echo -e "\u0024geoloc= shell_exec(\u0022curl https://extreme-ip-lookup.com/json/?key=ACJdcEKqljZrmlXp1GZA | jq -r '.country' | tr '[:lower:]' '[:upper:]'\u0022);" >> /var/www/html/index.php
-echo -e "\u0024localtime= shell_exec(\u0022uptime | awk '{print(\u00241)}'\u0022);" >> /var/www/html/index.php
-echo -e "\u0024users= shell_exec(\u0022uptime | awk '{print substr(\u00245, 1, length(\u00242)-1)}'\u0022);" >> /var/www/html/index.php
-echo -e "\u0024voltage = shell_exec('vcgencmd measure_volts | tr -d \volt=');" >> /var/www/html/index.php
-echo -e "\u0024pubip = shell_exec('curl ifconfig.co');" >> /var/www/html/index.php
-echo -e "\u0024HW = shell_exec('cat /proc/device-tree/model');" >> /var/www/html/index.php
-echo -e "\u0024cpupercent1 = shell_exec(\u0022vmstat 1 2 | tail -1 | awk '{print \u002413}'\u0022);" >> /var/www/html/index.php
-echo -e "\u0024cpupercent = trim(\u0024cpupercent1);" >> /var/www/html/index.php
-echo -e "\u0024uptime1 = shell_exec(\u0022uptime -p\u0022);"  >> /var/www/html/index.php
-echo -e "\u0024uptime2 = str_replace(str_split('upoteu,'),'',\u0024uptime1);" >> /var/www/html/index.php
-echo -e "\u0024uptime = rtrim(\u0024uptime2);" >> /var/www/html/index.php
-echo -e "\u0024raw = array();" >> /var/www/html/index.php
-echo -e "\u0024handle = popen('free -mt 2>&1', 'r');" >> /var/www/html/index.php
-echo -e "while (!feof(\u0024handle)) {" >> /var/www/html/index.php
-echo -e "    \u0024raw[] = fgets(\u0024handle);" >> /var/www/html/index.php
-echo -e "}" >> /var/www/html/index.php
-echo -e "pclose(\u0024handle);" >> /var/www/html/index.php
-echo -e "foreach(\u0024raw as \u0024key => \u0024val) {" >> /var/www/html/index.php
-echo -e "  if (strpos(\u0024val,\u0022Mem:\u0022) !== FALSE) {" >> /var/www/html/index.php
-echo -e "    list(\u0024junk,\u0024trmem,\u0024tumem, \u0024tfmem) = preg_split('/ +/',\u0024val);" >> /var/www/html/index.php
-echo -e "  }" >> /var/www/html/index.php
-echo -e "  if (strpos(\u0024val,\u0022Swap:\u0022) !== FALSE) {" >> /var/www/html/index.php
-echo -e "    list(\u0024junk,\u0024trswap,\u0024tuswap, \u0024tfswap) = preg_split('/ +/',\u0024val);" >> /var/www/html/index.php
-echo -e "  }" >> /var/www/html/index.php
-echo -e "  if (strpos(\u0024val,\u0022Total:\u0022) !== FALSE) {" >> /var/www/html/index.php
-echo -e "    list(\u0024junk,\u0024tmem,\u0024umem, \u0024fmem) = preg_split('/ +/',\u0024val);" >> /var/www/html/index.php
-echo -e "  }" >> /var/www/html/index.php
-echo -e "}" >> /var/www/html/index.php
-echo -e "echo \u0022<pre>               ___ ___________ \u0022;" >> /var/www/html/index.php
-echo -e "echo \u0022<br>\u0022;" >> /var/www/html/index.php
-echo -e "echo \u0022              / _ )_  __/ ___/\u0022;" >> /var/www/html/index.php
-echo -e "echo \u0022<br>\u0022;" >> /var/www/html/index.php
-echo -e "echo \u0022             / _  |/ / / /__  \u0022;" >> /var/www/html/index.php
-echo -e "echo \u0022<br>\u0022;" >> /var/www/html/index.php
-echo -e "echo \u0022            /____//_/  \___/_____ \u0022;" >> /var/www/html/index.php
-echo -e "echo \u0022<br>\u0022;" >> /var/www/html/index.php
-echo -e "echo \u0022           / /  / __ \/_  __/ __ \ \u0022;" >> /var/www/html/index.php
-echo -e "echo \u0022<br>\u0022;" >> /var/www/html/index.php
-echo -e "echo \u0022          / /__/ /_/ / / / / /_/ /\u0022;" >> /var/www/html/index.php
-echo -e "echo \u0022<br>\u0022;" >> /var/www/html/index.php
-echo -e "echo \u0022         /____/\____/_/_/  \____/ \u0022;" >> /var/www/html/index.php
-echo -e "echo \u0022<br>\u0022;" >> /var/www/html/index.php
-echo -e "echo \u0022        / _ \/ _ \/  _/ \u0022;" >> /var/www/html/index.php
-echo -e "echo \u0022<br>\u0022;" >> /var/www/html/index.php
-echo -e "echo \u0022       / , _/ ___// /    \u0022;" >> /var/www/html/index.php
-echo -e "echo \u0022<br>\u0022;" >> /var/www/html/index.php
-echo -e "echo \u0022      /_/|_/_/  /___/</pre>\u0022;" >> /var/www/html/index.php
-echo -e "echo \u0022<ul><pre>\u0022;" >> /var/www/html/index.php
-echo -e "echo \u0022\u0022 . \u0024HW . \u0022<br>\u0022;" >> /var/www/html/index.php
-echo -e "echo \u0022<br>\u0022;" >> /var/www/html/index.php
-echo -e "echo \u0022Local Time:   \u0022 . substr_replace(\u0024localtime ,\u0022\u0022, -4) .\u0022<br>\u0022;" >> /var/www/html/index.php
-echo -e "echo \u0022Geo Location: \u0022 . \u0024geoloc .\u0022\u0022;" >> /var/www/html/index.php
-echo -e "echo \u0022Public IP:    \u0022 . \u0024pubip .\u0022\u0022;" >> /var/www/html/index.php
-echo -e "echo \u0022Local IP:     \u0022 . \u0024ip .\u0022\u0022;" >> /var/www/html/index.php
-echo -e "echo \u0022CPU:          \u0022 . substr_replace(\u0024cpu ,\u0022 GHz\u0022,-2) . \u0022<br>\u0022;" >> /var/www/html/index.php
-echo -e "echo \u0022CPU % Used:   \u0022 . \u0024cpupercent .\u0022 % <br>\u0022;" >> /var/www/html/index.php
-echo -e "echo \u0022Uptime:      \u0022 . \u0024uptime .\u0022<br>\u0022;" >> /var/www/html/index.php
-echo -e "echo \u0022Volts:        \u0022 . substr(\u0024voltage, 0, -4) . \u0022 V<br>\u0022;" >> /var/www/html/index.php
-echo -e "echo \u0022VTemp:         \u0022 . \u0024temp . \u0022 °C<br>\u0022;" >> /var/www/html/index.php
-echo -e "echo \u0022Ex HD % Used: \u0022. \u0024exstoragepercentused;" >> /var/www/html/index.php
-echo -e "echo \u0022Ex HD Free:   \u0022. \u0024exstoragefree;" >> /var/www/html/index.php
-echo -e "echo \u0022Ex HD Used:   \u0022. \u0024exstorageused;" >> /var/www/html/index.php
-echo -e "echo \u0022Ex HD Total:  \u0022. \u0024exstoragesize;" >> /var/www/html/index.php
-echo -e "echo \u0022Free Mem:     \u0022. \u0024tfmem  . \u0022MB<br>\u0022;" >> /var/www/html/index.php
-echo -e "echo \u0022Used Mem:     \u0022. \u0024tumem  . \u0022MB<br>\u0022;" >> /var/www/html/index.php
-echo -e "echo \u0022Total Mem:    \u0022. \u0024trmem  . \u0022MB<br>\u0022;" >> /var/www/html/index.php
-echo -e "echo \u0022<br>\u0022;" >> /var/www/html/index.php
-echo -e "echo \u0024chain;" >> /var/www/html/index.php
-echo -e "echo \u0022<br>\u0022;" >> /var/www/html/index.php
-echo -e "echo \u0022BTC Peers:    \u0022 . \u0024btcpeers;" >> /var/www/html/index.php
-echo -e "echo \u0022BTC Block:    \u0022 . \u0024btcblock;" >> /var/www/html/index.php
-echo -e "echo \u0022BTC Diff:     \u0022 . \u0024diff;" >> /var/www/html/index.php
-echo -e "if (empty(\u0024mempool)) {echo \u0022BTC Mempool:  N/A\u0022;}else{echo \u0022BTC Mempool:  \u0022 . \u0024mempool .\u0022\u0022;};" >> /var/www/html/index.php
-echo -e "if (empty(\u0024balance)) {echo \u0022BTC Balance:  N/A\u0022;}else{echo \u0022BTC Balance:    \u0022 . \u0024balance .\u0022\u0022;};" >> /var/www/html/index.php
-echo -e "echo \u0022<br>\u0022;" >> /var/www/html/index.php
-echo -e "echo \u0022BTC Sync:     \u0022 . substr(\u0024btcsync, 0, strpos(\u0024btcsync, \u0022.\u0022)) . \u0022%</pre>\u0022;" >> /var/www/html/index.php
-echo -e "echo \u0022<a href='http://192.168.0.98/miner.php' style='color: green; font: bold font-size: 12px; font-family: courier' >MINER STATS</a>\u0022;" >> /var/www/html/index.php
-echo -e "echo \u0022<ul>\u0022;" >> /var/www/html/index.php
-echo -e "?>" >> /var/www/html/index.php
 
 
 # ###############################
 # Uninstall Script
 # ###############################
 
-touch uninstall.sh
-
-echo "rm -r /usr/share/keyrings/tailscale-archive-keyring.gpg" >> uninstall.sh
-echo "rm -r /etc/apt/sources.list.d/tailscale.list" >> uninstall.sh
-echo "apt remove apt-transport-https -y" >> uninstall.sh
-echo "apt purge tailscale -y" >> uninstall.sh
-echo "rm -r /etc/environment" >> uninstall.sh
-echo "rm -r /etc/default/locale" >> uninstall.sh
-echo "sed -i 's/en_US.UTF-8 UTF-8/# en_US.UTF-8 UTF-8/g' /etc/locale.gen " >> uninstall.sh
-echo "swapon --all" >> uninstall.sh
-echo "apt install dphys-swapfile -y" >> uninstall.sh
-echo "pip uninstall glances -y" >> uninstall.sh
-echo "apt purge python3-pip -y" >> uninstall.sh
-echo "rm -r /usr/local/bin/speedtest-cli" >> uninstall.sh
-echo "sed -i 's/#Watchdog On/ /g' /boot/config.txt" >> uninstall.sh
-echo "sed -i 's/dtparam=watchdog=on/ /g' /boot/config.txt" >> uninstall.sh
-echo "systemctl stop watchdog" >> uninstall.sh
-echo "systemctl disable watchdog" >> uninstall.sh
-echo "rm -r /etc/watchdog.conf" >> uninstall.sh
-echo "apt purge watchdog -y" >> uninstall.sh
-echo "rm -r /etc/sysctl.d/disable-ipv6.conf" >> uninstall.sh
-echo "sed -i 's/ipv6.disable=1/ /g' /boot/cmdline.txt" >> uninstall.sh
-echo "systemctl enable hciuart.service" >> uninstall.sh
-echo "systemctl enable bluetooth.service" >> uninstall.sh
-echo "sed -i 's/# Disable Bluetooth/ /g' /boot/config.txt" >> uninstall.sh
-echo "sed -i 's/dtoverlay=disable-bt/ /g' /boot/config.txt" >> uninstall.sh
-echo "rm -r /home/pi/mymacchanger.py" >> uninstall.sh
-echo "sed -i '1d' /var/spool/cron/root" >> uninstall.sh
-echo "sed -i '2d' /var/spool/cron/root" >> uninstall.sh
-echo "sed -i '3d' /var/spool/cron/root" >> uninstall.sh
-echo "rm -r /var/spool/cron/root" >> uninstall.sh
-echo "apt purge jq -y" >> uninstall.sh
-echo "apt purge python3-pip -y" >> uninstall.sh
-echo "pip uninstall telepot -y" >> uninstall.sh
-echo "rm -r /home/pi/Bots" >> uninstall.sh
-echo "systemctl stop bot.service" >> uninstall.sh
-echo "rm -r /etc/systemd/system/bot.service" >> uninstall.sh
-echo "systemctl disable bot.service" >> uninstall.sh
-echo "systemctl daemon-reload" >> uninstall.sh
-echo "sed -i '1d' /var/spool/cron/root" >> uninstall.sh
-echo "sed -i '2d' /var/spool/cron/root" >> uninstall.sh
-echo "sed -i '3d' /var/spool/cron/root" >> uninstall.sh
-echo "rm /etc/motd" >> uninstall.sh
-echo "rm -r /etc/update-motd.d/20-raspberry-bitcoin" >> uninstall.sh
-echo "rm -r /etc/update-motd.d/30-swap-warning" >> uninstall.sh
-echo "apt purge jq -y" >> uninstall.sh
-echo "rm -r /var/www/html/index.php" >> uninstall.sh
-echo "apt purge php -y" >> uninstall.sh
-echo "apt purge apache2 -y" >> uninstall.sh
-echo "rm -rf /etc/apache2" >> uninstall.sh
-echo "apt autoremove -y" >> uninstall.sh
-echo "rm -r install.sh" >> uninstall.sh
+wget https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/uninstall.sh
 
 # ###############################
 # Final Reboot & Clean Up
 # ###############################
 
 apt autoremove -y
-reboot

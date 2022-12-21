@@ -7,7 +7,7 @@ sed -i 's/# en_GB.UTF-8 UTF-8/en_GB.UTF-8 UTF-8/g' /etc/locale.gen
 sed -i 's/en_US.UTF-8 UTF-8/# en_US.UTF-8 UTF-8/g' /etc/locale.gen
 rm -r /var/www/html/index.php
 rm /var/www/html/miner.php
-apt purge php7.4
+apt purge php7.4 -y
 apt purge apache2 -y
 rm -r /etc/apache2
 rm /usr/share/keyrings/tailscale-archive-keyring.gpg

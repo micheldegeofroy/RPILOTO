@@ -51,7 +51,7 @@ sed -i '3d' /var/spool/cron/root
 rm /etc/motd
 rm -r /etc/update-motd.d/20-raspberry-bitcoin
 rm -r /etc/update-motd.d/30-swap-warning
-apt purge jq -y" >> uninstall.sh
+apt purge jq -y
 apt purge python3.9 -y
 rm -r /usr/local/lib/python3.9
 apt autoremove -y

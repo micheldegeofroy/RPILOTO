@@ -54,5 +54,6 @@ rm -r /etc/update-motd.d/30-swap-warning
 apt purge jq -y
 apt purge python3.9 -y
 rm -r /usr/local/lib/python3.9
+rm -r /usr/lib/python3
 apt autoremove -y
 rm install.sh

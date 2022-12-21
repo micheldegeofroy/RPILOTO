@@ -172,14 +172,7 @@ systemctl disable bluetooth.service
 
 touch /home/pi/mymacchanger.py
 
-echo 'import random' >> /home/pi/mymacchanger.py
-echo 'import subprocess' >> /home/pi/mymacchanger.py
-echo 'random_mac = [random.randint(0x00, 0xff) for _ in range(6)]' >> /home/pi/mymacchanger.py
-echo "new_mac = ':'.join(map(lambda x: '%02x' % x, random_mac))" >> /home/pi/mymacchanger.py
-echo 'subprocess.call("ifconfig wlan0 down", shell=True)' >> /home/pi/mymacchanger.py
-echo 'subprocess.call("ifconfig wlan0 hw ether " + new_mac, shell=True)' >> /home/pi/mymacchanger.py
-echo 'subprocess.call("ifconfig wlan0 up", shell=True)' >> /home/pi/mymacchanger.py
-echo 'print("New Mac address: " + new_mac)' >> /home/pi/mymacchanger.py
+wget https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/mymacchanger.py
 
 touch /var/spool/cron/root
 /usr/bin/crontab /var/spool/cron/root
@@ -219,6 +212,7 @@ echo -e '30 8 * * * curl -s -X POST https://api.telegram.org/bot5564114282:AAGSj
 # SSH Custom Login Splash Screen
 # ###############################
 
+rm /etc/motd
 touch /etc/motd
 
 echo ' ' >> /etc/motd

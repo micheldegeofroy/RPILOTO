@@ -256,17 +256,10 @@ mkdir /home/pi/Bots/
 
 wget https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/Bot.py -P /home/pi/Bots/
 
-touch /etc/systemd/system/bot.service
 
-echo '[Unit]' >> /etc/systemd/system/bot.service
-echo 'Description=Telegram Bot Service' >> /etc/systemd/system/bot.service
-echo 'After=multi-user.target' >> /etc/systemd/system/bot.service
-echo '[Service]' >> /etc/systemd/system/bot.service
-echo 'Type=simple' >> /etc/systemd/system/bot.service
-echo 'Restart=always' >> /etc/systemd/system/bot.service
-echo 'ExecStart=/usr/bin/python3 /home/pi/Bots/Bot.py' >> /etc/systemd/system/bot.service
-echo '[Install]' >> /etc/systemd/system/bot.service
-echo 'WantedBy=multi-user.target' >> /etc/systemd/system/bot.service
+wget https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/bot.service -P /etc/systemd/system/
+
+pip3 install --upgrade RPi.GPIO
 
 systemctl enable bot.service
 systemctl start bot.service

@@ -1,3 +1,4 @@
+crontab -r
 rm /etc/environment
 rm /etc/default/locale
 touch /etc/default/locale

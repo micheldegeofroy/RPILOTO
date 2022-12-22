@@ -1,5 +1,4 @@
 #!/bin/bash
-
 # ###########################################
 # ###########################################
 #
@@ -17,7 +16,7 @@
 #ssh into your pi
 #ssh pi@YOURDEVICEIP 
 #
-#If you get this msg
+#If you get the below msg
 #
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 #@    WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!     @
@@ -57,9 +56,6 @@
 # ###############################
 # Update the software sources
 # ###############################
-
-rm /var/spool/cron/crontabs/root
-touch /var/spool/cron/crontabs/root
 
 apt update -y
 apt upgrade -y

@@ -81,11 +81,11 @@ sudo apt-get purge php7.4 libapache2-mod-php7.4 -y
 sudo apt-get purge autoremove -y
 sudo apt-get install apache2 libapache2-mod-php7.4 php7.4 -y
 
-wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/index.php -P" /var/www/html/
+sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/index.php" -P /var/www/html/
 
 wait
 
-wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/miner.php -P" /var/www/html/
+sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/miner.php" -P /var/www/html/
 
 wait
 
@@ -131,7 +131,7 @@ touch done8.sh
 # Install Speed Test #9
 # ###############################
 
-wget -O /usr/local/bin/speedtest-cli "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/speedtest.py"
+sudo wget -O /usr/local/bin/speedtest-cli "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/speedtest.py"
 
 wait
 
@@ -186,7 +186,7 @@ touch done12.sh
 # Install macchanger #13
 # ###############################
 
-wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/mymacchanger.py"
+sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/mymacchanger.py"
 
 wait
 
@@ -203,7 +203,7 @@ apt install jq -y
 apt install python3-pip -y
 pip install telepot
 
-wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/script.py"
+sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/script.py"
 
 wait
 
@@ -213,11 +213,11 @@ rm script.py
 
 mkdir /home/pi/Bots/
 
-wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/Bot.py" -P /home/pi/Bots/
+sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/Bot.py" -P /home/pi/Bots/
 
 wait
 
-wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/bot.service" -P /etc/systemd/system/
+sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/bot.service" -P /etc/systemd/system/
 
 wait
 
@@ -284,7 +284,7 @@ touch done16.sh
 
 mkdir -p /etc/update-motd.d/
 
-wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/20-raspberry-bitcoin" -P /etc/update-motd.d/
+sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/20-raspberry-bitcoin" -P /etc/update-motd.d/
 
 wait
 
@@ -297,7 +297,7 @@ touch done17.sh
 # Uninstall Script #18
 # ###############################
 
-wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/uninstall.sh"
+sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/uninstall.sh"
 
 wait
 

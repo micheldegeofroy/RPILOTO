@@ -66,6 +66,7 @@ apt upgrade -y
 # Fix Language Local
 # ###############################
 
+rm /etc/environment
 touch /etc/environment
 
 echo "LANGUAGE=en_US" >> /etc/environment
@@ -73,6 +74,7 @@ echo "LC_ALL=en_US" >> /etc/environment
 echo "LANG=en_US" >> /etc/environment
 echo "LC_TYPE=en_US" >> /etc/environment
 
+rm /etc/default/locale
 touch /etc/default/locale
 
 echo "LANG=en_US.UTF-8" >> /etc/default/locale
@@ -171,13 +173,9 @@ systemctl disable bluetooth.service
 # Install macchanger
 # ###############################
 
-touch /home/pi/mymacchanger.py
-
 wget https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/mymacchanger.py
 
-touch /var/spool/cron/root
-/usr/bin/crontab /var/spool/cron/root
-echo "*/180 * * * * /usr/bin/python3 /home/pi/mymacchanger.py" >> /var/spool/cron/root
+crontab -u pi -l; echo "@reboot && /usr/bin/python3 /home/pi/mymacchanger.py >/dev/null 2>&1" | crontab -
 
 # ###############################
 # Install telegram bot
@@ -207,7 +205,7 @@ systemctl start bot.service
 # Heartbeat Telegram
 # ###############################
 
-echo -e '30 8 * * * curl -s -X POST https://api.telegram.org/bot5564114282:AAGSjjJkjNH7RB-4dUH-aJW1pMmquFEq-m8/sendMessage -d chat_id=90423887 -d text="BTC Loto is Alive !"' >> /var/spool/cron/root
+crontab -u pi -l; echo '30 8 * * * curl -s -X POST https://api.telegram.org/bot5564114282:AAGSjjJkjNH7RB-4dUH-aJW1pMmquFEq-m8/sendMessage -d chat_id=90423887 -d text='BTC Loto is Alive !"' | crontab -
 
 # ###############################
 # SSH Custom Login Splash Screen

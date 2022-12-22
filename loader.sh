@@ -1,6 +1,6 @@
 
 echo -e "pi\npi\n" | sudo passwd root 
-wget https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/installtest.sh
+wget https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/install.sh
 crontab -l; echo "@reboot sleep 120 && /bin/bash /home/pi/install.sh >/dev/null 2>&1" | crontab -
-sudo mkdir done2.sh
+sudo touch done1.sh
 sudo shutdown -r +2 "loader // Shutting down in 2 min"

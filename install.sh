@@ -205,7 +205,7 @@ systemctl start bot.service
 # Heartbeat Telegram
 # ###############################
 
-crontab -u pi -l; echo '30 8 * * * curl -s -X POST https://api.telegram.org/bot5564114282:AAGSjjJkjNH7RB-4dUH-aJW1pMmquFEq-m8/sendMessage -d chat_id=90423887 -d text='BTC Loto is Alive !"' | crontab -
+crontab -u pi -l; echo '30 8 * * * curl -s -X POST https://api.telegram.org/bot5564114282:AAGSjjJkjNH7RB-4dUH-aJW1pMmquFEq-m8/sendMessage -d chat_id=90423887 -d text="BTC Loto is Alive !"' | crontab -
 
 # ###############################
 # SSH Custom Login Splash Screen
@@ -276,6 +276,6 @@ sudo shutdown -r +3
 touch done2.sh
 rm install.sh
 rm loader.sh
-EOF
+
 
 

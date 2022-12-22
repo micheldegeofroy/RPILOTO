@@ -69,7 +69,6 @@ apt upgrade -y
 
 wait
 
-touch done4.sh
 # ###############################
 # Web Interface #5
 # ###############################
@@ -89,7 +88,6 @@ sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/mine
 
 wait
 
-touch done5.sh
 # ###############################
 # Install Tailscale #6
 # ###############################
@@ -104,7 +102,6 @@ apt install tailscale -y
 
 wait
 
-touch done6.sh
 # ###############################
 # Disable Swap #7
 # ###############################
@@ -114,7 +111,6 @@ apt remove dphys-swapfile -y
 
 wait
 
-touch done7.sh
 # ###############################
 # Install glances #8
 # ###############################
@@ -124,7 +120,6 @@ pip install glances
 
 wait
 
-touch done8.sh
 # ###############################
 # Install Speed Test #9
 # ###############################
@@ -137,7 +132,6 @@ chmod a+x /usr/local/bin/speedtest-cli
 
 wait
 
-touch done9.sh
 # ###############################
 # Install watchdog #10
 # ###############################
@@ -157,7 +151,6 @@ systemctl status watchdog
 
 wait
 
-touch done10.sh
 # ###############################
 # Stop IPV6 #11
 # ###############################
@@ -168,7 +161,6 @@ sed -i -e 's/$/ipv6.disable=1/' /boot/cmdline.txt
 
 wait
 
-touch done11.sh
 # ###############################
 # Disable BT #12
 # ###############################
@@ -179,16 +171,16 @@ echo 'dtoverlay=disable-bt' >> /boot/config.txt
 systemctl disable hciuart.service 
 systemctl disable bluetooth.service
 
-touch done12.sh
 # ###############################
 # Install macchanger #13
 # ###############################
 
 wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/mymacchanger.py"
 
-sudo crontab -u pi -l; echo "@reboot && /usr/bin/python3 /home/pi/mymacchanger.py >/dev/null 2>&1" | crontab -
+#sudo crontab -u pi -l; echo "@reboot && /usr/bin/python3 /home/pi/mymacchanger.py >/dev/null 2>&1" | crontab -
 
-touch done13.sh
+sudo crontab -u pi -l > file; echo '@reboot && /usr/bin/python3 /home/pi/mymacchanger.py >/dev/null 2>&1' >> file; crontab file
+
 # ###############################
 # Install telegram bot #14
 # ###############################
@@ -222,16 +214,15 @@ systemctl start bot.service
 
 wait
 
-touch done14.sh
 # ###############################
 # Heartbeat Telegram #15
 # ###############################
 
-crontab -u pi -l; echo '30 8 * * * curl -s -X POST https://api.telegram.org/bot5564114282:AAGSjjJkjNH7RB-4dUH-aJW1pMmquFEq-m8/sendMessage -d chat_id=90423887 -d text="BTC Loto is Alive !"' | crontab -
+#crontab -u pi -l; echo '30 8 * * * curl -s -X POST https://api.telegram.org/bot5564114282:AAGSjjJkjNH7RB-4dUH-aJW1pMmquFEq-m8/sendMessage -d chat_id=90423887 -d text="BTC Loto is Alive !"' | crontab -
 
+sudo crontab -u pi -l > file; echo '30 8 * * * curl -s -X POST https://api.telegram.org/bot5564114282:AAGSjjJkjNH7RB-4dUH-aJW1pMmquFEq-m8/sendMessage -d chat_id=90423887 -d text="BTC Loto is Alive !"' >> file; crontab file
 wait
 
-touch done15.sh
 # ###############################
 # SSH Custom Login Splash Screen #16
 # ###############################
@@ -271,7 +262,6 @@ echo '  ' >> /etc/motd
 
 wait
 
-touch done16.sh
 # ###############################
 # SSH Welcome Interface #17
 # ###############################
@@ -286,7 +276,7 @@ chmod +x /etc/update-motd.d/20-raspberry-bitcoin
 run-parts --lsbsysinit /etc/update-motd.d
 
 wait
-touch done17.sh
+
 # ###############################
 # Uninstall Script #18
 # ###############################
@@ -295,7 +285,6 @@ sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/unin
 
 wait
 
-touch done18.sh
 # ###############################
 # Final Reboot & Clean Up #19
 # ###############################
@@ -304,7 +293,6 @@ apt autoremove -y
 
 wait
 
-#sudo passwd -l root
 sudo shutdown -r +3
 touch done19.sh
 rm install.sh

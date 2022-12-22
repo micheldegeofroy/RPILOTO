@@ -1,0 +1,172 @@
+#!/bin/bash
+  
+  # Ram
+  ram_total=$(free -m | grep Mem | awk '{ print $2 }')
+  ram_avail=$(free -m | grep Mem | awk '{ print $7 }')
+  ram_used=$(free -m | grep Mem | awk '{ print $3 }')
+  ram_Xused=$(echo ${ram_used} ${ram_total}| awk '{print $1 / $2 *100}' | sed 's/\.[^[:blank:]]*//')
+
+  # Mem
+  hdd_total=$(df -h | grep "/$" | awk '{ print $2 }')
+  hdd_free=$(df -h | grep "/$" | awk '{ print $4 }')
+  hdd_used=$(df -h | grep "/$" | awk '{ print $3 }')
+  hdd_Xused=$(df -h | grep "/$" | awk '{ print $5 }')
+  
+  ram_swap=$(free -m | grep Swap | awk '{ print $3 }')
+
+  # External Storage
+  external_storage=$(df -h | grep '/dev/sd')
+  if [ ! -z "${external_storage}" ]; then
+  external_total=$(echo ${external_storage} | awk '{ print $2 }')
+  external_avail=$(echo ${external_storage} | awk '{ print $3 }')
+  external_Xused=$(df -h | grep "/dev/sd" | awk '{print$5}')    
+  external_info="EXTERNAL STORAGE: ${BOLD}${external_avail} / ${external_total} ${external_Xused} ${RESET_STYLE}"
+  else
+  external_info=$(echo "EXTERNAL STORAGE: N/A ")  
+  fi
+
+  # Swap
+  swap_check=$(free -mh | grep -i swap | awk '{print substr($2, 1,1)}')
+  swap_memory=$(free -mh | grep -i swap)
+  swap_total=$(echo ${swap_memory} | awk '{print substr($2, 1, length($2) - 2)}')  
+  if [ "${swap_check}" != "0" ]; then
+  swap_info="SWAP: ${BOLD}${ram_swap}M / ${swap_total}G${RESET_STYLE}"
+  else
+  swap_info="$(tput -T xterm setaf 2)SWAP: N/A"
+  fi
+
+  # IP Geo Location
+  GEOLOC="$(curl https://extreme-ip-lookup.com/json/?key=ACJdcEKqljZrmlXp1GZA)"
+  geoloc="$(echo ${GEOLOC} | jq -r '.country' | tr '[:lower:]' '[:upper:]')"
+
+  # Hardware type
+  RPI="$(tr -d '\0' < /proc/device-tree/model)"
+  rpimod="$(echo ${RPI} | tr '[:lower:]' '[:upper:]')"
+
+  # Uptime
+  TIME="$(uptime | sed 's/.*up \([^,]*\), .*/\1/')"
+  uptime="$(echo ${TIME})"
+
+  # CPU Speed
+  GHZ="$(vcgencmd measure_clock arm | awk ' BEGIN { FS="=" } ; { printf("%.1fGHz\n", $2 / 1000000000) } ')"
+  ghz="$(echo ${GHZ})"
+
+  # VOLTS
+  VOLTS="$(vcgencmd measure_volts $id | awk '{print substr($0, 6, length($0) - 9)} ')"
+  volts="$(echo ${VOLTS})"
+
+  # PUBIP="$(curl https://api.ipify.org/)"
+  # PUBIP="$(curl ipv4.icanhazip.com)"  
+  PUBIP="$(curl ifconfig.co)" 
+  pubip="$(echo ${PUBIP})"
+
+  # IP
+  IP="$(hostname -I)"  
+  ip="$(echo ${IP})" 
+  
+  # CPU temperature
+  TEMPCPU="$(awk '{printf("\n%.1f°C\n\n",$1/1e3)}' /sys/class/thermal/thermal_zone0/temp)"
+  temp="$(echo ${TEMPCPU})"
+
+  # CPU % USED
+  CPUUSED="$(vmstat 1 2 | tail -1 | awk '{print $13}')"
+  cpuused="$(echo ${CPUUSED})"
+
+  #BITCOIN CORE
+
+  data_dir="/mnt/hdd/bitcoin"
+  btc_path=$(command -v bitcoin-cli)
+  if [ ! -z ${btc_path} ]; then
+  btc_line1="BITCOIN CORE"
+
+  # Blockchanin Information
+  BLOCKCHAIN_INFO="$(bitcoin-cli -datadir=${data_dir} getblockchaininfo 2> /dev/null)"
+  chain="$(echo ${BLOCKCHAIN_INFO} | jq -r '.chain' | tr '[:lower:]' '[:upper:]')"
+  if [ ! -z $chain ]; then
+  chain="${chain}NET"
+  fi
+
+  blocks="$(echo ${BLOCKCHAIN_INFO} | jq -r '.blocks')"
+
+  # Current sync status
+  progress="$(echo ${BLOCKCHAIN_INFO} | jq -r '.verificationprogress')"
+  percentage=$(printf "%.2f%%" "$(echo $progress | awk '{print 100 * $1}')")
+  if [ -n $percentage ]; then
+  l2_extra="sync progress: ${percentage}"
+  fi
+  
+  # Peers
+  PEER_INFO="$(bitcoin-cli -datadir=${data_dir} getpeerinfo 2> /dev/null)"
+  peers_count=$(echo ${PEER_INFO} | jq 'length')
+
+  # Check Wallet Balance
+  balance="$(bitcoin-cli -datadir=$data_dir getbalance 2> /dev/null)"
+  re='[+-]?([0-9]*[.])?[0-9]+$'
+  if ! [[ $balance =~ $re ]]; then
+  balance="$(tput -T xterm setaf 2)N/A"
+  fi
+
+  # Network
+  NETWORK_INFO="$(bitcoin-cli -datadir=${data_dir} getnetworkinfo 2> /dev/null)"
+  networks="$(echo ${NETWORK_INFO} | jq -r '[.localaddresses[] | [.address, .port|tostring] | join(":")] | join("\t")')"
+  version="$(echo ${NETWORK_INFO} | jq -r '.subversion' | grep -Po '((\d+\.?){3})')"
+  
+  # Mempool
+  MEMPOOL_INFO="$(bitcoin-cli -datadir=${data_dir} getmempoolinfo 2> /dev/null)"
+  mempool="$(echo ${MEMPOOL_INFO} | jq -r '.size' | xargs)"
+
+
+  else
+  btc_line2="$(tput -T xterm setaf 1)NOT RUNNING"
+  fi
+
+  if [ ! -z "${btc_line1}" ] && [ ! -z ${chain} ]; then
+  btc_line1="${btc_line1} (V${version}, ${chain})"
+  btc_line2="PEERS: ${peers_count} / ON BLOCK: ${blocks} SYNC: ${percentage}"
+  btc_line3="BALANCE: ${balance} / MEMPOOL TRANSACTIONS: ${mempool}"
+
+  if [ ! -z "${networks}" ]; then
+  btc_line4="PUBLIC IP / ${networks}"
+  fi
+  else
+
+  ps cax | grep bitcoind >/dev/null 2>&1
+  if [ $? -eq 0 ]; then
+  btc_line2="$(tput -T xterm setaf 1)BTC CORE STARTING"
+  else
+  btc_line2="$(tput -T xterm setaf 1)BTC CORE NOT RUNNING"
+  fi
+  fi
+ 
+  # Miner
+  Ver="$(sudo -u pi ./bfgminer/bfgminer --version | grep -n 4 | awk '{ print $2 }' | sed -e 's/\-[^\.]*$//')"
+  ps cax | grep bfgminer >/dev/null 2>&1
+  if [ $? -eq 0 ]; then
+  btc_line5="$(tput -T xterm setaf 1)BFGMINER ${Ver}"
+  else
+  btc_line5="$(tput -T xterm setaf 1)BFGMINER NOT RUNNING"
+  fi
+
+  Check1="$( curl -d '{"addr":"1LdJ4nyxrJqNB1oyr76rYerb2KDZk9wAvo"}' -H 'Authorization: Bearer KR9NNX9cXq9KIiowcoDWaHKHsVakW1ZNoH0zWied5S8' https://www.blockonomics.co/api/balance | sed 's/,.*//' | tr -d '{"response": [{"confirmed": ' )"
+
+#Check="$(printf '%.*f\n' 6 ${Check1})"
+#| awk ' BEGIN { FS="=" } ; { printf("%.1f BTC\n", $1 * 0.00000001) } '
+Check="$(echo ${Check1:0:3}.${Check1:3:3}) BTC"
+echo "$(tput -T xterm setaf 2)
+         ___ ___________
+        / _ )_  __/ ___/     $(tput -T xterm setaf 1)${rpimod}$(tput -T xterm setaf 2)
+       / _  |/ / / /__       $(tput -T xterm setaf 2)CPU: ${temp}$(tput -T xterm setaf 2)$(tput -T xterm setaf 2) ${ghz} ${volts}V ${cpuused} % UPTIME: ${uptime}$(tput -T xterm setaf 2)
+      /____//_/  \___/_____  $(tput -T xterm setaf 2)MEM: ${ram_used}M/${ram_total}M ${ram_Xused}% SD STORAGE: ${hdd_used}/${hdd_total} ${hdd_Xused}$(tput -T xterm setaf 2)
+     / /  / __ \/_  __/ __ \ $(tput -T xterm setaf 2)${external_info}${swap_info}$(tput -T xterm setaf 2)
+    / /__/ /_/ / / / / /_/ / $(tput -T xterm setaf 2)IP'S: ${ip} / ${pubip}  ${geoloc}
+   /____/\____/_/_/  \____/  $(tput -T xterm setaf 1)${btc_line1}$(tput -T xterm setaf 2)
+  / _ \/ _ \/  _/            $(tput -T xterm setaf 2)${btc_line2}$(tput -T xterm setaf 2)
+ / , _/ ___// /              $(tput -T xterm setaf 2)${btc_line3}$(tput -T xterm setaf 2)
+/_/|_/_/  /___/              $(tput -T xterm setaf 2)${btc_line5}$(tput -T xterm setaf 2)
+                             $(tput -T xterm setaf 2)${btc_line4}$(tput -T xterm setaf 2)
+                             $(tput -T xterm setaf 2)${Check} ${Check1} SATS$(tput -T xterm setaf 2)
+                             $(tput -T xterm setaf 2)$(tput -T xterm setaf 2)
+                             $(tput -T xterm sgr0)"
+echo $(tput -T xterm setaf 7)WEB$(tput -T xterm setaf 7)
+echo $(tput -T xterm setaf 7)To open Web Monitor goto: http://${ip}/index.php$(tput -T xterm setaf 7)
+

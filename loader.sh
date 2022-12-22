@@ -8,7 +8,9 @@ echo -e "pi\npi\n" | sudo passwd root
 # Download Install File
 # ###############################
 
-wget https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/setup.sh
+wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/setup.sh"
+
+wait
 
 # ###############################
 # Cron @ Reboot to Launch Install

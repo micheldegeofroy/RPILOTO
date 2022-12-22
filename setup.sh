@@ -40,7 +40,9 @@ sed -i 's/en_GB.UTF-8 UTF-8/# en_GB.UTF-8 UTF-8/g' /etc/locale.gen
 # Download Install File
 # ###############################
 
-wget https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/install.sh
+wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/install.sh"
+
+wait
 
 # ###############################
 # Cron @ Reboot to Launch Install

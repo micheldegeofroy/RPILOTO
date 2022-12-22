@@ -67,6 +67,8 @@ touch done3.sh
 apt update -y
 apt upgrade -y
 
+wait
+
 touch done4.sh
 # ###############################
 # Web Interface #5
@@ -80,7 +82,14 @@ sudo apt-get purge autoremove -y
 sudo apt-get install apache2 libapache2-mod-php7.4 php7.4 -y
 
 wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/index.php -P" /var/www/html/
+
+wait
+
 wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/miner.php -P" /var/www/html/
+
+wait
+
+wait
 
 touch done5.sh
 # ###############################
@@ -95,6 +104,8 @@ curl -fsSL https://pkgs.tailscale.com/stable/raspbian/bullseye.tailscale-keyring
 apt update -y
 apt install tailscale -y
 
+wait
+
 touch done6.sh
 # ###############################
 # Disable Swap #7
@@ -102,6 +113,8 @@ touch done6.sh
 
 swapoff --all
 apt remove dphys-swapfile -y
+
+wait
 
 touch done7.sh
 # ###############################
@@ -111,13 +124,20 @@ touch done7.sh
 apt install python3-pip -y
 pip install glances
 
+wait
+
 touch done8.sh
 # ###############################
 # Install Speed Test #9
 # ###############################
 
 wget -O /usr/local/bin/speedtest-cli "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/speedtest.py"
+
+wait
+
 chmod a+x /usr/local/bin/speedtest-cli
+
+wait
 
 touch done9.sh
 # ###############################
@@ -137,6 +157,8 @@ systemctl enable watchdog
 systemctl start watchdog
 systemctl status watchdog
 
+wait
+
 touch done10.sh
 # ###############################
 # Stop IPV6 #11
@@ -145,6 +167,8 @@ touch done10.sh
 echo net.ipv6.conf.all.disable_ipv6=1 | sudo tee /etc/sysctl.d/disable-ipv6.conf
 sysctl --system
 sed -i -e 's/$/ipv6.disable=1/' /boot/cmdline.txt
+
+wait
 
 touch done11.sh
 # ###############################
@@ -164,7 +188,11 @@ touch done12.sh
 
 wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/mymacchanger.py"
 
+wait
+
 crontab -u pi -l; echo "@reboot && /usr/bin/python3 /home/pi/mymacchanger.py >/dev/null 2>&1" | crontab -
+
+wait
 
 touch done13.sh
 # ###############################
@@ -177,6 +205,8 @@ pip install telepot
 
 wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/script.py"
 
+wait
+
 python3 script.py
 
 rm script.py
@@ -184,12 +214,19 @@ rm script.py
 mkdir /home/pi/Bots/
 
 wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/Bot.py" -P /home/pi/Bots/
+
+wait
+
 wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/bot.service" -P /etc/systemd/system/
+
+wait
 
 pip3 install --upgrade RPi.GPIO
 
 systemctl enable bot.service
 systemctl start bot.service
+
+wait
 
 touch done14.sh
 # ###############################
@@ -197,6 +234,8 @@ touch done14.sh
 # ###############################
 
 crontab -u pi -l; echo '30 8 * * * curl -s -X POST https://api.telegram.org/bot5564114282:AAGSjjJkjNH7RB-4dUH-aJW1pMmquFEq-m8/sendMessage -d chat_id=90423887 -d text="BTC Loto is Alive !"' | crontab -
+
+wait
 
 touch done15.sh
 # ###############################
@@ -236,6 +275,8 @@ echo 'To launch Glances: glances' >> /etc/motd
 echo 'To Add to this splash screen edit with sudo nano  /etc/motd' >> /etc/motd
 echo '  ' >> /etc/motd
 
+wait
+
 touch done16.sh
 # ###############################
 # SSH Welcome Interface #17
@@ -245,9 +286,12 @@ mkdir -p /etc/update-motd.d/
 
 wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/20-raspberry-bitcoin" -P /etc/update-motd.d/
 
+wait
+
 chmod +x /etc/update-motd.d/20-raspberry-bitcoin
 run-parts --lsbsysinit /etc/update-motd.d
 
+wait
 touch done17.sh
 # ###############################
 # Uninstall Script #18
@@ -255,12 +299,16 @@ touch done17.sh
 
 wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/uninstall.sh"
 
+wait
+
 touch done18.sh
 # ###############################
 # Final Reboot & Clean Up #19
 # ###############################
 
 apt autoremove -y
+
+wait
 
 sudo passwd -l root
 sudo shutdown -r +3

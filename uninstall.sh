@@ -51,7 +51,7 @@ sed -i '2d' /var/spool/cron/root
 sed -i '3d' /var/spool/cron/root
 rm /etc/motd
 rm -r /etc/update-motd.d/20-raspberry-bitcoin
-rm -r /etc/update-motd.d/30-swap-warning
+rm -r /etc/update-motd.d/10-uname
 apt purge jq -y
 apt purge python3.9 -y
 rm -r /usr/local/lib/python3.9

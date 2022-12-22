@@ -54,20 +54,22 @@
 #bash install.sh
 #
 # ###############################
-# Remove Cronjob
+# Remove Cronjob #3
 # ###############################
 
 crontab -u pi -r
 
+touch done3.sh
 # ###############################
-# Update the software sources
+# Update the software sources #4
 # ###############################
 
 apt update -y
 apt upgrade -y
 
+touch done4.sh
 # ###############################
-# Web Interface
+# Web Interface #5
 # ###############################
 
 apt install php7.4 -y
@@ -80,8 +82,9 @@ sudo apt-get install apache2 libapache2-mod-php7.4 php7.4 -y
 wget https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/index.php -P /var/www/html/
 wget https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/miner.php -P /var/www/html/
 
+touch done5.sh
 # ###############################
-# Install Tailscale
+# Install Tailscale #6
 # ###############################
 
 apt install apt-transport-https
@@ -92,29 +95,33 @@ curl -fsSL https://pkgs.tailscale.com/stable/raspbian/bullseye.tailscale-keyring
 apt update -y
 apt install tailscale -y
 
+touch done6.sh
 # ###############################
-# Disable Swap
+# Disable Swap #7
 # ###############################
 
 swapoff --all
 apt remove dphys-swapfile -y
 
+touch done7.sh
 # ###############################
-# Install glances
+# Install glances #8
 # ###############################
 
 apt install python3-pip -y
 pip install glances
 
+touch done8.sh
 # ###############################
-# Install Speed Test
+# Install Speed Test #9
 # ###############################
 
 wget -O /usr/local/bin/speedtest-cli https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/speedtest.py
 chmod a+x /usr/local/bin/speedtest-cli
 
+touch done9.sh
 # ###############################
-# Install watchdog
+# Install watchdog #10
 # ###############################
 
 echo '#Watchdog On' >> /boot/config.txt
@@ -130,16 +137,18 @@ systemctl enable watchdog
 systemctl start watchdog
 systemctl status watchdog
 
+touch done10.sh
 # ###############################
-# Stop IPV6
+# Stop IPV6 #11
 # ###############################
 
 echo net.ipv6.conf.all.disable_ipv6=1 | sudo tee /etc/sysctl.d/disable-ipv6.conf
 sysctl --system
 sed -i -e 's/$/ipv6.disable=1/' /boot/cmdline.txt
 
+touch done11.sh
 # ###############################
-# Disable BT
+# Disable BT #12
 # ###############################
 
 echo '# Disable Bluetooth' >> /boot/config.txt
@@ -148,16 +157,18 @@ echo 'dtoverlay=disable-bt' >> /boot/config.txt
 systemctl disable hciuart.service 
 systemctl disable bluetooth.service
 
+touch done12.sh
 # ###############################
-# Install macchanger
+# Install macchanger #13
 # ###############################
 
 wget https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/mymacchanger.py
 
 crontab -u pi -l; echo "@reboot && /usr/bin/python3 /home/pi/mymacchanger.py >/dev/null 2>&1" | crontab -
 
+touch done13.sh
 # ###############################
-# Install telegram bot
+# Install telegram bot #14
 # ###############################
                                                                                                                                                              
 apt install jq -y
@@ -180,14 +191,16 @@ pip3 install --upgrade RPi.GPIO
 systemctl enable bot.service
 systemctl start bot.service
 
+touch done14.sh
 # ###############################
-# Heartbeat Telegram
+# Heartbeat Telegram #15
 # ###############################
 
 crontab -u pi -l; echo '30 8 * * * curl -s -X POST https://api.telegram.org/bot5564114282:AAGSjjJkjNH7RB-4dUH-aJW1pMmquFEq-m8/sendMessage -d chat_id=90423887 -d text="BTC Loto is Alive !"' | crontab -
 
+touch done15.sh
 # ###############################
-# SSH Custom Login Splash Screen
+# SSH Custom Login Splash Screen #16
 # ###############################
 
 rm /etc/motd
@@ -223,36 +236,35 @@ echo 'To launch Glances: glances' >> /etc/motd
 echo 'To Add to this splash screen edit with sudo nano  /etc/motd' >> /etc/motd
 echo '  ' >> /etc/motd
 
+touch done16.sh
 # ###############################
-# SSH Welcome Interface
+# SSH Welcome Interface #17
 # ###############################
 
-wget -qO- https://gist.githubusercontent.com/meeDamian/0006c766340e0afd16936b13a0c7dbd8/raw/3b7ea819617f645ca4675f7351df70d1622863bd/na%25C3%25AFve-rbp-btc.sh | sudo sh
-
-sudo chmod +x /etc/update-motd.d/20-raspberry-bitcoin
-rm -r /etc/update-motd.d/20-raspberry-bitcoin
+mkdir -p /etc/update-motd.d/
 
 wget https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/20-raspberry-bitcoin -P /etc/update-motd.d/
 
 chmod +x /etc/update-motd.d/20-raspberry-bitcoin
-chmod -x /etc/update-motd.d/30-swap-warning
 run-parts --lsbsysinit /etc/update-motd.d
 
+touch done17.sh
 # ###############################
-# Uninstall Script
+# Uninstall Script #18
 # ###############################
 
 wget https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/uninstall.sh
 
+touch done18.sh
 # ###############################
-# Final Reboot & Clean Up
+# Final Reboot & Clean Up #19
 # ###############################
 
 apt autoremove -y
 
 sudo passwd -l root
 sudo shutdown -r +3
-touch done3.sh
+touch done19.sh
 rm install.sh
 rm setup.sh
 rm loader.sh

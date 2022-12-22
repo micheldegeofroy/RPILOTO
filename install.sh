@@ -79,8 +79,8 @@ sudo apt-get purge php7.4 libapache2-mod-php7.4 -y
 sudo apt-get purge autoremove -y
 sudo apt-get install apache2 libapache2-mod-php7.4 php7.4 -y
 
-wget https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/index.php -P /var/www/html/
-wget https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/miner.php -P /var/www/html/
+wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/index.php -P" /var/www/html/
+wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/miner.php -P" /var/www/html/
 
 touch done5.sh
 # ###############################
@@ -116,7 +116,7 @@ touch done8.sh
 # Install Speed Test #9
 # ###############################
 
-wget -O /usr/local/bin/speedtest-cli https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/speedtest.py
+wget -O /usr/local/bin/speedtest-cli "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/speedtest.py"
 chmod a+x /usr/local/bin/speedtest-cli
 
 touch done9.sh
@@ -162,7 +162,7 @@ touch done12.sh
 # Install macchanger #13
 # ###############################
 
-wget https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/mymacchanger.py
+wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/mymacchanger.py"
 
 crontab -u pi -l; echo "@reboot && /usr/bin/python3 /home/pi/mymacchanger.py >/dev/null 2>&1" | crontab -
 
@@ -175,7 +175,7 @@ apt install jq -y
 apt install python3-pip -y
 pip install telepot
 
-wget https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/script.py
+wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/script.py"
 
 python3 script.py
 
@@ -183,8 +183,8 @@ rm script.py
 
 mkdir /home/pi/Bots/
 
-wget https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/Bot.py -P /home/pi/Bots/
-wget https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/bot.service -P /etc/systemd/system/
+wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/Bot.py" -P /home/pi/Bots/
+wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/bot.service" -P /etc/systemd/system/
 
 pip3 install --upgrade RPi.GPIO
 
@@ -243,7 +243,7 @@ touch done16.sh
 
 mkdir -p /etc/update-motd.d/
 
-wget https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/20-raspberry-bitcoin -P /etc/update-motd.d/
+wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/20-raspberry-bitcoin" -P /etc/update-motd.d/
 
 chmod +x /etc/update-motd.d/20-raspberry-bitcoin
 run-parts --lsbsysinit /etc/update-motd.d
@@ -253,7 +253,7 @@ touch done17.sh
 # Uninstall Script #18
 # ###############################
 
-wget https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/uninstall.sh
+wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/uninstall.sh"
 
 touch done18.sh
 # ###############################

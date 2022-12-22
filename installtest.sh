@@ -1,4 +1,4 @@
 crontab -u pi -r
-passwd -l root
+sudo passwd -l root
 rm installtest.sh
-reboot
+sudo reboot

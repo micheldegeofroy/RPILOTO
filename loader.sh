@@ -2,7 +2,7 @@
 # Set Root Password
 # ###############################
 
-echo -e "pi\npi\n" | sudo passwd root 
+# echo -e "pi\npi\n" | sudo passwd root 
 
 # ###############################
 # Download Install File

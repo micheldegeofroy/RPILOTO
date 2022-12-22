@@ -89,8 +89,6 @@ sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/mine
 
 wait
 
-wait
-
 touch done5.sh
 # ###############################
 # Install Tailscale #6
@@ -186,13 +184,9 @@ touch done12.sh
 # Install macchanger #13
 # ###############################
 
-sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/mymacchanger.py"
+wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/mymacchanger.py"
 
-wait
-
-crontab -u pi -l; echo "@reboot && /usr/bin/python3 /home/pi/mymacchanger.py >/dev/null 2>&1" | crontab -
-
-wait
+sudo crontab -u pi -l; echo "@reboot && /usr/bin/python3 /home/pi/mymacchanger.py >/dev/null 2>&1" | crontab -
 
 touch done13.sh
 # ###############################

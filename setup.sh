@@ -55,4 +55,4 @@ crontab -l; echo "@reboot sleep 120 && /bin/bash /home/pi/install.sh >/dev/null 
 # ###############################
 
 sudo touch done2.sh
-sudo shutdown -r +2 "loader // Shutting down in 2 min"
+sudo shutdown -r +2

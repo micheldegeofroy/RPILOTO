@@ -252,8 +252,9 @@ apt autoremove -y
 
 sudo passwd -l root
 sudo shutdown -r +3
-touch done2.sh
+touch done3.sh
 rm install.sh
+rm setup.sh
 rm loader.sh
 
 

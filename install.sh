@@ -276,6 +276,6 @@ sudo shutdown -r +3
 touch done2.sh
 rm install.sh
 rm loader.sh
-
+EOF
 
 

@@ -304,7 +304,7 @@ apt autoremove -y
 
 wait
 
-sudo passwd -l root
+#sudo passwd -l root
 sudo shutdown -r +3
 touch done19.sh
 rm install.sh

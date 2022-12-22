@@ -57,6 +57,8 @@
 # Update the software sources
 # ###############################
 
+crontab -u pi -r
+
 apt update -y
 apt upgrade -y
 
@@ -389,6 +391,12 @@ wget https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/uninstall.
 # ###############################
 
 apt autoremove -y
+
+sudo passwd -l root
+sudo shutdown -r +3 "Install Script // Reboot in 3 min"
+mkdir done.sh
 rm install.sh
-passwd -l root
-reboot
+rm loader.sh
+
+
+

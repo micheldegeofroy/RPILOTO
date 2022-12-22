@@ -77,7 +77,7 @@ echo "<ul><pre>";
 echo "" . $HW . "<br>";
 echo "<br>";
 echo "Local Time:   " . substr_replace($localtime ,"", -4) ."<br>";
-echo "Geo Location: " . $geoloc ."";
+if (empty($geoloc)) {echo "Geo Location: N/A<br>";}else{echo "FGeo Location: " . $geoloc ."<br>";};
 echo "Public IP:    " . $pubip ."";
 echo "Local IP:     " . $ip ."";
 echo "CPU % Load:   " . $cpupercent ." % <br>";

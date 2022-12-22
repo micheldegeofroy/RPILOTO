@@ -1,0 +1,4 @@
+
+
+
+sudo passwd -l root

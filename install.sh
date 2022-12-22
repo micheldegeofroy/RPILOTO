@@ -272,7 +272,7 @@ wget https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/uninstall.
 apt autoremove -y
 
 sudo passwd -l root
-sudo shutdown -r +3 "Install Script // Reboot in 3 min"
+sudo shutdown -r +3
 touch done2.sh
 rm install.sh
 rm loader.sh

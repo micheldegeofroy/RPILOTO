@@ -300,6 +300,7 @@ touch done19.sh
 rm install.sh
 rm setup.sh
 rm loader.sh
+rm file
 
 
 

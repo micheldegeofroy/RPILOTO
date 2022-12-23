@@ -8,7 +8,7 @@
 # Download Install File
 # ###############################
 
-wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/setup.sh"
+sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/setup.sh"
 
 wait
 
@@ -22,5 +22,4 @@ crontab -l; echo "@reboot sleep 120 && /bin/bash /home/pi/setup.sh >/dev/null 2>
 # Other Tasks
 # ###############################
 
-sudo touch done1.sh
-sudo shutdown -r +2 "loader // Shutting down in 2 min"
+sudo shutdown -r +2

@@ -111,8 +111,8 @@ sudo apt remove dphys-swapfile -y
 # Install glances #8
 # ###############################
 
-sudo snap install core
-sudo snap install glances
+#sudo snap install core
+#sudo snap install glances
 #sudo apt install python3-pip -y
 #sudo pip install glances
 
@@ -173,6 +173,7 @@ sudo crontab -u pi -l > file; echo '@reboot && /usr/bin/python3 /home/pi/mymacch
 # Install telegram bot #14
 # ###############################
                                                                                                                                                              
+sudo apt install python3
 sudo apt install jq -y
 sudo apt install python3-pip -y
 sudo pip install telepot

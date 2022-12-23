@@ -48,7 +48,7 @@ wait
 # Cron @ Reboot to Launch Install
 # ###############################
 
-crontab -u pi -l; echo "@reboot sleep 120 && /bin/bash /home/pi/install.sh >/dev/null 2>&1" | crontab -
+sudo crontab -u pi -l; echo "@reboot sleep 120 && /bin/bash /home/pi/install.sh >/dev/null 2>&1" | crontab -
 
 # ###############################
 # Other Tasks

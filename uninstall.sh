@@ -22,7 +22,8 @@ sudo apt purge tailscale -y
 sudo swapon --all
 sudo apt install dphys-swapfile -y
 sudo pip uninstall glances -y
-sudo apt purge python3-pip -y
+sudo apt purge pip
+#sudo apt purge python3-pip -y
 sudo rm /usr/local/bin/speedtest-cli
 sudo sed -i 's/#Watchdog On/ /g' /boot/config.txt
 sudo sed -i 's/dtparam=watchdog=on/ /g' /boot/config.txt
@@ -38,8 +39,8 @@ sudo sed -i 's/# Disable Bluetooth/ /g' /boot/config.txt
 sudo sed -i 's/dtoverlay=disable-bt/ /g' /boot/config.txt
 sudo rm /home/pi/mymacchanger.py
 sudo apt purge jq -y
-sudo apt purge python -y
-sudo apt purge python3-pip -y
+#sudo apt purge python -y
+#sudo apt purge python3-pip -y
 sudo pip uninstall telepot -y
 sudo rm -r /home/pi/Bots
 sudo systemctl stop bot.service
@@ -49,8 +50,8 @@ sudo systemctl daemon-reload
 sudo rm /etc/motd
 sudo rm -r /etc/update-motd.d/ssh-welcome
 sudo rm -r /etc/update-motd.d/10-uname
-sudo apt purge jq -y
-sudo apt purge python3.9 -y
+#sudo apt purge jq -y
+#sudo apt purge python3.9 -y
 sudo rm -r /usr/local/lib/python3.9
 sudo rm -r /usr/lib/python3
 sudo rm -r /usr/lib/php

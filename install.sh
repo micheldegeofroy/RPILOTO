@@ -301,10 +301,10 @@ apt autoremove -y
 wait
 
 
-rm install.sh
-rm setup.sh
-rm loader.sh
-rm file
-sudo reboot
+sudo rm install.sh
+sudo rm setup.sh
+sudo rm loader.sh
+sudo rm file
+sudo sudo reboot
 
 

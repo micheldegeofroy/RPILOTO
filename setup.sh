@@ -54,5 +54,5 @@ sudo crontab -u pi -l; echo "@reboot sleep 120 && /bin/bash /home/pi/install.sh 
 # Other Tasks
 # ###############################
 
-sudo touch done2.sh
-sudo shutdown -r +2
+
+sudo reboot

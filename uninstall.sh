@@ -1,4 +1,5 @@
 sudo crontab -r
+sudo apt purge python-is-python2 -y
 sudo rm /etc/environment
 sudo rm /etc/default/locale
 sudo touch /etc/default/locale

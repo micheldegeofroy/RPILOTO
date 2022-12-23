@@ -173,7 +173,7 @@ sudo crontab -u pi -l > file; echo '@reboot && /usr/bin/python3 /home/pi/mymacch
 # Install telegram bot #14
 # ###############################
                                                                                                                                                              
-sudo apt install python3
+sudo apt install python3 -y
 sudo apt install jq -y
 sudo apt install python3-pip -y
 sudo pip install telepot

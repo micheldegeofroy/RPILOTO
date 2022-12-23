@@ -74,12 +74,12 @@ sudo apt install python -y
 
 sudo apt install php7.4 -y
 
-sudo apt-get purge apache2 -y
-sudo apt-get purge php7.4 libapache2-mod-php7.4 -y
-sudo apt-get purge -y
-sudo apt-get autoremove -y
-sudo apt-get clean -y
-sudo apt-get autoclean -y
+sudo apt purge apache2 -y
+sudo apt purge php7.4 libapache2-mod-php7.4 -y
+sudo apt purge -y
+sudo apt autoremove -y
+sudo apt clean -y
+sudo apt autoclean -y
 sudo apt-get install apache2 libapache2-mod-php7.4 php7.4 -y
 
 sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/index.php" -P /var/www/html/
@@ -241,10 +241,8 @@ sudo echo "  " | sudo tee -a /etc/motd
 
 mkdir -p /etc/update-motd.d/
 
-#sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/20-raspberry-bitcoin" -P /etc/update-motd.d/
 sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/ssh-welcome" -P /etc/update-motd.d/
 
-#chmod +x /etc/update-motd.d/20-raspberry-bitcoin
 sudo chmod +x /etc/update-motd.d/ssh-welcome
 #sudo run-parts --lsbsysinit /etc/update-motd.d
 
@@ -258,10 +256,13 @@ sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/unin
 # Final Reboot & Clean Up #19
 # ###############################
 
+sudo apt purge -y
 sudo apt autoremove -y
+sudo apt clean -y
+sudo apt autoclean -y
 wait
 sudo rm install.sh
 sudo rm file
-sudo sudo reboot
+sudo reboot
 
 

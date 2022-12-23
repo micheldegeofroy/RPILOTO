@@ -13,7 +13,7 @@ echo "##########################################"
 echo " "
 echo " "
 
-sudo crontab -u pi -r
+sudo crontab -r
 
 echo " "
 echo " "

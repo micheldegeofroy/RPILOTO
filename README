@@ -38,7 +38,7 @@ Use this below command and ssh again
 
 ounce logged run cmd
 
-sudo wget https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/loader.sh && sudo bash loader.sh
+sudo wget https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/setup.sh && sudo bash setup.sh
 
 then go have a cup of coffee the RPI will reboot several times
 

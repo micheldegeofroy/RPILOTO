@@ -36,6 +36,7 @@ sudo sed -i 's/# Disable Bluetooth/ /g' /boot/config.txt
 sudo sed -i 's/dtoverlay=disable-bt/ /g' /boot/config.txt
 sudo rm /home/pi/mymacchanger.py
 sudo apt purge jq -y
+sudo apt purge python -y
 sudo apt purge python3-pip -y
 sudo pip uninstall telepot -y
 sudo rm -r /home/pi/Bots

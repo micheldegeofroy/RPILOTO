@@ -77,10 +77,10 @@ sudo apt-get purge apache2 -y
 sudo apt-get purge php7.4 libapache2-mod-php7.4 -y
 sudo apt-get purge autoremove -y
 sudo apt-get install apache2 libapache2-mod-php7.4 php7.4 -y
-sudo apt-get clean 
-sudo apt-get autoclean
-sudo apt-get purge apache2
-sudo apt-get install apache2
+sudo apt-get clean -y
+sudo apt-get autoclean -y
+sudo apt-get purge apache2 -y
+sudo apt-get install apache2 -y
 
 sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/index.php" -P /var/www/html/
 

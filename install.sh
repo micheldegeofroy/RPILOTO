@@ -111,8 +111,10 @@ sudo apt remove dphys-swapfile -y
 # Install glances #8
 # ###############################
 
-sudo apt install python3-pip -y
-sudo pip install glances
+sudo snap install core
+sudo snap install glances
+#sudo apt install python3-pip -y
+#sudo pip install glances
 
 # ###############################
 # Install Speed Test #9

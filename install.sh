@@ -71,18 +71,19 @@ sudo apt upgrade -y
 # Web Interface #5
 # ###############################
 
-sudo apt install php7.4 -y
+#sudo apt install php7.4 -y
+sudo apt install php -y
 
 #sudo apt purge apache2 -y
-sudo apt purge php7.4 libapache2-mod-php7.4 -y
-sudo apt purge -y
-sudo apt autoremove -y
-sudo apt clean -y
-sudo apt autoclean -y
-sudo apt install apache2 -y
-sudo apt install libapache2-mod-php7.4 -y
-sudo apt install php7.4 -y
-sudo apt autoremove -y
+#sudo apt purge php7.4 libapache2-mod-php7.4 -y
+#sudo apt purge -y
+#sudo apt autoremove -y
+#sudo apt clean -y
+#sudo apt autoclean -y
+#sudo apt install apache2 -y
+#sudo apt install libapache2-mod-php7.4 -y
+#sudo apt install php7.4 -y
+#sudo apt autoremove -y
 
 sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/index.php" -P /var/www/html/
 
@@ -111,6 +112,8 @@ sudo apt remove dphys-swapfile -y
 # Install glances #8
 # ###############################
 
+sudo apt install pip
+sudo pip install glances
 #sudo snap install core
 #sudo snap install glances
 #sudo apt install python3-pip -y
@@ -173,9 +176,9 @@ sudo crontab -u pi -l > file; echo '@reboot && /usr/bin/python3 /home/pi/mymacch
 # Install telegram bot #14
 # ###############################
                                                                                                                                                              
-sudo apt install python3 -y
+#sudo apt install python3 -y
 sudo apt install jq -y
-sudo apt install python3-pip -y
+#sudo apt install python3-pip -y
 sudo pip install telepot
 
 sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/script.py"

@@ -59,7 +59,6 @@
 
 crontab -u pi -r
 
-sudo touch done3.sh
 # ###############################
 # Update the software sources #4
 # ###############################

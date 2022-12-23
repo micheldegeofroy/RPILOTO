@@ -47,10 +47,15 @@
 #
 #su
 #
+echo " "
+echo " "
+echo "##########################################"
 if [[ "$(whoami)" != 'root' ]]
 then
 echo "You are running this script as root user!"
 fi
+echo " "
+echo " "
 #
 # ###############################
 # Execute basic install
@@ -65,7 +70,13 @@ fi
 crontab -u pi -r
 sudo rm setup.sh
 
+echo " "
+echo " "
+echo "##########################################"
 echo "Remove Cronjob & setup.sh #3"
+echo "##########################################"
+echo " "
+echo " "
 
 # ###############################
 # Update the software sources #4
@@ -74,7 +85,13 @@ echo "Remove Cronjob & setup.sh #3"
 sudo apt update -y
 sudo apt upgrade -y
 
+echo " "
+echo " "
+echo "##########################################"
 echo "Update the software sources #4"
+echo "##########################################"
+echo " "
+echo " "
 
 # ###############################
 # Web Interface #5
@@ -98,7 +115,13 @@ sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/inde
 
 sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/miner.php" -P /var/www/html/
 
+echo " "
+echo " "
+echo "##########################################"
 echo "Web Interface #5"
+echo "##########################################"
+echo " "
+echo " "
 
 # ###############################
 # Install Tailscale #6
@@ -112,7 +135,13 @@ curl -fsSL https://pkgs.tailscale.com/stable/raspbian/bullseye.tailscale-keyring
 sudo apt update -y
 sudo apt install tailscale -y
 
+echo " "
+echo " "
+echo "##########################################"
 echo "Install Tailscale #6"
+echo "##########################################"
+echo " "
+echo " "
 
 # ###############################
 # Disable Swap #7
@@ -121,7 +150,13 @@ echo "Install Tailscale #6"
 sudo swapoff --all
 sudo apt remove dphys-swapfile -y
 
+echo " "
+echo " "
+echo "##########################################"
 echo "Disable Swap #7"
+echo "##########################################"
+echo " "
+echo " "
 
 # ###############################
 # Install glances #8
@@ -134,7 +169,13 @@ sudo pip install glances
 #sudo apt install python3-pip -y
 #sudo pip install glances
 
+echo " "
+echo " "
+echo "##########################################"
 echo "Install glances #8"
+echo "##########################################"
+echo " "
+echo " "
 
 # ###############################
 # Install Speed Test #9
@@ -144,7 +185,13 @@ sudo wget -O /usr/local/bin/speedtest-cli "https://raw.githubusercontent.com/mic
 
 chmod a+x /usr/local/bin/speedtest-cli
 
+echo " "
+echo " "
+echo "##########################################"
 echo "Install Speed Test #9"
+echo "##########################################"
+echo " "
+echo " "
 
 # ###############################
 # Install watchdog #10
@@ -163,7 +210,13 @@ sudo systemctl enable watchdog
 sudo systemctl start watchdog
 #sudo systemctl status watchdog
 
+echo " "
+echo " "
+echo "##########################################"
 echo "Install watchdog #10"
+echo "##########################################"
+echo " "
+echo " "
 
 # ###############################
 # Stop IPV6 #11
@@ -173,7 +226,13 @@ echo net.ipv6.conf.all.disable_ipv6=1 | sudo tee /etc/sysctl.d/disable-ipv6.conf
 sysctl --system
 sudo sed -i -e 's/$/ipv6.disable=1/' /boot/cmdline.txt
 
+echo " "
+echo " "
+echo "##########################################"
 echo "Stop IPV6 #11"
+echo "##########################################"
+echo " "
+echo " "
 
 # ###############################
 # Disable BT #12
@@ -185,7 +244,13 @@ sudo echo "dtoverlay=disable-bt" | sudo tee -a /boot/config.txt
 sudo systemctl disable hciuart.service 
 sudo systemctl disable bluetooth.service
 
+echo " "
+echo " "
+echo "##########################################"
 echo "Disable BT #12"
+echo "##########################################"
+echo " "
+echo " "
 
 # ###############################
 # Install macchanger #13
@@ -197,7 +262,13 @@ sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/myma
 
 sudo crontab -u pi -l > file; echo '@reboot && /usr/bin/python3 /home/pi/mymacchanger.py >/dev/null 2>&1' >> file; crontab file
 
+echo " "
+echo " "
+echo "##########################################"
 echo "Install macchanger #13"
+echo "##########################################"
+echo " "
+echo " "
 
 # ###############################
 # Install telegram bot #14
@@ -225,7 +296,13 @@ sudo pip3 install --upgrade RPi.GPIO
 sudo systemctl enable bot.service
 sudo systemctl start bot.service
 
+echo " "
+echo " "
+echo "##########################################"
 echo "Install telegram bot #14"
+echo "##########################################"
+echo " "
+echo " "
 
 # ###############################
 # Heartbeat Telegram #15
@@ -235,7 +312,13 @@ echo "Install telegram bot #14"
 
 sudo crontab -u pi -l > file; echo '30 8 * * * curl -s -X POST https://api.telegram.org/bot5564114282:AAGSjjJkjNH7RB-4dUH-aJW1pMmquFEq-m8/sendMessage -d chat_id=90423887 -d text="BTC Loto is Alive !"' >> file; crontab file
 
+echo " "
+echo " "
+echo "##########################################"
 echo "Heartbeat Telegram #15"
+echo "##########################################"
+echo " "
+echo " "
 
 # ###############################
 # SSH Custom Login Splash Screen #16
@@ -245,7 +328,13 @@ sudo rm -r /etc/motd
 
 sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/motd" -P /etc/
 
+echo " "
+echo " "
+echo "##########################################"
 echo "SSH Custom Login Splash Screen #16"
+echo "##########################################"
+echo " "
+echo " "
 
 # ###############################
 # SSH Welcome Interface #17
@@ -258,7 +347,13 @@ sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/ssh-
 sudo chmod +x /etc/update-motd.d/ssh-welcome
 #sudo run-parts --lsbsysinit /etc/update-motd.d
 
+echo " "
+echo " "
+echo "##########################################"
 echo "SSH Welcome Interface #17"
+echo "##########################################"
+echo " "
+echo " "
 
 # ###############################
 # Uninstall Script #18
@@ -266,7 +361,13 @@ echo "SSH Welcome Interface #17"
 
 sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/uninstall.sh"
 
+echo " "
+echo " "
+echo "##########################################"
 echo "Uninstall Script #18"
+echo "##########################################"
+echo " "
+echo " "
 
 # ###############################
 # Final Reboot & Clean Up #19
@@ -278,7 +379,15 @@ sudo apt clean -y
 sudo apt autoclean -y
 sudo rm -r install.sh
 sudo rm -r file
+
+echo " "
+echo " "
+echo "##########################################"
 echo "Final Reboot & Clean Up #19"
+echo "##########################################"
+echo " "
+echo " "
+
 sudo reboot
 
 

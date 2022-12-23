@@ -4,8 +4,8 @@
 
 sudo apt update -y
 sudo apt upgrade -y
-sudo apt update
-sudo apt install snapd
+#sudo apt update
+#sudo apt install snapd
 
 # ###############################
 # Fix Language Local

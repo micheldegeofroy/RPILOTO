@@ -1,7 +1,56 @@
+Hardware: This script is meant to run/installed on RPI 4
+OS:Raspberry Pi OS Lite (64-bit) Debian Bullseye
+
+Start with clean OS install
+
+Use Raspberry Pi Imager to flash your SD
+
+In the Raspberry Pi Imager app in advanced settings
+
+Set Hostname to BTCLOTO
+Enable SSH
+Set User Name and Password
+Configure Wireless Lan to connect to your Wifi (or plug device in ethernet)
+Set Local Settings
+Save
+
+Flash your SD card and when finished insert into your RPI 4
+
+Scan your lan to find your device RPI 4
+
+from terminal ssh into RPI 4
+
+ssh pi@YOURDEVICEIP
+
+if you get this msg
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+#@    WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!     @
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+#IT IS POSSIBLE THAT SOMEONE IS DOING SOMETHING NASTY!
+#Someone could be eavesdropping on you right now (man-in-the-middle attack)!
+#It is also possible that a host key has just been changed.
+#The fingerprint for the ECDSA key sent by the remote host is
+
+Use this below command and ssh again
+
+#ssh-keygen -R YOURDEVICEIP
+
+ounce logged run cmd
+
+sudo wget https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/loader.sh && bash loader.sh
+
+then go have a cup of coffee the RPI will reboot several times
+
+
+
 ounce install is finished go to your bot and write
 
 sudo tailscale status
 clink on link to authorize tailscales
+
+to uninstall run
+sudo bash uninstall.sh
 
 to do script that asks for bot id and chat id and writes it to file
 script that asks for public adress of wallet

@@ -54,10 +54,11 @@
 #bash install.sh
 #
 # ###############################
-# Remove Cronjob #3
+# Remove Cronjob & setup.sh #3
 # ###############################
 
 crontab -u pi -r
+sudo rm setup.sh
 
 # ###############################
 # Update the software sources #4
@@ -134,7 +135,7 @@ sudo echo "max-load-1 = 24" | sudo tee -a /etc/watchdog.conf
 
 sudo systemctl enable watchdog
 sudo systemctl start watchdog
-sudo systemctl status watchdog
+#sudo systemctl status watchdog
 
 # ###############################
 # Stop IPV6 #11
@@ -245,7 +246,7 @@ sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/ssh-
 
 #chmod +x /etc/update-motd.d/20-raspberry-bitcoin
 sudo chmod +x /etc/update-motd.d/ssh-welcome
-sudo run-parts --lsbsysinit /etc/update-motd.d
+#sudo run-parts --lsbsysinit /etc/update-motd.d
 
 # ###############################
 # Uninstall Script #18
@@ -258,9 +259,8 @@ sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/unin
 # ###############################
 
 sudo apt autoremove -y
-
+wait
 sudo rm install.sh
-sudo rm setup.sh
 sudo rm file
 sudo sudo reboot
 

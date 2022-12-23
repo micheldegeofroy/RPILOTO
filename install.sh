@@ -50,10 +50,7 @@
 echo " "
 echo " "
 echo "##########################################"
-if [[ "$(whoami)" != 'root' ]]
-then
-echo "You are running this script as root user!"
-fi
+whoami
 echo "##########################################"
 echo " "
 echo " "

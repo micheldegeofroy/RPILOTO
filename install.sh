@@ -268,11 +268,13 @@ wait
 
 mkdir -p /etc/update-motd.d/
 
-sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/20-raspberry-bitcoin" -P /etc/update-motd.d/
+#sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/20-raspberry-bitcoin" -P /etc/update-motd.d/
+sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/ssh-welcome" -P /etc/update-motd.d/
 
 wait
 
-chmod +x /etc/update-motd.d/20-raspberry-bitcoin
+#chmod +x /etc/update-motd.d/20-raspberry-bitcoin
+chmod +x /etc/update-motd.d/ssh-welcome
 run-parts --lsbsysinit /etc/update-motd.d
 
 wait

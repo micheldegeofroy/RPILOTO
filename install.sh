@@ -136,18 +136,18 @@ wait
 # Install watchdog #10
 # ###############################
 
-echo '#Watchdog On' >> /boot/config.txt
-echo 'dtparam=watchdog=on' >> /boot/config.txt
+sudo echo "#Watchdog On" | sudo tee -a /boot/config.txt
+sudo echo "dtparam=watchdog=on" | sudo tee -a /boot/config.txt
 
-apt install watchdog -y
+sudo apt install watchdog -y
 
-echo 'watchdog-device = /dev/watchdog' >> /etc/watchdog.conf
-echo 'watchdog-timeout = 15' >> /etc/watchdog.conf
-echo 'max-load-1 = 24' >> /etc/watchdog.conf
+sudo echo "watchdog-device = /dev/watchdog" | sudo tee -a /etc/watchdog.conf
+sudo echo "watchdog-timeout = 15" | sudo tee -a /etc/watchdog.conf
+sudo echo "max-load-1 = 24" | sudo tee -a /etc/watchdog.conf
 
-systemctl enable watchdog
-systemctl start watchdog
-systemctl status watchdog
+sudo systemctl enable watchdog
+sudo systemctl start watchdog
+sudo systemctl status watchdog
 
 wait
 
@@ -157,7 +157,7 @@ wait
 
 echo net.ipv6.conf.all.disable_ipv6=1 | sudo tee /etc/sysctl.d/disable-ipv6.conf
 sysctl --system
-sed -i -e 's/$/ipv6.disable=1/' /boot/cmdline.txt
+sudo sed -i -e 's/$/ipv6.disable=1/' /boot/cmdline.txt
 
 wait
 
@@ -165,11 +165,11 @@ wait
 # Disable BT #12
 # ###############################
 
-echo '# Disable Bluetooth' >> /boot/config.txt
-echo 'dtoverlay=disable-bt' >> /boot/config.txt
+sudo echo "# Disable Bluetooth" | sudo tee -a /boot/config.txt
+sudo echo "dtoverlay=disable-bt" | sudo tee -a /boot/config.txt
 
-systemctl disable hciuart.service 
-systemctl disable bluetooth.service
+sudo systemctl disable hciuart.service 
+sudo systemctl disable bluetooth.service
 
 # ###############################
 # Install macchanger #13
@@ -185,19 +185,19 @@ sudo crontab -u pi -l > file; echo '@reboot && /usr/bin/python3 /home/pi/mymacch
 # Install telegram bot #14
 # ###############################
                                                                                                                                                              
-apt install jq -y
-apt install python3-pip -y
-pip install telepot
+sudo apt install jq -y
+sudo apt install python3-pip -y
+sudo pip install telepot
 
 sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/script.py"
 
 wait
 
-python3 script.py
+sudo python3 script.py
 
-rm script.py
+sudo rm script.py
 
-mkdir /home/pi/Bots/
+sudo mkdir /home/pi/Bots/
 
 sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/Bot.py" -P /home/pi/Bots/
 
@@ -207,10 +207,10 @@ sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/bot.
 
 wait
 
-pip3 install --upgrade RPi.GPIO
+sudo pip3 install --upgrade RPi.GPIO
 
-systemctl enable bot.service
-systemctl start bot.service
+sudo systemctl enable bot.service
+sudo systemctl start bot.service
 
 wait
 
@@ -227,38 +227,39 @@ wait
 # SSH Custom Login Splash Screen #16
 # ###############################
 
-rm /etc/motd
-touch /etc/motd
+sudo rm /etc/motd
+sudo touch /etc/motd
 
-echo ' ' >> /etc/motd
+
+sudo echo " " | sudo tee -a /etc/motd
 echo 'GENERAL DEBUG' >> /etc/motd
-echo 'sudo nano /var/log/messages' >> /etc/motd
-echo 'sudo nano /var/log/kern.log' >> /etc/motd
-echo 'sudo nano /var/log/syslog' >> /etc/motd
-echo 'sudo tail -n 100 -f /var/log/syslog' >> /etc/motd
-echo 'sudo tail -n 100 -f /var/log/messages' >> /etc/motd
-echo 'sudo journalctl -xe' >> /etc/motd
-echo '  ' >> /etc/motd
-echo 'BOT' >> /etc/motd
-echo 'sudo systemctl stop bot.service' >> /etc/motd
-echo 'sudo systemctl restart bot.service' >> /etc/motd
-echo 'sudo systemctl status bot.service' >> /etc/motd
-echo 'sudo systemctl daemon-reload' >> /etc/motd
-echo 'sudo systemctl enable bot.service' >> /etc/motd
-echo 'sudo systemctl start bot.service' >> /etc/motd
-echo 'sudo nano /Bots/Bot.py' >> /etc/motd
-echo '  ' >> /etc/motd
-echo 'BTC' >> /etc/motd
-echo 'sudo tail -n 100 -f /mnt/hdd/debug.log' >> /etc/motd
-echo 'bitcoin-cli getblockchaininfo' >> /etc/motd
-echo '  ' >> /etc/motd
-echo 'OTHER' >> /etc/motd
-echo 'To reload this Splash Screen: sudo run-parts --lsbsysinit /etc/update-motd.d' >> /etc/motd
-echo 'To edit the Web Monitor script: sudo nano /var/www/html/index.php' >> /etc/motd
-echo 'To edit the Login Welcome script: sudo nano /etc/update-motd.d/20-raspberry-bitcoin' >> /etc/motd
-echo 'To launch Glances: glances' >> /etc/motd
-echo 'To Add to this splash screen edit with sudo nano  /etc/motd' >> /etc/motd
-echo '  ' >> /etc/motd
+sudo echo "sudo nano /var/log/messages" | sudo tee -a /etc/motd
+sudo echo "sudo nano /var/log/kern.log" | sudo tee -a /etc/motd
+sudo echo "sudo nano /var/log/syslog" | sudo tee -a /etc/motd
+sudo echo "sudo tail -n 100 -f /var/log/syslog" | sudo tee -a /etc/motd
+sudo echo "sudo tail -n 100 -f /var/log/messages" | sudo tee -a /etc/motd
+sudo echo "sudo journalctl -xe" | sudo tee -a /etc/motd
+sudo echo " " | sudo tee -a /etc/motd
+sudo echo "BOT" | sudo tee -a /etc/motd
+sudo echo "sudo systemctl stop bot.service" | sudo tee -a /etc/motd
+sudo echo "sudo systemctl restart bot.service" | sudo tee -a /etc/motd
+sudo echo "sudo systemctl status bot.service" | sudo tee -a /etc/motd
+sudo echo "sudo systemctl daemon-reload" | sudo tee -a /etc/motd
+sudo echo "sudo systemctl enable bot.service" | sudo tee -a /etc/motd
+sudo echo "sudo systemctl start bot.service" | sudo tee -a /etc/motd
+sudo echo "sudo nano /Bots/Bot.py" | sudo tee -a /etc/motd
+sudo echo "  " | sudo tee -a /etc/motd
+sudo echo "BTC" | sudo tee -a /etc/motd
+sudo echo "sudo tail -n 100 -f /mnt/hdd/debug.log" | sudo tee -a /etc/motd
+sudo echo "bitcoin-cli getblockchaininfo" | sudo tee -a /etc/motd
+sudo echo "  " | sudo tee -a /etc/motd
+sudo echo "OTHER" | sudo tee -a /etc/motd
+sudo echo "To reload this Splash Screen: sudo run-parts --lsbsysinit /etc/update-motd.d" | sudo tee -a /etc/motd
+sudo echo "To edit the Web Monitor script: sudo nano /var/www/html/index.php" | sudo tee -a /etc/motd
+sudo echo "To edit the Login Welcome script: sudo nano /etc/update-motd.d/20-raspberry-bitcoin" | sudo tee -a /etc/motd
+sudo echo "To launch Glances: glances" | sudo tee -a /etc/motd
+sudo echo "To Add to this splash screen edit with sudo nano  /etc/motd" | sudo tee -a /etc/motd
+sudo echo "  " | sudo tee -a /etc/motd
 
 wait
 
@@ -274,8 +275,8 @@ sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/ssh-
 wait
 
 #chmod +x /etc/update-motd.d/20-raspberry-bitcoin
-chmod +x /etc/update-motd.d/ssh-welcome
-run-parts --lsbsysinit /etc/update-motd.d
+sudo chmod +x /etc/update-motd.d/ssh-welcome
+sudo run-parts --lsbsysinit /etc/update-motd.d
 
 wait
 

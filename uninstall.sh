@@ -53,4 +53,6 @@ sudo rm -r /usr/lib/python3
 sudo rm -r usr/lib/php
 sudo crontab -u pi -r
 sudo apt autoremove -y
+sudo apt-get clean
+sudo apt-get autoclean
 sudo rm uninstall.sh

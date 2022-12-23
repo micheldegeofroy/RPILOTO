@@ -1,0 +1,40 @@
+
+GENERAL DEBUG
+sudo nano /var/log/messages
+sudo nano /var/log/kern.log
+sudo nano /var/log/syslog
+sudo tail -n 100 -f /var/log/syslog
+sudo tail -n 100 -f /var/log/messages
+systemctl status cron
+sudo journalctl -xe
+journalctl -p 0
+
+0: emergency
+1: alerts
+2: critical
+3: errors
+4: warning
+5: notice
+6: info
+7: debug
+ 
+BOT
+sudo systemctl stop bot.service
+sudo systemctl restart bot.service
+sudo systemctl status bot.service
+sudo systemctl daemon-reload
+sudo systemctl enable bot.service
+sudo systemctl start bot.service
+sudo nano /Bots/Bot.py
+  
+BTC
+sudo tail -n 100 -f /mnt/hdd/debug.log
+bitcoin-cli getblockchaininfo
+  
+OTHER
+To reload this Splash Screen: sudo run-parts --lsbsysinit /etc/update-motd.d
+To edit the Web Monitor script: sudo nano /var/www/html/index.php
+To edit the Login Welcome script: sudo nano /etc/update-motd.d/ssh-welcome
+To launch Glances: glances
+To Add to this splash screen edit with sudo nano  /etc/motd
+To launch Speed Test speedtest-cli --simple

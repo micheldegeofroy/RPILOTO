@@ -52,5 +52,7 @@ clink on link to authorize tailscales
 to uninstall run
 sudo bash uninstall.sh
 
+sudo wget https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/uninstall.sh && sudo bash uninstall.sh
+
 to do script that asks for bot id and chat id and writes it to file
 script that asks for public adress of wallet

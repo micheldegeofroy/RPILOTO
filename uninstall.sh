@@ -60,6 +60,6 @@ sudo rm -r /usr/lib/python2.7
 sudo rm -r /usr/lib/python3.9
 sudo crontab -u pi -r
 sudo apt autoremove -y
-sudo apt-get clean
-sudo apt-get autoclean
-sudo rm uninstall.sh
+sudo apt clean -y
+sudo apt autoclean -y
+sudo rm uninstall.sh 

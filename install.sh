@@ -296,11 +296,11 @@ apt autoremove -y
 
 wait
 
-sudo shutdown -r +3
+
 rm install.sh
 rm setup.sh
 rm loader.sh
 rm file
-
+sudo reboot
 
 

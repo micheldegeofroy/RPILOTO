@@ -10,7 +10,8 @@ sudo sed -i 's/en_US.UTF-8 UTF-8/# en_US.UTF-8 UTF-8/g' /etc/locale.gen
 sudo rm -r /var/www/html/index.php
 sudo rm -r /var/www/html/miner.php
 sudo rm -r /var/www
-sudo apt purge php7.4 -y
+#sudo apt purge php7.4 -y
+sudo apt purge php -y
 sudo apt purge apache2 -y
 sudo rm -r /etc/apache2
 sudo rm /usr/share/keyrings/tailscale-archive-keyring.gpg

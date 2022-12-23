@@ -64,10 +64,6 @@ echo " "
 # ###############################
 # Remove Cronjob & setup.sh #3
 # ###############################
-
-crontab -u pi -r
-sudo rm setup.sh
-
 echo " "
 echo " "
 echo "##########################################"
@@ -76,12 +72,12 @@ echo "##########################################"
 echo " "
 echo " "
 
+crontab -u pi -r
+sudo rm setup.sh
+
 # ###############################
 # Update the software sources #4
 # ###############################
-
-sudo apt update -y
-sudo apt upgrade -y
 
 echo " "
 echo " "
@@ -91,9 +87,20 @@ echo "##########################################"
 echo " "
 echo " "
 
+sudo apt update -y
+sudo apt upgrade -y
+
 # ###############################
 # Web Interface #5
 # ###############################
+
+echo " "
+echo " "
+echo "##########################################"
+echo "Web Interface #5"
+echo "##########################################"
+echo " "
+echo " "
 
 #sudo apt install php7.4 -y
 sudo apt install php -y
@@ -113,25 +120,10 @@ sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/inde
 
 sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/miner.php" -P /var/www/html/
 
-echo " "
-echo " "
-echo "##########################################"
-echo "Web Interface #5"
-echo "##########################################"
-echo " "
-echo " "
-
 # ###############################
 # Install Tailscale #6
 # ###############################
 
-sudo apt install apt-transport-https
-
-curl -fsSL https://pkgs.tailscale.com/stable/raspbian/bullseye.noarmor.gpg | sudo tee /usr/share/keyrings/tailscale-archive-keyring.gpg > /dev/null
-curl -fsSL https://pkgs.tailscale.com/stable/raspbian/bullseye.tailscale-keyring.list | sudo tee /etc/apt/sources.list.d/tailscale.list
-
-sudo apt update -y
-sudo apt install tailscale -y
 
 echo " "
 echo " "
@@ -141,12 +133,17 @@ echo "##########################################"
 echo " "
 echo " "
 
+sudo apt install apt-transport-https
+
+curl -fsSL https://pkgs.tailscale.com/stable/raspbian/bullseye.noarmor.gpg | sudo tee /usr/share/keyrings/tailscale-archive-keyring.gpg > /dev/null
+curl -fsSL https://pkgs.tailscale.com/stable/raspbian/bullseye.tailscale-keyring.list | sudo tee /etc/apt/sources.list.d/tailscale.list
+
+sudo apt update -y
+sudo apt install tailscale -y
+
 # ###############################
 # Disable Swap #7
 # ###############################
-
-sudo swapoff --all
-sudo apt remove dphys-swapfile -y
 
 echo " "
 echo " "
@@ -156,16 +153,12 @@ echo "##########################################"
 echo " "
 echo " "
 
+sudo swapoff --all
+sudo apt remove dphys-swapfile -y
+
 # ###############################
 # Install glances #8
 # ###############################
-
-sudo apt install pip -y
-sudo pip install glances
-#sudo snap install core
-#sudo snap install glances
-#sudo apt install python3-pip -y
-#sudo pip install glances
 
 echo " "
 echo " "
@@ -175,13 +168,16 @@ echo "##########################################"
 echo " "
 echo " "
 
+sudo apt install pip -y
+sudo pip install glances
+#sudo snap install core
+#sudo snap install glances
+#sudo apt install python3-pip -y
+#sudo pip install glances
+
 # ###############################
 # Install Speed Test #9
 # ###############################
-
-sudo wget -O /usr/local/bin/speedtest-cli "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/speedtest.py"
-
-chmod a+x /usr/local/bin/speedtest-cli
 
 echo " "
 echo " "
@@ -191,9 +187,21 @@ echo "##########################################"
 echo " "
 echo " "
 
+sudo wget -O /usr/local/bin/speedtest-cli "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/speedtest.py"
+
+chmod a+x /usr/local/bin/speedtest-cli
+
 # ###############################
 # Install watchdog #10
 # ###############################
+
+echo " "
+echo " "
+echo "##########################################"
+echo "Install watchdog #10"
+echo "##########################################"
+echo " "
+echo " "
 
 sudo echo "#Watchdog On" | sudo tee -a /boot/config.txt
 sudo echo "dtparam=watchdog=on" | sudo tee -a /boot/config.txt
@@ -208,21 +216,9 @@ sudo systemctl enable watchdog
 sudo systemctl start watchdog
 #sudo systemctl status watchdog
 
-echo " "
-echo " "
-echo "##########################################"
-echo "Install watchdog #10"
-echo "##########################################"
-echo " "
-echo " "
-
 # ###############################
 # Stop IPV6 #11
 # ###############################
-
-echo net.ipv6.conf.all.disable_ipv6=1 | sudo tee /etc/sysctl.d/disable-ipv6.conf
-sysctl --system
-sudo sed -i -e 's/$/ipv6.disable=1/' /boot/cmdline.txt
 
 echo " "
 echo " "
@@ -232,15 +228,13 @@ echo "##########################################"
 echo " "
 echo " "
 
+echo net.ipv6.conf.all.disable_ipv6=1 | sudo tee /etc/sysctl.d/disable-ipv6.conf
+sysctl --system
+sudo sed -i -e 's/$/ipv6.disable=1/' /boot/cmdline.txt
+
 # ###############################
 # Disable BT #12
 # ###############################
-
-sudo echo "# Disable Bluetooth" | sudo tee -a /boot/config.txt
-sudo echo "dtoverlay=disable-bt" | sudo tee -a /boot/config.txt
-
-sudo systemctl disable hciuart.service 
-sudo systemctl disable bluetooth.service
 
 echo " "
 echo " "
@@ -250,15 +244,15 @@ echo "##########################################"
 echo " "
 echo " "
 
+sudo echo "# Disable Bluetooth" | sudo tee -a /boot/config.txt
+sudo echo "dtoverlay=disable-bt" | sudo tee -a /boot/config.txt
+
+sudo systemctl disable hciuart.service 
+sudo systemctl disable bluetooth.service
+
 # ###############################
 # Install macchanger #13
 # ###############################
-
-sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/mymacchanger.py"
-
-#sudo crontab -u pi -l; echo "@reboot && /usr/bin/python3 /home/pi/mymacchanger.py >/dev/null 2>&1" | crontab -
-
-sudo crontab -u pi -l > file; echo '@reboot && /usr/bin/python3 /home/pi/mymacchanger.py >/dev/null 2>&1' >> file; crontab file
 
 echo " "
 echo " "
@@ -268,10 +262,24 @@ echo "##########################################"
 echo " "
 echo " "
 
+sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/mymacchanger.py"
+
+#sudo crontab -u pi -l; echo "@reboot && /usr/bin/python3 /home/pi/mymacchanger.py >/dev/null 2>&1" | crontab -
+
+sudo crontab -u pi -l > file; echo '@reboot && /usr/bin/python3 /home/pi/mymacchanger.py >/dev/null 2>&1' >> file; crontab file
+
 # ###############################
 # Install telegram bot #14
 # ###############################
-                                                                                                                                                             
+ 
+echo " "
+echo " "
+echo "##########################################"
+echo "Install telegram bot #14"
+echo "##########################################"
+echo " "
+echo " "
+
 #sudo apt install python3 -y
 sudo apt install jq -y
 #sudo apt install python3-pip -y
@@ -294,21 +302,9 @@ sudo pip3 install --upgrade RPi.GPIO
 sudo systemctl enable bot.service
 sudo systemctl start bot.service
 
-echo " "
-echo " "
-echo "##########################################"
-echo "Install telegram bot #14"
-echo "##########################################"
-echo " "
-echo " "
-
 # ###############################
 # Heartbeat Telegram #15
 # ###############################
-
-#crontab -u pi -l; echo '30 8 * * * curl -s -X POST https://api.telegram.org/bot5564114282:AAGSjjJkjNH7RB-4dUH-aJW1pMmquFEq-m8/sendMessage -d chat_id=90423887 -d text="BTC Loto is Alive !"' | crontab -
-
-sudo crontab -u pi -l > file; echo '30 8 * * * curl -s -X POST https://api.telegram.org/bot5564114282:AAGSjjJkjNH7RB-4dUH-aJW1pMmquFEq-m8/sendMessage -d chat_id=90423887 -d text="BTC Loto is Alive !"' >> file; crontab file
 
 echo " "
 echo " "
@@ -318,13 +314,13 @@ echo "##########################################"
 echo " "
 echo " "
 
+#crontab -u pi -l; echo '30 8 * * * curl -s -X POST https://api.telegram.org/bot5564114282:AAGSjjJkjNH7RB-4dUH-aJW1pMmquFEq-m8/sendMessage -d chat_id=90423887 -d text="BTC Loto is Alive !"' | crontab -
+
+sudo crontab -u pi -l > file; echo '30 8 * * * curl -s -X POST https://api.telegram.org/bot5564114282:AAGSjjJkjNH7RB-4dUH-aJW1pMmquFEq-m8/sendMessage -d chat_id=90423887 -d text="BTC Loto is Alive !"' >> file; crontab file
+
 # ###############################
 # SSH Custom Login Splash Screen #16
 # ###############################
-
-sudo rm -r /etc/motd
-
-sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/motd" -P /etc/
 
 echo " "
 echo " "
@@ -334,16 +330,13 @@ echo "##########################################"
 echo " "
 echo " "
 
+sudo rm -r /etc/motd
+
+sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/motd" -P /etc/
+
 # ###############################
 # SSH Welcome Interface #17
 # ###############################
-
-mkdir -p /etc/update-motd.d/
-
-sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/ssh-welcome" -P /etc/update-motd.d/
-
-sudo chmod +x /etc/update-motd.d/ssh-welcome
-#sudo run-parts --lsbsysinit /etc/update-motd.d
 
 echo " "
 echo " "
@@ -353,11 +346,16 @@ echo "##########################################"
 echo " "
 echo " "
 
+mkdir -p /etc/update-motd.d/
+
+sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/ssh-welcome" -P /etc/update-motd.d/
+
+sudo chmod +x /etc/update-motd.d/ssh-welcome
+#sudo run-parts --lsbsysinit /etc/update-motd.d
+
 # ###############################
 # Uninstall Script #18
 # ###############################
-
-sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/uninstall.sh"
 
 echo " "
 echo " "
@@ -367,16 +365,11 @@ echo "##########################################"
 echo " "
 echo " "
 
+sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/uninstall.sh"
+
 # ###############################
 # Final Reboot & Clean Up #19
 # ###############################
-
-sudo apt purge -y
-sudo apt autoremove -y
-sudo apt clean -y
-sudo apt autoclean -y
-sudo rm -r install.sh
-sudo rm -r file
 
 echo " "
 echo " "
@@ -386,6 +379,12 @@ echo "##########################################"
 echo " "
 echo " "
 
+sudo apt purge -y
+sudo apt autoremove -y
+sudo apt clean -y
+sudo apt autoclean -y
+sudo rm -r install.sh
+sudo rm -r file
 sudo reboot
 
 

@@ -203,37 +203,8 @@ sudo crontab -u pi -l > file; echo '30 8 * * * curl -s -X POST https://api.teleg
 # ###############################
 
 sudo rm /etc/motd
-sudo touch /etc/motd
 
-sudo echo " " | sudo tee -a /etc/motd
-echo 'GENERAL DEBUG' >> /etc/motd
-sudo echo "sudo nano /var/log/messages" | sudo tee -a /etc/motd
-sudo echo "sudo nano /var/log/kern.log" | sudo tee -a /etc/motd
-sudo echo "sudo nano /var/log/syslog" | sudo tee -a /etc/motd
-sudo echo "sudo tail -n 100 -f /var/log/syslog" | sudo tee -a /etc/motd
-sudo echo "sudo tail -n 100 -f /var/log/messages" | sudo tee -a /etc/motd
-sudo echo "sudo journalctl -xe" | sudo tee -a /etc/motd
-sudo echo " " | sudo tee -a /etc/motd
-sudo echo "BOT" | sudo tee -a /etc/motd
-sudo echo "sudo systemctl stop bot.service" | sudo tee -a /etc/motd
-sudo echo "sudo systemctl restart bot.service" | sudo tee -a /etc/motd
-sudo echo "sudo systemctl status bot.service" | sudo tee -a /etc/motd
-sudo echo "sudo systemctl daemon-reload" | sudo tee -a /etc/motd
-sudo echo "sudo systemctl enable bot.service" | sudo tee -a /etc/motd
-sudo echo "sudo systemctl start bot.service" | sudo tee -a /etc/motd
-sudo echo "sudo nano /Bots/Bot.py" | sudo tee -a /etc/motd
-sudo echo "  " | sudo tee -a /etc/motd
-sudo echo "BTC" | sudo tee -a /etc/motd
-sudo echo "sudo tail -n 100 -f /mnt/hdd/debug.log" | sudo tee -a /etc/motd
-sudo echo "bitcoin-cli getblockchaininfo" | sudo tee -a /etc/motd
-sudo echo "  " | sudo tee -a /etc/motd
-sudo echo "OTHER" | sudo tee -a /etc/motd
-sudo echo "To reload this Splash Screen: sudo run-parts --lsbsysinit /etc/update-motd.d" | sudo tee -a /etc/motd
-sudo echo "To edit the Web Monitor script: sudo nano /var/www/html/index.php" | sudo tee -a /etc/motd
-sudo echo "To edit the Login Welcome script: sudo nano /etc/update-motd.d/20-raspberry-bitcoin" | sudo tee -a /etc/motd
-sudo echo "To launch Glances: glances" | sudo tee -a /etc/motd
-sudo echo "To Add to this splash screen edit with sudo nano  /etc/motd" | sudo tee -a /etc/motd
-sudo echo "  " | sudo tee -a /etc/motd
+sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/motd" -P /etc/
 
 # ###############################
 # SSH Welcome Interface #17
@@ -260,7 +231,6 @@ sudo apt purge -y
 sudo apt autoremove -y
 sudo apt clean -y
 sudo apt autoclean -y
-wait
 sudo rm install.sh
 sudo rm file
 sudo reboot

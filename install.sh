@@ -59,13 +59,13 @@
 
 crontab -u pi -r
 
-touch done3.sh
+sudo touch done3.sh
 # ###############################
 # Update the software sources #4
 # ###############################
 
-apt update -y
-apt upgrade -y
+sudo apt update -y
+sudo apt upgrade -y
 
 wait
 
@@ -73,7 +73,7 @@ wait
 # Web Interface #5
 # ###############################
 
-apt install php7.4 -y
+sudo apt install php7.4 -y
 
 sudo apt-get purge apache2 -y
 sudo apt-get purge php7.4 libapache2-mod-php7.4 -y
@@ -92,13 +92,13 @@ wait
 # Install Tailscale #6
 # ###############################
 
-apt install apt-transport-https
+sudo apt install apt-transport-https
 
 curl -fsSL https://pkgs.tailscale.com/stable/raspbian/bullseye.noarmor.gpg | sudo tee /usr/share/keyrings/tailscale-archive-keyring.gpg > /dev/null
 curl -fsSL https://pkgs.tailscale.com/stable/raspbian/bullseye.tailscale-keyring.list | sudo tee /etc/apt/sources.list.d/tailscale.list
 
-apt update -y
-apt install tailscale -y
+sudo apt update -y
+sudo apt install tailscale -y
 
 wait
 
@@ -106,8 +106,8 @@ wait
 # Disable Swap #7
 # ###############################
 
-swapoff --all
-apt remove dphys-swapfile -y
+sudo swapoff --all
+sudo apt remove dphys-swapfile -y
 
 wait
 
@@ -115,8 +115,8 @@ wait
 # Install glances #8
 # ###############################
 
-apt install python3-pip -y
-pip install glances
+sudo apt install python3-pip -y
+sudo pip install glances
 
 wait
 

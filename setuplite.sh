@@ -1,15 +1,24 @@
-# ###############################
-# Update the software sources
-# ###############################
+#!/bin/bash
+echo " "
+echo " "
+echo "##########################################"
+echo "Update the software sources"
+echo "##########################################"
+echo " "
+echo " "
 
 sudo apt update -y
 sudo apt upgrade -y
 #sudo apt update
 #sudo apt install snapd
 
-# ###############################
-# Fix Language Local
-# ###############################
+echo " "
+echo " "
+echo "##########################################"
+echo "Fix Language Local"
+echo "##########################################"
+echo " "
+echo " "
 
 sudo rm /etc/environment
 sudo touch /etc/environment
@@ -32,9 +41,13 @@ sudo localedef -f UTF-8 -i en_US en_US.UTF-8
 sudo sed -i 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/g' /etc/locale.gen
 sudo sed -i 's/en_GB.UTF-8 UTF-8/# en_GB.UTF-8 UTF-8/g' /etc/locale.gen
 
-# ###############################
-# Download Install File
-# ###############################
+echo " "
+echo " "
+echo "##########################################"
+echo "Download Install File"
+echo "##########################################"
+echo " "
+echo " "
 
 sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/install.sh"
 

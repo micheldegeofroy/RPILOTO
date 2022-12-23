@@ -67,8 +67,6 @@ sudo touch done3.sh
 sudo apt update -y
 sudo apt upgrade -y
 
-wait
-
 # ###############################
 # Web Interface #5
 # ###############################
@@ -86,11 +84,7 @@ sudo apt-get install apache2
 
 sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/index.php" -P /var/www/html/
 
-wait
-
 sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/miner.php" -P /var/www/html/
-
-wait
 
 # ###############################
 # Install Tailscale #6
@@ -104,16 +98,12 @@ curl -fsSL https://pkgs.tailscale.com/stable/raspbian/bullseye.tailscale-keyring
 sudo apt update -y
 sudo apt install tailscale -y
 
-wait
-
 # ###############################
 # Disable Swap #7
 # ###############################
 
 sudo swapoff --all
 sudo apt remove dphys-swapfile -y
-
-wait
 
 # ###############################
 # Install glances #8
@@ -122,19 +112,13 @@ wait
 sudo apt install python3-pip -y
 sudo pip install glances
 
-wait
-
 # ###############################
 # Install Speed Test #9
 # ###############################
 
 sudo wget -O /usr/local/bin/speedtest-cli "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/speedtest.py"
 
-wait
-
 chmod a+x /usr/local/bin/speedtest-cli
-
-wait
 
 # ###############################
 # Install watchdog #10
@@ -153,8 +137,6 @@ sudo systemctl enable watchdog
 sudo systemctl start watchdog
 sudo systemctl status watchdog
 
-wait
-
 # ###############################
 # Stop IPV6 #11
 # ###############################
@@ -162,8 +144,6 @@ wait
 echo net.ipv6.conf.all.disable_ipv6=1 | sudo tee /etc/sysctl.d/disable-ipv6.conf
 sysctl --system
 sudo sed -i -e 's/$/ipv6.disable=1/' /boot/cmdline.txt
-
-wait
 
 # ###############################
 # Disable BT #12
@@ -195,8 +175,6 @@ sudo pip install telepot
 
 sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/script.py"
 
-wait
-
 sudo python3 script.py
 
 sudo rm script.py
@@ -205,18 +183,12 @@ sudo mkdir /home/pi/Bots/
 
 sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/Bot.py" -P /home/pi/Bots/
 
-wait
-
 sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/bot.service" -P /etc/systemd/system/
-
-wait
 
 sudo pip3 install --upgrade RPi.GPIO
 
 sudo systemctl enable bot.service
 sudo systemctl start bot.service
-
-wait
 
 # ###############################
 # Heartbeat Telegram #15
@@ -225,7 +197,6 @@ wait
 #crontab -u pi -l; echo '30 8 * * * curl -s -X POST https://api.telegram.org/bot5564114282:AAGSjjJkjNH7RB-4dUH-aJW1pMmquFEq-m8/sendMessage -d chat_id=90423887 -d text="BTC Loto is Alive !"' | crontab -
 
 sudo crontab -u pi -l > file; echo '30 8 * * * curl -s -X POST https://api.telegram.org/bot5564114282:AAGSjjJkjNH7RB-4dUH-aJW1pMmquFEq-m8/sendMessage -d chat_id=90423887 -d text="BTC Loto is Alive !"' >> file; crontab file
-wait
 
 # ###############################
 # SSH Custom Login Splash Screen #16
@@ -233,7 +204,6 @@ wait
 
 sudo rm /etc/motd
 sudo touch /etc/motd
-
 
 sudo echo " " | sudo tee -a /etc/motd
 echo 'GENERAL DEBUG' >> /etc/motd
@@ -265,8 +235,6 @@ sudo echo "To launch Glances: glances" | sudo tee -a /etc/motd
 sudo echo "To Add to this splash screen edit with sudo nano  /etc/motd" | sudo tee -a /etc/motd
 sudo echo "  " | sudo tee -a /etc/motd
 
-wait
-
 # ###############################
 # SSH Welcome Interface #17
 # ###############################
@@ -276,13 +244,9 @@ mkdir -p /etc/update-motd.d/
 #sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/20-raspberry-bitcoin" -P /etc/update-motd.d/
 sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/ssh-welcome" -P /etc/update-motd.d/
 
-wait
-
 #chmod +x /etc/update-motd.d/20-raspberry-bitcoin
 sudo chmod +x /etc/update-motd.d/ssh-welcome
 sudo run-parts --lsbsysinit /etc/update-motd.d
-
-wait
 
 # ###############################
 # Uninstall Script #18
@@ -290,16 +254,11 @@ wait
 
 sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/uninstall.sh"
 
-wait
-
 # ###############################
 # Final Reboot & Clean Up #19
 # ###############################
 
-apt autoremove -y
-
-wait
-
+sudo apt autoremove -y
 
 sudo rm install.sh
 sudo rm setup.sh

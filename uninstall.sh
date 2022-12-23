@@ -41,7 +41,7 @@ echo " "
 
 sudo apt purge php -y
 sudo apt purge apache2 -y
-sudo rm -r /etc/apache2 -y
+sudo rm -r /etc/apache2
 sudo rm -r /var/www/html/index.php
 sudo rm -r /var/www/html/miner.php
 sudo rm -r /var/www
@@ -147,7 +147,7 @@ sudo rm -r /home/pi/mymacchanger.py
 echo " "
 echo " "
 echo "##########################################"
-echo "Install telegram bot #14"
+echo "Uninstall telegram bot #14"
 echo "##########################################"
 echo " "
 echo " "

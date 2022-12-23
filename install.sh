@@ -66,7 +66,6 @@ sudo rm setup.sh
 
 sudo apt update -y
 sudo apt upgrade -y
-sudo apt install python -y
 
 # ###############################
 # Web Interface #5
@@ -74,13 +73,16 @@ sudo apt install python -y
 
 sudo apt install php7.4 -y
 
-sudo apt purge apache2 -y
+#sudo apt purge apache2 -y
 sudo apt purge php7.4 libapache2-mod-php7.4 -y
 sudo apt purge -y
 sudo apt autoremove -y
 sudo apt clean -y
 sudo apt autoclean -y
-sudo apt-get install apache2 libapache2-mod-php7.4 php7.4 -y
+sudo apt install apache2 -y
+sudo apt install libapache2-mod-php7.4 -y
+sudo apt install php7.4 -y
+sudo apt autoremove -y
 
 sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/index.php" -P /var/www/html/
 

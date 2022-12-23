@@ -197,7 +197,7 @@ sudo apt purge jq -y
 sudo apt purge pip -y
 
 #sudo rm -r /usr/local/lib/python3.9
-#sudo rm -r /usr/lib/python3
+sudo rm -r /usr/lib/python3
 #sudo rm -r /usr/lib/php
 #sudo rm -r /usr/lib/apache2
 #sudo rm -r /usr/lib/python2.7

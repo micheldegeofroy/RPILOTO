@@ -296,7 +296,6 @@ apt autoremove -y
 wait
 
 sudo shutdown -r +3
-touch done19.sh
 rm install.sh
 rm setup.sh
 rm loader.sh

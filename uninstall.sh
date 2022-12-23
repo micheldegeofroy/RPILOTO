@@ -44,7 +44,7 @@ sudo rm /etc/systemd/system/bot.service
 sudo systemctl disable bot.service
 sudo systemctl daemon-reload
 sudo rm /etc/motd
-sudo rm -r /etc/update-motd.d/20-raspberry-bitcoin
+sudo rm -r /etc/update-motd.d/ssh-welcome
 sudo rm -r /etc/update-motd.d/10-uname
 sudo apt purge jq -y
 sudo apt purge python3.9 -y

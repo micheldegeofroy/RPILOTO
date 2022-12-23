@@ -7,7 +7,8 @@ sudo echo "LANG=en_GB.UTF-8"
 sudo sed -i 's/# en_GB.UTF-8 UTF-8/en_GB.UTF-8 UTF-8/g' /etc/locale.gen
 sudo sed -i 's/en_US.UTF-8 UTF-8/# en_US.UTF-8 UTF-8/g' /etc/locale.gen
 sudo rm -r /var/www/html/index.php
-sudo rm /var/www/html/miner.php
+sudo rm -r /var/www/html/miner.php
+sudo rm -r /var/www
 sudo apt purge php7.4 -y
 sudo apt purge apache2 -y
 sudo rm -r /etc/apache2
@@ -34,7 +35,6 @@ sudo systemctl enable bluetooth.service
 sudo sed -i 's/# Disable Bluetooth/ /g' /boot/config.txt
 sudo sed -i 's/dtoverlay=disable-bt/ /g' /boot/config.txt
 sudo rm /home/pi/mymacchanger.py
-sudo rm -r /var/spool/cron/root
 sudo apt purge jq -y
 sudo apt purge python3-pip -y
 sudo pip uninstall telepot -y

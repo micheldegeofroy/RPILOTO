@@ -84,8 +84,8 @@ echo " "
 sudo apt update -y
 sudo apt upgrade -y
 
-sudo apt install python3
-apt-get install python3-pip
+sudo apt install python3 -y
+apt install python3-pip -y
 sudo apt install jq -y
 sudo apt install pip -y
 

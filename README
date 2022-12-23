@@ -1,6 +1,8 @@
 Hardware: This script is meant to run/installed on RPI 4
 OS:Raspberry Pi OS Lite (64-bit) Debian Bullseye
 
+############ INSTALL OS ####################################
+
 Start with clean OS install
 
 Use Raspberry Pi Imager to flash your SD
@@ -16,13 +18,29 @@ Save
 
 Flash your SD card and when finished insert into your RPI 4
 
+############ SET UP TELEGRAM BOT ####################################
+
+Follow instructions of this site #https://www.instructables.com/Set-up-Telegram-Bot-on-Raspberry-Pi/
+
+Install Telegram on phone
+
+Find a Bot called BotFather
+
+Create a new bot by sending msg to BotFather /newbot
+
+Get token, something like 123456789:ABCdefGHKIJKlmNoPQRsTUVwxyZ
+
+Get your Chat ID
+
+############ INSTALL ####################################
+
 Scan your lan to find your device RPI 4
 
-from terminal ssh into RPI 4
+Srom terminal ssh into RPI 4
 
 ssh pi@YOURDEVICEIP
 
-if you get this msg
+If you get this msg
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 #@    WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!     @
@@ -36,23 +54,32 @@ Use this below command and ssh again
 
 #ssh-keygen -R YOURDEVICEIP
 
-ounce logged run cmd
+Ounce logged in run the below cmd
 
 sudo wget https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/setup.sh && sudo bash setup.sh
 
-then go have a cup of coffee the RPI will reboot several times
+Then go have a cup of coffee the RPI will reboot several times takes about 30 mins
 
 
 
-ounce install is finished go to your bot and write
+Ounce install is finished go to your bot and write
 
 sudo tailscale status
 clink on link to authorize tailscales
 
-to uninstall run
+############ UNINSTALL ####################################
+
+To uninstall 
+
+Ssh into the RPI 4 and run the below cmd 
+
 sudo bash uninstall.sh
 
+you can also re download the uninstall.sh script
+
 sudo wget https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/uninstall.sh && sudo bash uninstall.sh
+
+############ TODO ####################################
 
 to do script that asks for bot id and chat id and writes it to file
 script that asks for public adress of wallet

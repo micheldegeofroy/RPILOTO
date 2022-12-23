@@ -74,12 +74,12 @@ sudo apt install php7.4 -y
 
 sudo apt-get purge apache2 -y
 sudo apt-get purge php7.4 libapache2-mod-php7.4 -y
-sudo apt-get purge autoremove -y
-sudo apt-get install apache2 libapache2-mod-php7.4 php7.4 -y
+sudo apt-get purge -y
+sudo apt-get autoremove -y
 sudo apt-get clean -y
 sudo apt-get autoclean -y
-sudo apt-get purge apache2 -y
-sudo apt-get install apache2 -y
+sudo apt-get install apache2 libapache2-mod-php7.4 php7.4 -y
+
 
 sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/index.php" -P /var/www/html/
 
@@ -158,7 +158,7 @@ sudo systemctl disable bluetooth.service
 # Install macchanger #13
 # ###############################
 
-wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/mymacchanger.py"
+sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/mymacchanger.py"
 
 #sudo crontab -u pi -l; echo "@reboot && /usr/bin/python3 /home/pi/mymacchanger.py >/dev/null 2>&1" | crontab -
 
@@ -261,7 +261,6 @@ sudo apt autoremove -y
 
 sudo rm install.sh
 sudo rm setup.sh
-sudo rm loader.sh
 sudo rm file
 sudo sudo reboot
 

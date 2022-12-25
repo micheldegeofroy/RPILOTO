@@ -57,7 +57,15 @@ def message_received(update, context):
         
         if command == '/who':
             run = subprocess.run(["whoami"], capture_output=True)
-            context.bot.send_message(chat_id, run.stdout.decode())
+            context.bot.send_message(chat_id, run.stdout.decode()) 
+        elif command == '/ledon':
+            context.bot.sendMessage(chat_id, on(11))
+        elif command =='/ledoff':
+            context.bot.sendMessage(chat_id, off(11))    
+        elif command == '/fanon':
+            context.bot.sendMessage(chat_id, on(12))
+        elif command =='/fanoff':
+            context.bot.sendMessage(chat_id, off(12)) 
         elif command == '/model':
             run = subprocess.run(["cat", "/proc/device-tree/model"], capture_output=True)
             context.bot.send_message(chat_id, run.stdout.decode())

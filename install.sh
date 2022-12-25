@@ -244,6 +244,7 @@ echo " "
 #sudo apt install python3 -y
 #sudo apt install jq -y
 #sudo apt install python3-pip -y
+sudo pip install python-telegram-bot
 sudo pip install telepot
 sudo pip3 install --upgrade RPi.GPIO
 

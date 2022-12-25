@@ -152,6 +152,7 @@ echo "##########################################"
 echo " "
 echo " "
 
+sudo pip uninstall python-telegram-bot -y
 sudo pip uninstall telepot -y
 sudo rm -r /home/pi/Bots
 sudo systemctl stop bot.service

@@ -1,16 +1,40 @@
 import time
 import random
 import datetime
-import subprocess
-import re
-import os
+import telepot
+from telepot.loop import MessageLoop
 import telegram
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
+import subprocess
+import RPi.GPIO as GPIO
+import re
+import os
+os.system('pwd')
+os.system('cd ~')
+os.system('df -h')
+os.system('ls -la')
+stream = os.popen('ls -la')
+stream = os.popen('df -h')
+output = stream.readlines()
 
-# Replace this with your own bot token
+#LED
+def on(pin):
+        GPIO.output(pin,GPIO.HIGH)
+        return
+def off(pin):
+        GPIO.output(pin,GPIO.LOW)
+        return
+# to use Raspberry Pi board pin numbers
+GPIO.setmode(GPIO.BOARD)
+GPIO.setwarnings(False)
+# set up GPIO output channel
+GPIO.setup(11, GPIO.OUT)
+GPIO.setup(12, GPIO.OUT)
+
+# Replace this with your bot token
 TOKEN = "5564114282:AAGSjjJkjNH7RB-4dUH-aJW1pMmquFEq-m8"
 
-# Replace with the chat ID of the user you want to send the message to
+# Replace with the chat ID of the Admin you want to send the message to
 ADMIN_ID = 90423887
 
 # Replace with the message you want to send
@@ -25,13 +49,9 @@ def read_chat_ids():
     return chat_ids
 
 def message_received(update, context):
-    # Get the chat ID of the sender
     chat_id = update.message.chat_id
-    # Read the list of allowed chat IDs
     allowed_chat_ids = read_chat_ids()
-    # Check if the chat ID is in the list of allowed chat IDs
     if chat_id in allowed_chat_ids:
-        # Get the message text and command
         command = update.message.text
         print('Got command: %s' % command)
         
@@ -62,6 +82,12 @@ def message_received(update, context):
         elif command == '/cpu':
             run = subprocess.run(["""vmstat 1 2 | tail -1 | awk '{print $13}'"""], shell=True, capture_output= True)
             context.bot.sendMessage(chat_id,text = "CPU% : " + run.stdout.decode('utf-8')[:3] + "%")
+        elif command == '/eth0':
+            run = subprocess.run(["""ip link show eth0 | awk '/ether/ {print $2}'"""], shell=True, capture_output= True)
+            context.bot.sendMessage(chat_id,text = "Public IP: "+run.stdout.decode('utf-8'))           
+        elif command == '/wlan0':
+            run = subprocess.run(["""ip link show wlan0 | awk '/ether/ {print $2}'"""], shell=True, capture_output= True)
+            context.bot.sendMessage(chat_id,text = "Public IP: "+run.stdout.decode('utf-8'))
         elif command == '/wanip':
             run = subprocess.run(['curl ifconfig.co'], shell=True, capture_output= True)
             context.bot.sendMessage(chat_id,text = "Public IP: "+run.stdout.decode('utf-8'))
@@ -114,19 +140,14 @@ def message_received(update, context):
             context.bot.send_message(chat_id, 'Try /help')
     else:
         # Send a message to the user telling them to contact the admin
-        context.bot.send_message(chat_id=chat_id, text='Unauthorized')
+        context.bot.send_message(chat_id=chat_id, text='Unauthorized Access')
 
-# Create the Updater and pass it the bot's token.
 updater = Updater(TOKEN, use_context=True)
 
-# Get the dispatcher to register handlers
 dispatcher = updater.dispatcher
 
-# Add a message handler for regular messages
 dispatcher.add_handler(MessageHandler(Filters.text, message_received))
 
-# Start the bot
 updater.start_polling()
 
-# Run the bot indefinitely
 updater.idle()

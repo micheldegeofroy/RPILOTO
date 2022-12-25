@@ -7,19 +7,19 @@ $page = $_SERVER['PHP_SELF'];
 $sec = "60";
 header("Refresh: $sec; url=$page");
 # BTCLOTORPI #
-$ver = shell_exec("sudo -u bitcoin /usr/local/bin/bitcoin-cli getnetworkinfo 2> /dev/null | jq -r '.subversion'");
-$chain1 = shell_exec("sudo -u bitcoin /usr/local/bin/bitcoin-cli getblockchaininfo 2> /dev/null | jq -r '.chain'");
+$ver = shell_exec("sudo -u pi /usr/local/bin/bitcoin-cli getnetworkinfo 2> /dev/null | jq -r '.subversion'");
+$chain1 = shell_exec("sudo -u pi /usr/local/bin/bitcoin-cli getblockchaininfo 2> /dev/null | jq -r '.chain'");
 $chain2 = "Net ";
 $chain3 = "Bitcoin Core ";
 $chain4 = substr($chain1, 0, -1);
 $chain5 = str_replace(str_split('/:Satoshi'),'',$ver);
 $chain = $chain3.ucfirst($chain4).$chain2."V".$chain5;
 $diff = shell_exec("sudo -u bitcoin /usr/local/bin/bitcoin-cli getblockchaininfo 2> /dev/null | jq -r '.difficulty'");
-$mempool = shell_exec("sudo -u bitcoin /usr/local/bin/bitcoin-cli getmempoolinfo 2> /dev/null | jq -r '.size'");
-$balance = shell_exec("sudo -u bitcoin /usr/local/bin/bitcoin-cli getbalance 2> /dev/null");
-$btcblock = shell_exec("sudo -u bitcoin /usr/local/bin/bitcoin-cli getblockchaininfo 2> /dev/null | jq -r '.blocks'");
-$btcpeers = shell_exec("sudo -u bitcoin /usr/local/bin/bitcoin-cli getpeerinfo 2> /dev/null | jq 'length'");
-$btcsync = shell_exec("sudo -u bitcoin /usr/local/bin/bitcoin-cli getblockchaininfo 2> /dev/null | jq -r '.verificationprogress' | awk '{print 100 * $1}'");
+$mempool = shell_exec("sudo -u pi /usr/local/bin/bitcoin-cli getmempoolinfo 2> /dev/null | jq -r '.size'");
+$balance = shell_exec("sudo -u pi /usr/local/bin/bitcoin-cli getbalance 2> /dev/null");
+$btcblock = shell_exec("sudo -u pi /usr/local/bin/bitcoin-cli getblockchaininfo 2> /dev/null | jq -r '.blocks'");
+$btcpeers = shell_exec("sudo -u pi /usr/local/bin/bitcoin-cli getpeerinfo 2> /dev/null | jq 'length'");
+$btcsync = shell_exec("sudo -u pi /usr/local/bin/bitcoin-cli getblockchaininfo 2> /dev/null | jq -r '.verificationprogress' | awk '{print 100 * $1}'");
 # GENERAL RPI #
 $exstoragepercentused = shell_exec("df -h | grep '/dev/sd' | awk '{print($5)}'");
 $exstoragefree = shell_exec("df -h | grep '/dev/sd' | awk '{print($4)}'");

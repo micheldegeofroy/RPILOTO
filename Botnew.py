@@ -18,7 +18,7 @@ stream = os.popen('ls -la')
 stream = os.popen('df -h')
 output = stream.readlines()
 
-token = "replacewithyourbottoken"
+token = "5564114282:AAGSjjJkjNH7RB-4dUH-aJW1pMmquFEq-m8"
 
 #LED
 def on(pin):

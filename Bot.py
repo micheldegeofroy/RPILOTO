@@ -32,6 +32,8 @@ def handle(msg):
     chat_id = msg['chat']['id']
     command = msg['text']
 
+token = "replacewithyourbottoken"
+
     print('Got command: %s' % command)
 
     if command == '/who':
@@ -119,7 +121,7 @@ def handle(msg):
          os.system('sudo systemctl stop bfgminer.service')
     else: bot.sendMessage(chat_id,'Try /help')
 
-bot = telepot.Bot('replacewithyourbottoken')
+bot = telepot.Bot(token=token)
 
 bot.sendMessage(90423887, "BTC Loto BOT  is back online")
 

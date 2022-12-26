@@ -18,7 +18,6 @@ stream = os.popen('ls -la')
 stream = os.popen('df -h')
 output = stream.readlines()
 
-
 #  +-----+-----+-------------------+------+---+---Pi 4B--+---+------+--------------------+-----+-----+
 #  | BCM | wPi |        Name       | Mode | V | Physical | V | Mode |         Name       | wPi | BCM |
 #  +-----+-----+-------------------+------+---+----++----+---+------+--------------------+-----+-----+
@@ -68,8 +67,7 @@ output = stream.readlines()
 #        GPIO 26           (37) [.] [.] (38) GPFS9
 #                  GND  0V (39) [.] [.] (40) GPFS10
 
-
-# Note: 
+# Notes: 
 # "GND  0V" stands for "Ground"
 # "SDA"     stands for "Serial Data Line" 
 # "SCL"     stands for "Serial Clock Line" 

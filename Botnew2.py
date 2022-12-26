@@ -107,7 +107,7 @@ bot = telegram.Bot(token=TOKEN)
 bot.send_message(chat_id=ADMIN_ID, text=MESSAGE)
 
 def read_chat_ids():
-    with open('chat_ids.txt', 'r') as f:
+    with open('/home/pi/chat_ids.txt', 'r') as f:
         chat_ids = [int(line.strip()) for line in f]
     return chat_ids
 

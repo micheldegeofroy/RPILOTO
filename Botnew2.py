@@ -90,10 +90,10 @@ def on(pin):
 def off(pin):
         GPIO.output(pin,GPIO.LOW)
         return
-# to use Raspberry Pi board pin numbers
+# To use Raspberry Pi board pin numbers
 GPIO.setmode(GPIO.BOARD)
 GPIO.setwarnings(False)
-# set up GPIO output channel
+# Set up GPIO output channel
 GPIO.setup(11, GPIO.OUT)
 GPIO.setup(12, GPIO.OUT)
 
@@ -103,7 +103,6 @@ TOKEN = "replacewithyourbottoken"
 # Replace with the chat ID of the Admin you want to send the message to
 ADMIN_ID = replacewithadminchatid
 
-# Replace with the message you want to send
 MESSAGE = "BTC Loto BOT is back online!"
 
 bot = telegram.Bot(token=TOKEN)
@@ -209,15 +208,11 @@ def message_received(update, context):
         else:
             context.bot.send_message(chat_id, 'Try /help')
     else:
-        # Send a message to the user telling them to contact the admin
+        # Send a message to the user telling them they are not authorized
         context.bot.send_message(chat_id=chat_id, text='Unauthorized Access')
 
 updater = Updater(TOKEN, use_context=True)
-
 dispatcher = updater.dispatcher
-
 dispatcher.add_handler(MessageHandler(Filters.text, message_received))
-
 updater.start_polling()
-
 updater.idle()

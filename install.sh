@@ -339,6 +339,6 @@ sudo apt clean -y
 sudo apt autoclean -y
 sudo rm -r install.sh
 sudo rm -r file
-sudo reboot
+#sudo reboot
 
 

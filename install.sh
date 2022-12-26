@@ -99,7 +99,8 @@ echo " "
 echo " "
 
 #sudo apt install php7.4 -y
-sudo apt install php -y
+#sudo apt install php -y
+sudo apt install php7.4 -y
 
 #sudo apt purge apache2 -y
 #sudo apt purge php7.4 libapache2-mod-php7.4 -y

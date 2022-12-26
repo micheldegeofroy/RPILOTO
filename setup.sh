@@ -10,6 +10,7 @@ sudo crontab -u pi -r
 
 sudo apt update -y
 sudo apt upgrade -y
+sudo rm loader.sh
 
 # ###############################
 # Fix Language Local
@@ -41,8 +42,6 @@ sudo sed -i 's/en_GB.UTF-8 UTF-8/# en_GB.UTF-8 UTF-8/g' /etc/locale.gen
 # ###############################
 
 sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/install.sh"
-
-wait
 
 # ###############################
 # Cron @ Reboot to Launch Install

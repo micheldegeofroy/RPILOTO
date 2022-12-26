@@ -57,7 +57,7 @@ echo "##########################################"
 echo " "
 echo " "
 
-#crontab -l; echo "@reboot sleep 120 && /bin/bash /home/pi/setup.sh >/dev/null 2>&1" | crontab -
+crontab -l; echo "#@reboot sleep 120 && /bin/bash /home/pi/setup.sh >/dev/null 2>&1" | crontab -
 
 echo " "
 echo " "

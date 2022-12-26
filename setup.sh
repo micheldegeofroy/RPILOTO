@@ -62,6 +62,23 @@ sudo sed -i 's/en_GB.UTF-8 UTF-8/# en_GB.UTF-8 UTF-8/g' /etc/locale.gen
 echo " "
 echo " "
 echo "##########################################"
+echo "Update cron Heartbeat"
+echo "##########################################"
+echo " "
+echo " "
+
+# Read the first and second line of the botdata.txt file
+replace_value2=$(tail -n +2 botdata.txt | head -n 1)
+
+# Replace the target value in the Bot.py script with the replacement values from botdata.txt
+sed -i "s/replacealsowithyourbottoken/$replace_value2/g" install.sh 
+
+# Confirm that the replacement has been made
+echo "The cron job Bot Token has been set in install.sh file."
+
+echo " "
+echo " "
+echo "##########################################"
 echo "Cron @ Reboot to Launch Install"
 echo "##########################################"
 echo " "

@@ -48,6 +48,7 @@ echo " "
 echo " "
 
 sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/setup.sh"
+sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/install.sh"
 
 echo " "
 echo " "

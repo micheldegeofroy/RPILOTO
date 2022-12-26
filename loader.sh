@@ -53,4 +53,4 @@ crontab -l; echo "@reboot sleep 120 && /bin/bash /home/pi/setup.sh >/dev/null 2>
 # Other Tasks
 # ###############################
 
-sudo shutdown -r +2
+sudo reboot

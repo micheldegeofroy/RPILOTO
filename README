@@ -151,3 +151,9 @@ Expand file system
 #        GPIO 19           (35) [.] [.] (36) GPFS8
 #        GPIO 26           (37) [.] [.] (38) GPFS9
 #                  GND  0V (39) [.] [.] (40) GPFS10
+
+
+
+loader.sh >>> updates & upgrades >>> creates botdata.txt & chat_ids.txt >>> runs script to get Chat ID and Bot Token from User 
+>>> writes information to botdata.txt and chat_ids.txt >>> downloads setup.sh >>> set cron job to launch setup.sh >>> reboots 
+

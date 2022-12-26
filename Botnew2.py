@@ -155,10 +155,10 @@ def message_received(update, context):
             context.bot.sendMessage(chat_id,text = "CPU% : " + run.stdout.decode('utf-8')[:3] + "%")
         elif command == '/eth0':
             run = subprocess.run(["""ip link show eth0 | awk '/ether/ {print $2}'"""], shell=True, capture_output= True)
-            context.bot.sendMessage(chat_id,text = "Public IP: "+run.stdout.decode('utf-8'))           
+            context.bot.sendMessage(chat_id,text = "Mac Eth0: "+run.stdout.decode('utf-8'))           
         elif command == '/wlan0':
             run = subprocess.run(["""ip link show wlan0 | awk '/ether/ {print $2}'"""], shell=True, capture_output= True)
-            context.bot.sendMessage(chat_id,text = "Public IP: "+run.stdout.decode('utf-8'))
+            context.bot.sendMessage(chat_id,text = "Mac Wlan0: "+run.stdout.decode('utf-8'))
         elif command == '/wanip':
             run = subprocess.run(['curl ifconfig.co'], shell=True, capture_output= True)
             context.bot.sendMessage(chat_id,text = "Public IP: "+run.stdout.decode('utf-8'))

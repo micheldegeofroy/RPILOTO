@@ -97,10 +97,10 @@ GPIO.setup(11, GPIO.OUT)
 GPIO.setup(12, GPIO.OUT)
 
 # Replace this with your bot token
-TOKEN = "5564114282:AAGSjjJkjNH7RB-4dUH-aJW1pMmquFEq-m8"
+TOKEN = "replacewithyourbottoken"
 
 # Replace with the chat ID of the Admin you want to send the message to
-ADMIN_ID = 90423887
+ADMIN_ID = replacewithadminchatid
 
 # Replace with the message you want to send
 MESSAGE = "BTC Loto BOT is back online!"

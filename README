@@ -75,11 +75,9 @@ ssh-keygen -R YOURDEVICEIP
 
 Ounce logged in run the below cmd
 
-sudo wget https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/setup.sh && sudo bash setup.sh
+sudo wget https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/loader.sh && sudo bash loader.sh
 
 Then go have a cup of coffee the RPI will reboot several times takes about 30 mins
-
-
 
 Ounce install is finished go to your bot and write
 

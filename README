@@ -99,6 +99,7 @@ sudo wget https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/unins
 ############ TODO ##################################################################################################
 
 script that asks for public adress of wallet
+Expand file system
 
 ############ RPI 4 GPIO PINOUT & LED & FAN PLAN ####################################################################
 

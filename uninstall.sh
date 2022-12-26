@@ -45,6 +45,7 @@ sudo rm -r /etc/apache2
 sudo rm -r /var/www/html/index.php
 sudo rm -r /var/www/html/miner.php
 sudo rm -r /var/www
+sudo apt autoremove -y
 
 #sudo apt purge php7.4 -y
 #sudo apt purge python-is-python2 -y

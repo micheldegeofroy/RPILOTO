@@ -48,6 +48,16 @@ echo " "
 echo " "
 
 sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/setup.sh"
+
+echo " "
+echo " "
+echo "##########################################"
+echo "Download Install File"
+echo "##########################################"
+echo " "
+echo " "
+
+
 sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/install.sh"
 
 echo " "
@@ -58,7 +68,7 @@ echo "##########################################"
 echo " "
 echo " "
 
-crontab -l; echo "#@reboot sleep 120 && /bin/bash /home/pi/setup.sh >/dev/null 2>&1" | crontab -
+crontab -l; echo "#@reboot sleep 60 && /bin/bash /home/pi/setup.sh >/dev/null 2>&1" | crontab -
 
 echo " "
 echo " "

@@ -9,6 +9,7 @@ import subprocess
 import RPi.GPIO as GPIO
 import re
 import os
+
 os.system('pwd')
 os.system('cd ~')
 os.system('df -h')
@@ -80,7 +81,7 @@ output = stream.readlines()
 # "MISO"    stands for "Master In, Slave Out" 
 # "SCLK"    stands for "Serial Clock"
 # "GPIO"    stands for "General Purpose Input, Output"
-# "SPIO"    stands for "
+# "SPIO"    stands for "Special Purpose Input, Output"
  
 #LED
 def on(pin):
@@ -179,10 +180,6 @@ def message_received(update, context):
         elif command == '/sync': 
             run = subprocess.run(["""bitcoin-cli -rpcuser=USER -rpcpassword=PASS getblockchaininfo 2> /dev/null  | jq -r '.verificationprogress' | awk '{print 100 * $1}'"""], shell=True, capture_output= True)
             context.bot.sendMessage(chat_id,text = "Blockchain Sync is at: " + run.stdout.decode('utf-8')[:4] + "%")
-        elif re.search("magnet:", command):
-            run = subprocess.run(["transmission-remote -a '%s'  " %  command  ], shell=True, capture_output = True)
-            print(run.stdout)
-            context.bot.sendMessage(chat_id, "Well, something happened, maybe good, maybe shit")
         elif re.search("ping", command):
             run = subprocess.run([ command + """ -c 3 | awk -F ' ' '{print substr($7, 1, length($1) 0)}' | sed -e 's/\(data.\|packet\)//'"""], shell=True, capture_output = True)
             context.bot.sendMessage(chat_id, "Ping" + run.stdout.decode('utf-8'))
@@ -194,9 +191,9 @@ def message_received(update, context):
         elif command == '/Fuck':      
             context.bot.sendMessage(chat_id, "Are you from NYC ?")
         elif command == '/help':
-            context.bot.sendMessage(chat_id, "/start /shutdown /startminer /stopminer /fanon /fanoff /ledon /ledoff /ping /sudo /help /htop /sync /model /uptime /where /who /hd /hdex /volts /speed /cpughz /cpu /wanip /lanip /temp /reboot ")
+            context.bot.sendMessage(chat_id, "/start /shutdown /startminer /stopminer /fanon /fanoff /ledon /ledoff /eth0 /wlan0 /ping /sudo /help /htop /sync /model /uptime /where /who /hd /hdex /volts /speed /cpughz /cpu /wanip /lanip /temp /reboot ")
         elif command == '/start':
-            context.bot.sendMessage(chat_id, "/start /shutdown /startminer /stopminer /fanon /fanoff /ledon /ledoff /ping /sudo /help /htop /sync /model /uptime /where /who /hd /hdex /volts /speed /cpughz /cpu /wanip /lanip /temp /reboot ")
+            context.bot.sendMessage(chat_id, "/start /shutdown /startminer /stopminer /fanon /fanoff /ledon /ledoff /eth0 /wlan0 /ping /sudo /help /htop /sync /model /uptime /where /who /hd /hdex /volts /speed /cpughz /cpu /wanip /lanip /temp /reboot ")
         elif command == '/reboot':
             context.bot.sendMessage(chat_id,'Rebooting Now ')
             os.system('sudo reboot')

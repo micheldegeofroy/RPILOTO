@@ -67,4 +67,4 @@ echo "##########################################"
 echo " "
 echo " "
 
-sudo reboot
+#sudo reboot

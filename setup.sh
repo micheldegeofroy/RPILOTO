@@ -1,20 +1,32 @@
-# ###############################
-# Remove Cronjob
-# ###############################
+echo " "
+echo " "
+echo "##########################################"
+echo "Remove Previous Cronjob"
+echo "##########################################"
+echo " "
+echo " "
 
-sudo crontab -u pi -r
+sudo crontab -r
 
-# ###############################
-# Update the software sources
-# ###############################
+echo " "
+echo " "
+echo "##########################################"
+echo "Update software sources & remove loader.sh"
+echo "##########################################"
+echo " "
+echo " "
 
 sudo apt update -y
 sudo apt upgrade -y
 sudo rm loader.sh
 
-# ###############################
-# Fix Language Local
-# ###############################
+echo " "
+echo " "
+echo "##########################################"
+echo "Fix Language Local"
+echo "##########################################"
+echo " "
+echo " "
 
 sudo rm /etc/environment
 sudo touch /etc/environment
@@ -37,21 +49,33 @@ sudo localedef -f UTF-8 -i en_US en_US.UTF-8
 sudo sed -i 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/g' /etc/locale.gen
 sudo sed -i 's/en_GB.UTF-8 UTF-8/# en_GB.UTF-8 UTF-8/g' /etc/locale.gen
 
-# ###############################
-# Download Install File
-# ###############################
+echo " "
+echo " "
+echo "##########################################"
+echo "Download Install File"
+echo "##########################################"
+echo " "
+echo " "
 
 sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/install.sh"
 
-# ###############################
-# Cron @ Reboot to Launch Install
-# ###############################
+echo " "
+echo " "
+echo "##########################################"
+echo "Cron @ Reboot to Launch Install"
+echo "##########################################"
+echo " "
+echo " "
 
-sudo crontab -u pi -l; echo "@reboot sleep 120 && /bin/bash /home/pi/install.sh >/dev/null 2>&1" | crontab -
+sudo crontab -l; echo "@reboot sleep 120 && /bin/bash /home/pi/install.sh >/dev/null 2>&1" | crontab -
 
-# ###############################
-# Other Tasks
-# ###############################
+echo " "
+echo " "
+echo "##########################################"
+echo "Reboot"
+echo "##########################################"
+echo " "
+echo " "
 
 
 sudo reboot

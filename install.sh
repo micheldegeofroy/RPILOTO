@@ -166,9 +166,7 @@ echo "##########################################"
 echo " "
 echo " "
 
-sudo wget -O /usr/local/bin/speedtest-cli "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/speedtest.py"
-
-chmod a+x /usr/local/bin/speedtest-cli
+sudo pip install speedtest-cli
 
 echo " "
 echo " "

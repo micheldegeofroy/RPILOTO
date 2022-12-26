@@ -69,7 +69,7 @@ echo "##########################################"
 echo " "
 echo " "
 
-crontab -u pi -r
+crontab -r
 sudo rm setup.sh
 
 echo " "

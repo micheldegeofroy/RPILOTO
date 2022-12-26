@@ -4,9 +4,13 @@
 
 # echo -e "pi\npi\n" | sudo passwd root 
 
-# ###############################
-# Get Bot Token and Admin Chat ID
-# ###############################
+echo " "
+echo " "
+echo "##########################################"
+echo "Get Bot Token and Admin Chat ID"
+echo "##########################################"
+echo " "
+echo " "
 
 sudo rm botdata.txt
 sudo rm chat_ids.txt
@@ -35,22 +39,32 @@ echo "Your Telegram Admin Chat ID is: $ID"
 TOKEN=$(tail -n +2 botdata.txt | head -n 1)
 echo "Your Telegram Bot Token is: $TOKEN"
 
-# ###############################
-# Download Install File
-# ###############################
+echo " "
+echo " "
+echo "##########################################"
+echo "Download Install File"
+echo "##########################################"
+echo " "
+echo " "
 
 sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/setup.sh"
 
-wait
-
-# ###############################
-# Cron @ Reboot to Launch Install
-# ###############################
+echo " "
+echo " "
+echo "##########################################"
+echo "Cron @ Reboot to Launch Install"
+echo "##########################################"
+echo " "
+echo " "
 
 crontab -l; echo "@reboot sleep 120 && /bin/bash /home/pi/setup.sh >/dev/null 2>&1" | crontab -
 
-# ###############################
-# Other Tasks
-# ###############################
+echo " "
+echo " "
+echo "##########################################"
+echo "Reboot"
+echo "##########################################"
+echo " "
+echo " "
 
 sudo reboot

@@ -18,48 +18,49 @@ stream = os.popen('df -h')
 output = stream.readlines()
 
 
- #          +-----+-----+-----------+------+---+---Pi 4B--+---+------+---------+-----+-----+
- #          | BCM | wPi |    Name   | Mode | V | Physical | V | Mode | Name    | wPi | BCM |
- #          +-----+-----+---------+------+---+----++----+---+------+---------+-----+-----+
- #          |     |     |     +3.3v |      |   |  1 || 2  |   |      | 5v      |     |     |
- #          |   2 |   8 |   GPIO  2 |   IN | 1 |  3 || 4  |   |      | 5v      |     |     |
- #          |   3 |   9 |   GPIO  3 |   IN | 1 |  5 || 6  |   |      | 0v      |     |     |
- #          |   4 |   7 |   GPIO  4 |   IN | 1 |  7 || 8  | 0 | IN   | TxD     | 15  | 14  |
- #          |     |     |   GND  0v |      |   |  9 || 10 | 1 | IN   | RxD     | 16  | 15  |
- #          |  17 |   0 |   GPIO 17 |   IN | 0 | 11 || 12 | 0 | IN   | GPIO. 1 | 1   | 18  |
- #          |  27 |   2 |   GPIO 27 |   IN | 0 | 13 || 14 |   |      | 0v      |     |     |
- #          |  22 |   3 |   GPIO 22 |   IN | 0 | 15 || 16 | 0 | IN   | GPIO. 4 | 4   | 23  |
- #          |     |     |     +3.3v |      |   | 17 || 18 | 0 | IN   | GPIO. 5 | 5   | 24  |
- #          |  10 |  12 | SPIO_MOSI | ALT0 | 0 | 19 || 20 |   |      | 0v      |     |     |
- #          |   9 |  13 | SPIO_MISO | ALT0 | 0 | 21 || 22 | 0 | IN   | GPIO. 6 | 6   | 25  |
- #          |  11 |  14 | SPIO_SCLK | ALT0 | 0 | 23 || 24 | 1 | OUT  | CE0     | 10  | 8   |
- #          |     |     |   GND  0v |      |   | 25 || 26 | 1 | OUT  | CE1     | 11  | 7   |
- #          |   0 |  30 |   GPIO  0 |   IN | 1 | 27 || 28 | 1 | IN   | SCL.0   | 31  | 1   |
- #          |   5 |  21 |   GPIO  5 |   IN | 1 | 29 || 30 |   |      | 0v      |     |     |
- #          |   6 |  22 |   GPIO  6 |   IN | 1 | 31 || 32 | 0 | IN   | GPIO.26 | 26  | 12  |
- #          |  13 |  23 |   GPIO 13 |   IN | 0 | 33 || 34 |   |      | 0v      |     |     |
- #          |  19 |  24 |   GPIO 19 |   IN | 0 | 35 || 36 | 0 | IN   | GPIO.27 | 27  | 16  |
- #          |  26 |  25 |   GPIO 26 |   IN | 0 | 37 || 38 | 0 | IN   | GPIO.28 | 28  | 20  |
- #          |     |     |   GND  0v |      |   | 39 || 40 | 0 | IN   | GPIO.29 | 29  | 21  |
- #          +-----+-----+-----------+------+---+----++----+---+------+---------+-----+-----+
+#  +-----+-----+-------------------+------+---+---Pi 4B--+---+------+---------+-----+-----+
+#  | BCM | wPi |        Name       | Mode | V | Physical | V | Mode | Name    | wPi | BCM |
+#  +-----+-----+-------------------+------+---+----++----+---+------+---------+-----+-----+
+#  |     |     |             +3.3V |      |   |  1 || 2  |   |      | +5V     |     |     |
+#  |   2 |   8 | GPIO 2    SDA   1 |   IN | 1 |  3 || 4  |   |      | +5V     |     |     |
+#  |   3 |   9 | GPIO 3    SCL   1 |   IN | 1 |  5 || 6  |   |      | GND  0V |     |     |
+#  |   4 |   7 | GPIO 4    GPCLK 0 |   IN | 1 |  7 || 8  | 0 | OUT  | TXD   1 | 15  | 14  |
+#  |     |     |           GND  0V |      |   |  9 || 10 | 1 | OUT  | RXD   1 | 16  | 15  |
+#  |  17 |   0 |           GPIO 17 |   IN | 0 | 11 || 12 | 1 | OUT  | GPIO 18 | 1   | 18  |
+#  |  27 |   2 |           GPIO 27 |   IN | 0 | 13 || 14 |   |      | GND  0V |     |     |
+#  |  22 |   3 |           GPIO 22 |   IN | 0 | 15 || 16 | 0 | OUT  | GPIO 23 | 4   | 23  |
+#  |     |     |             +3.3V |      |   | 17 || 18 | 0 | OUT  | GPIO 24 | 5   | 24  |
+#  |  10 |  12 | GPIO 10 SPIO_MOSI | ALT0 | 0 | 19 || 20 |   |      | GND  0V |     |     |
+#  |   9 |  13 | GPIO  9 SPIO_MISO | ALT0 | 0 | 21 || 22 | 0 | OUT  | GPIO 25 | 6   | 25  |
+#  |  11 |  14 | GPIO 11 SPIO_SCLK | ALT0 | 0 | 23 || 24 | 1 | OUT  | GPIO 08 | 10  | 8   |
+#  |     |     |           GND  0V |      |   | 25 || 26 | 1 | OUT  | GPIO 01 | 11  | 7   |
+#  |   0 |  30 | GPIO  0    SDA  0 |   IN | 1 | 27 || 28 | 1 | IN   | SCL   0 | 31  | 1   |
+#  |   5 |  21 | GPIO  5           |   IN | 1 | 29 || 30 |   |      | GND  0V |     |     |
+#  |   6 |  22 | GPIO  6           |   IN | 1 | 31 || 32 | 0 | OUT  | GPIO 26 | 26  | 12  |
+#  |  13 |  23 | GPIO 13           |   IN | 0 | 33 || 34 |   |      | GND  0V |     |     |
+#  |  19 |  24 | GPIO 19           |   IN | 0 | 35 || 36 | 0 | IN   | GPIO 27 | 27  | 16  |
+#  |  26 |  25 | GPIO 26           |   IN | 0 | 37 || 38 | 0 | IN   | GPIO 28 | 28  | 20  |
+#  |     |     |           GND  0V |      |   | 39 || 40 | 0 | IN   | GPIO 29 | 29  | 21  |
+#  +-----+-----+-------------------+------+---+----++----+---+------+---------+-----+-----+
 
-#    ---------------------------------------
-#   |
-#   |     3V3 (1)  (2)  +5V
-#   |    SDA1 (3)  (4)  +5V----------------
-#   |    SCL1 (5)  (6)  GND
-#   |     GND (7)  (8)  TXD1
-#   |    SDA2 (9)  (10) RXD1
-#    --- SCL2 (11) (12) GPCLK0
-#         GND (13) (14) GND
-#       GPFS0 (15) (16) GPFS1
-#         3V3 (17) (18) GPFS2
-#       MOSI0 (19) (20) GND
-#       MISO0 (21) (22) GPFS3
-#        SDA0 (23) (24) MOSI1
-#        SCL0 (25) (26) MISO1
-#         GND (27) (28) SCLK1
-#       GPFS4 (29) (30) GND
+#  +------------------------------RED-------------------------------------+
+#  |  +---------------------------BLACK---------------------------------+ |
+#  |  |                                                                 | |
+#  |  |            +3.3V   (1) [X] [X] (2)  +5V                       ,,| |,,
+#  |  |  GPIO 2    SDA   1 (3) [X] [X] (4)  +5V -------RED-------+    | LED |
+#  |  |  GPIO 3    SCL   1 (5) [X] [X] (6)  GND  0V ---BLACK--+  |    '''''''
+#  |  |  GPIO 4    GPCLK 0 (7)  [X] [X] (8)  TXD   1           |  |
+#  |  +----------- GND  0V (9)  [X] [X] (10) RXD   1
+#  +-------------- GPIO 17 (11) [X] [X] (12) GPIO  1 ------
+#                  GPIO 27 (13) [X] [X] (14) GND  0V
+#                  GPIO 22 (15) [X] [X] (16) 
+#                  +3.3V   (17) [X] [X] (18) GPFS2
+#        GPIO 10 SPIO_MOSI (19) [X] [X] (20) GND
+#        GPIO  9 SPIO_MISO (21) [X] [X] (22) GPFS3
+#        GPIO 11 SPIO_SCLK (23) [X] [X] (24) MOSI1
+#                  GND  0V (25) [X] [X] (26) MISO1
+#         GND  (27) [X] [X] (28) SCLK1
+#       GPFS4  (29) [X] [X] (30) GND
 #       GPFS5 (31) (32) GPFS6
 #         GND (33) (34) GND
 #       GPFS7 (35) (36) GPFS8
@@ -68,18 +69,19 @@ output = stream.readlines()
 #         GND (41) (42) GPFS11
 
 # Note: 
-# "GND" stanss for "Ground"
-# "SDA" stands for "Serial Data Line" 
-# "SCL" stands for "Serial Clock Line" 
-# "TXD" stands for "Transmit Data" 
-# "RXD" stands for "Receive Data" 
-# "GPCLK" stands for "General Purpose Clock"
-# "GPFS" stands for "General Purpose Function Select" 
-# "MOSI" stands for "Master Out, Slave In" 
-# "MISO" stands for "Master In, Slave Out" 
-# "SCLK" stands for "Serial Clock"
-
-
+# "GND  0V" stands for "Ground"
+# "SDA"     stands for "Serial Data Line" 
+# "SCL"     stands for "Serial Clock Line" 
+# "TXD"     stands for "Transmit Data" 
+# "RXD"     stands for "Receive Data" 
+# "GPCLK"   stands for "General Purpose Clock"
+# "GPFS"    stands for "General Purpose Function Select" 
+# "MOSI"    stands for "Master Out, Slave In" 
+# "MISO"    stands for "Master In, Slave Out" 
+# "SCLK"    stands for "Serial Clock"
+# "GPIO"    stands for "General Purpose Input, Output"
+# "SPIO"    stands for "
+ 
 #LED
 def on(pin):
         GPIO.output(pin,GPIO.HIGH)

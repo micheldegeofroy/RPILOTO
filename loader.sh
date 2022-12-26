@@ -7,6 +7,16 @@
 echo " "
 echo " "
 echo "##########################################"
+echo "Set Priviliges for www-data"
+echo "##########################################"
+echo " "
+echo " "
+
+sudo usermod -a -G sudo www-data
+
+echo " "
+echo " "
+echo "##########################################"
 echo "Get Bot Token and Admin Chat ID"
 echo "##########################################"
 echo " "

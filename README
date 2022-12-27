@@ -152,7 +152,21 @@ Expand file system
 #        GPIO 26           (37) [.] [.] (38) GPFS9
 #                  GND  0V (39) [.] [.] (40) GPFS10
 
+https://www.cryptocompare.com/
 
+sign up
+
+choose in pull down menu API keys
+
+Click green button Create an API key
+
+Choose Read/Write All user data
+
+Where you see My Crypt App write Bot
+
+Copy API Key
+
+edc0eec6919061dd5475b0830acc90a34101203cede2c1c0b40471b5404e9c18
 
 loader.sh >>> updates & upgrades >>> creates botdata.txt & chat_ids.txt >>> runs script to get Chat ID and Bot Token from User 
 >>> writes information to botdata.txt and chat_ids.txt >>> downloads setup.sh >>> set cron job to launch setup.sh >>> reboots 

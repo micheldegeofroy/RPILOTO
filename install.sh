@@ -261,6 +261,8 @@ sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/wall
 
 sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/bot.service" -P /etc/systemd/system/
 
+sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/wallet.service" -P /etc/systemd/system/
+
 # Read the first and second line of the botdata.txt file
 replace_value1=$(head -n 1 botdata.txt)
 replace_value2=$(tail -n +2 botdata.txt | head -n 1)
@@ -282,6 +284,8 @@ echo "The Admin User Chat ID, Bot Token and BTC address have been set in Bot.py 
 
 sudo systemctl enable bot.service
 sudo systemctl start bot.service
+sudo systemctl enable wallet.service
+sudo systemctl start wallet.service
 
 echo " "
 echo " "

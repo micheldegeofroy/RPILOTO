@@ -183,32 +183,12 @@ def get_btc_balance(wallet_address, api_key):
 
     return btc_balance
 
-
-def check_btc_blance(bot, chat_id):
-    # Initialize the previous balance of the Bitcoin wallet to 0
-    prev_btc_balance = 0
-
-    while True:
-        # Get the current balance of the Bitcoin wallet
-        btc_balance = get_btc_balance(wallet_address, api_key)
-
-        # If the balance has changed, send a message to the user
-        if btc_balance != prev_btc_balance:
-            message = f'The value of your Bitcoin wallet has changed to ${btc_balance}!'
-            bot.send_message(chat_id=chat_id, text=message)
-
-        # Update the previous value of the Bitcoin wallet
-        prev_btc_balance = btc_balance
-
-        # Wait for 1 minute before checking the value again
-        time.sleep(60)
-
 # Function for /walletusd
 def send_btc_value(bot, chat_id, wallet_address, api_key):
     # Get the current value of the Bitcoin wallet
     btc_value = get_btc_value(wallet_address, api_key)
 
-    message = f'The current value of your Bitcoin wallet is ${btc_value:.0f} USD'
+    message = f'The current value of your BTC wallet is ${btc_value:.0f} USD'
     bot.send_message(chat_id=chat_id, text=message)
 
 # Function for /wallet
@@ -217,7 +197,7 @@ def send_btc_balance(bot, chat_id, wallet_address, api_key):
     btc_balance = get_btc_balance(wallet_address, api_key)
 
     # Send a message to the user with the current balance of the Bitcoin wallet
-    message = f'The current balance of your Bitcoin wallet is: {btc_balance} BTC'
+    message = f'The current balance of your BTC wallet is: {btc_balance} BTC'
     bot.send_message(chat_id=chat_id, text=message)
 
 def blink_led():
@@ -449,8 +429,12 @@ def message_received(update, context):
         # Send a message to the user telling them they are not authorized
         context.bot.send_message(chat_id=chat_id, text='Unauthorized Access')
 
+# Start the background thread to check the value of the Bitcoin wallet
+# thread = threading.Thread(target=check_btc_value, args=(bot, ADMIN_ID), daemon=True)
 updater = Updater(token=TOKEN, use_context=True)
+# btc_handler = CommandHandler('btc', btc_command)
 dispatcher = updater.dispatcher
 dispatcher.add_handler(MessageHandler(Filters.text, message_received))
+# dispatcher.add_handler(btc_handler)
 updater.start_polling()
 updater.idle()

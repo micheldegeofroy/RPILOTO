@@ -1,11 +1,48 @@
 import requests
 import time
 import os
+import RPi.GPIO as GPIO
+import threading
 
+flag = False
+
+#Replace with https://www.blockonomics.co API key
 api_key = 'KR9NNX9cXq9KIiowcoDWaHKHsVakW1ZNoH0zWied5S8'
+
+# Replace 1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa with the actual address of your Bitcoin wallet yourbtcwalletaddress 
 wallet_address = '1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa'
+
+# Replace this with your telegram bot bot token
 TOKEN = '5564114282:AAGSjjJkjNH7RB-4dUH-aJW1pMmquFEq-m8'
+
+# Replace with the chat ID of the telegram Admin
 ADMIN_ID = 90423887
+
+# LED
+def on(pin):
+    GPIO.output(pin, GPIO.HIGH)
+    return
+
+def off(pin):
+    GPIO.output(pin, GPIO.LOW)
+    return
+
+# Set up GPIO output channel
+GPIO.setmode(GPIO.BOARD)
+GPIO.setwarnings(False)
+GPIO.setup(11, GPIO.OUT)
+
+# Function for leds blink
+def blink_led():
+    global flag
+    # Set the flag to True
+    flag = True
+    while flag:
+        # Blink the LED
+        GPIO.output(11, GPIO.HIGH)
+        time.sleep(0.5)
+        GPIO.output(11, GPIO.LOW)
+        time.sleep(0.5)
 
 def check_balance():
     # Make a request to the blockonomics API to get the current balance of the Bitcoin wallet
@@ -40,6 +77,8 @@ def check_balance():
 
     # Compare the current balance to the previous balance
     if current_balance_btc != previous_balance_btc:
+        thread = threading.Thread(target=blink_led)
+        thread.start()
         change = current_balance_btc - previous_balance_btc
         text = f"The balance of the BTC wallet has CHANGED !!! The previous value was {previous_balance_btc} BTC and the current value is {current_balance_btc} BTC The change in balance is {change} BTC"
         requests.get(f"https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={ADMIN_ID}&text={text}")
@@ -58,7 +97,6 @@ if os.stat("btcbalance.txt").st_size == 0:
     with open("btcbalance.txt", "w") as f:
         f.write("0,0")
 
-# Unhash to debug Check the balance every 40 seconds
-#while True:
-#    check_balance()
-#    time.sleep(40)
+while True:
+    check_balance()
+    time.sleep(600)

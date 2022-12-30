@@ -36,10 +36,20 @@ read chat_id
 echo -n "What is your telegram Bot Token?: "
 read token
 
+# Ask the user for wallet address
+echo -n "What is your telegram Bot Token?: "
+read btcaddress
+
+# Ask the user for https://www.blockonomics.co API key
+echo -n "What is your blockonomics.co API key?: "
+read apikey
+
 # Store  Chat ID to file
 echo "$chat_id " >> chat_ids.txt
 echo "$chat_id " >> botdata.txt
 echo "$token" >> botdata.txt
+echo "$btcaddress" >> botdata.txt
+echo "$apikey" >> botdata.txt
 
 # Read the telegram chat ID file and print it
 ID=$(head -n 1 botdata.txt)
@@ -48,6 +58,14 @@ echo "Your Telegram Admin Chat ID is: $ID"
 # Read the telegram token from file and print it
 TOKEN=$(tail -n +2 botdata.txt | head -n 1)
 echo "Your Telegram Bot Token is: $TOKEN"
+
+# Read the btcaddress  from file and print it
+ADD=$(tail -n +3 botdata.txt | head -n 1)
+echo "Your Wallet Address is: $TOKEN"
+
+# Read the btcaddress  from file and print it
+API=$(tail -n +3 botdata.txt | head -n 1)
+echo "Your Wallet Address is: $TOKEN"
 
 echo " "
 echo " "

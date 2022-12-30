@@ -257,6 +257,8 @@ sudo mkdir /home/pi/Bots/
 
 sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/Bot.py" -P /home/pi/Bots/
 
+sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/walletcheck.py" -P /home/pi/Bots/
+
 sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/bot.service" -P /etc/systemd/system/
 
 # Read the first and second line of the botdata.txt file

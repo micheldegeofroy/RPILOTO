@@ -13,7 +13,7 @@ api_key = 'KR9NNX9cXq9KIiowcoDWaHKHsVakW1ZNoH0zWied5S8'
 wallet_address = '1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa'
 
 # Replace this with your telegram bot bot token
-TOKEN = '5564114282:AAGSjjJkjNH7RB-4dUH-aJW1pMmquFEq-m8'
+TOKEN = 'replacewithyourbottoken'
 
 # Replace with the chat ID of the telegram Admin
 ADMIN_ID = replacewithadminchatid

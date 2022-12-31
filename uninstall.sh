@@ -159,8 +159,11 @@ sudo rm -r /home/pi/Bots
 sudo rm -r /home/pi/botdata.txt
 sudo rm -r /home/pi/chat_ids.txt
 sudo systemctl stop bot.service
+sudo systemctl stop wallet.service
 sudo rm -r /etc/systemd/system/bot.service
+sudo rm -r /etc/systemd/system/wallet.service
 sudo systemctl disable bot.service
+sudo systemctl disable wallet.service
 sudo systemctl daemon-reload
 
 echo " "

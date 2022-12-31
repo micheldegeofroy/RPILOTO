@@ -39,7 +39,8 @@ echo "##########################################"
 echo " "
 echo " "
 
-sudo apt purge php -y
+#sudo apt purge php -y
+sudo apt purge php7.4 -y
 sudo apt purge apache2 -y
 sudo rm -r /etc/apache2
 sudo rm -r /var/www/html/index.php

@@ -200,6 +200,30 @@ def send_btc_balance(bot, chat_id, wallet_address, api_key):
     message = f'The current balance of your BTC wallet is: {btc_balance} BTC'
     bot.send_message(chat_id=chat_id, text=message)
 
+# Function for /walletcheck
+def check_wallet_balance(wallet_address2, api_key):
+    # Make a request to the blockonomics API to get the current balance of the Bitcoin wallet
+    url = f'https://www.blockonomics.co/api/balance'
+    headers = {'Authorization': f'Bearer {api_key}',
+               'Content-Type': 'application/json'}
+    payload = {'addr': wallet_address2}
+    r = requests.post(url, headers=headers, json=payload)
+
+    # Check if the request was successful
+    if r.status_code != 200:
+        # There was an error with the request
+        return f"Error: {r.text}"
+
+    # Get the balance in satoshis
+    data = r.json()['response'][0]['confirmed']
+
+    # Convert the balance from satoshis to BTC
+    btc_balance = data / 100000000
+
+    # Return the balance
+    return f"The balance of the wallet is {btc_balance} BTC"
+
+# Function for leds blink
 def blink_led():
     global flag3
     # Set the flag to True
@@ -211,6 +235,7 @@ def blink_led():
         GPIO.output(11, GPIO.LOW)
         time.sleep(0.5)
 
+# Function for security
 def read_chat_ids():
     with open('/home/pi/chat_ids.txt', 'r') as f:
         chat_ids = [int(line.strip()) for line in f]
@@ -226,9 +251,20 @@ def message_received(update, context):
         global flag1
         global flag2
         global flag3
+        global flag4
         if command == '/who':
             run = subprocess.run(['whoami'], capture_output=True)
             context.bot.send_message(chat_id, run.stdout.decode())
+        elif command == '/walletcheck':
+            # Set the flag to True
+            flag4 = True
+            context.bot.send_message(chat_id, 'enter your bitcoin wallet address')
+        elif flag4:
+            wallet_address2 = command
+            balance = check_wallet_balance(wallet_address2, api_key)
+            context.bot.send_message(chat_id, balance)
+            # Reset the flag to False
+            flag4 = False
         elif command == '/wallet':
             send_btc_balance(bot, chat_id, wallet_address, api_key)
         elif command == '/walletusd':
@@ -371,6 +407,7 @@ def message_received(update, context):
                                     '/btc: Shows the current value of BTC in USD\n '
                                     '/wallet: Shows the current balance of your BTC wallet\n'
                                     '/walletusd: Shows the current value in USD of your wallet\n '
+                                    '/walletcheck: Checks the wallet balance of your choice\n'
                                     '/fanon: Turns the fan on\n '
                                     '/fanoff: Turns the fan off\n '
                                     '/ledon: Turns LED on\n '
@@ -399,14 +436,14 @@ def message_received(update, context):
                                     )
         elif command == '/help':
             context.bot.sendMessage(chat_id,
-                                    '/start /help /guide /reboot /shutdown /startminer /stopminer /btc '
+                                    '/start /help /guide /reboot /shutdown /startminer /stopminer /walletcheck /btc '
                                     '/wallet /walletusd /fanon /fanoff /ledon /ledoff /blinkon /blinkoff /eth0 /wlan0 '
                                     '/ping /sudo /htop /sync /model /uptime /where /who /hd /hdex '
                                     '/volts /speed /cpughz /cpu /wanip /lanip /temp '
                                     )
         elif command == '/start':
             context.bot.sendMessage(chat_id,
-                                    '/start /help / guide /reboot /shutdown /startminer /stopminer /btc '
+                                    '/start /help / guide /reboot /shutdown /startminer /stopminer /walletcheck /btc '
                                     '/wallet /walletusd /fanon /fanoff /ledon /ledoff /blinkon /blinkoff /eth0 /wlan0 '
                                     '/ping /sudo /htop /sync /model /uptime /where /who /hd /hdex '
                                     '/volts /speed /cpughz /cpu /wanip /lanip /temp '
@@ -429,12 +466,9 @@ def message_received(update, context):
         # Send a message to the user telling them they are not authorized
         context.bot.send_message(chat_id=chat_id, text='Unauthorized Access')
 
-# Start the background thread to check the value of the Bitcoin wallet
-# thread = threading.Thread(target=check_btc_value, args=(bot, ADMIN_ID), daemon=True)
 updater = Updater(token=TOKEN, use_context=True)
-# btc_handler = CommandHandler('btc', btc_command)
 dispatcher = updater.dispatcher
 dispatcher.add_handler(MessageHandler(Filters.text, message_received))
-# dispatcher.add_handler(btc_handler)
 updater.start_polling()
 updater.idle()
+

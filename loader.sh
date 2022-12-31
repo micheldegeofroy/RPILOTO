@@ -22,8 +22,8 @@ echo "##########################################"
 echo " "
 echo " "
 
-sudo rm botdata.txt
-sudo rm chat_ids.txt
+#sudo rm botdata.txt
+#sudo rm chat_ids.txt
 
 sudo touch botdata.txt
 sudo touch chat_ids.txt
@@ -106,4 +106,4 @@ echo "##########################################"
 echo " "
 echo " "
 
-#sudo reboot
+sudo reboot

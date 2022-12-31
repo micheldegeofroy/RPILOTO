@@ -7,6 +7,17 @@
 echo " "
 echo " "
 echo "##########################################"
+echo "Update software sources & remove loader.sh"
+echo "##########################################"
+echo " "
+echo " "
+
+sudo apt update -y
+sudo apt upgrade -y
+
+echo " "
+echo " "
+echo "##########################################"
 echo "Set Priviliges for www-data"
 echo "##########################################"
 echo " "

@@ -95,7 +95,8 @@ echo "##########################################"
 echo " "
 echo " "
 
-sudo rm -r /usr/local/bin/speedtest-cli
+#sudo rm -r /usr/local/bin/speedtest-cli
+sudo pip uninstall speedtest-cli -y
 
 echo " "
 echo " "

@@ -263,20 +263,20 @@ sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/bot.
 
 sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/wallet.service" -P /etc/systemd/system/
 
-# Read the first and second line of the botdata.txt file
+# Read the first, second and third line of the botdata.txt file
 replace_value1=$(head -n 1 botdata.txt)
 replace_value2=$(tail -n +2 botdata.txt | head -n 1)
-replace_value2=$(tail -n +3 botdata.txt | head -n 1)
+replace_value3=$(tail -n +3 botdata.txt | head -n 1)
 
 # Replace the target value in the Bot.py script with the replacement values from botdata.txt
 sed -i "s/replacewithyourbottoken/$replace_value2/g" /Bots/Bot.py 
 sed -i "s/replacewithadminchatid/$replace_value1/g" /Bots/Bot.py
-sed -i "s/1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa/$replace_value1/g" /Bots/Bot.py
+sed -i "s/1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa/$replace_value3/g" /Bots/Bot.py
 
 # Replace the target value in the walletcheck.py script with the replacement values from botdata.txt
 sed -i "s/replacewithyourbottoken/$replace_value2/g" /Bots/walletcheck.py 
 sed -i "s/replacewithadminchatid/$replace_value1/g" /Bots/walletcheck.py 
-sed -i "s/1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa/$replace_value1/g" /Bots/walletcheck.py 
+sed -i "s/1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa/$replace_value3/g" /Bots/walletcheck.py 
 
 
 # Confirm that the replacement has been made

@@ -66,15 +66,15 @@ sudo rm loader.sh
 # Confirm that the replacement has been made
 #echo "The cron job Bot Token has been set in install.sh file."
 
-echo " "
-echo " "
-echo "##########################################"
-echo "Cron @ Reboot to Launch Install"
-echo "##########################################"
-echo " "
-echo " "
+#echo " "
+#echo " "
+#echo "##########################################"
+#echo "Cron @ Reboot to Launch Install"
+#echo "##########################################"
+#echo " "
+#echo " "
 
-sudo crontab -l; echo "#@reboot sleep 120 && /bin/bash /home/pi/install.sh >/dev/null 2>&1" | crontab -
+#sudo crontab -l; echo "#@reboot sleep 120 && /bin/bash /home/pi/install.sh >/dev/null 2>&1" | crontab -
 
 echo " "
 echo " "

@@ -37,7 +37,7 @@ echo -n "What is your telegram Bot Token?: "
 read token
 
 # Ask the user for wallet address
-echo -n "What is your telegram Bot Token?: "
+echo -n "What is your BTC wallet address?: "
 read btcaddress
 
 # Ask the user for https://www.blockonomics.co API key

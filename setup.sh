@@ -28,7 +28,7 @@ echo "##########################################"
 echo " "
 echo " "
 
-sudo rm /etc/environment
+#sudo rm /etc/environment
 sudo touch /etc/environment
 
 sudo echo "LANGUAGE=en_US" | sudo tee -a /etc/environment
@@ -85,4 +85,4 @@ echo " "
 echo " "
 
 
-#sudo reboot
+sudo reboot

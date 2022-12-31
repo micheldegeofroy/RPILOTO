@@ -78,15 +78,15 @@ echo "Your Wallet Address is: $ADD"
 API=$(tail -n +3 botdata.txt | head -n 1)
 echo "Your Wallet Address is: $API"
 
-echo " "
-echo " "
-echo "##########################################"
-echo "Download Install File"
-echo "##########################################"
-echo " "
-echo " "
+#echo " "
+#echo " "
+#echo "##########################################"
+#echo "Download Setup File"
+#echo "##########################################"
+#echo " "
+#echo " "
 
-sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/setup.sh"
+#sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/setup.sh"
 
 echo " "
 echo " "

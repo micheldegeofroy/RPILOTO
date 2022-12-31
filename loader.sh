@@ -134,6 +134,16 @@ sudo localedef -f UTF-8 -i en_US en_US.UTF-8
 sudo sed -i 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/g' /etc/locale.gen
 sudo sed -i 's/en_GB.UTF-8 UTF-8/# en_GB.UTF-8 UTF-8/g' /etc/locale.gen
 
+#echo " "
+#echo " "
+#echo "##########################################"
+#echo "Cron @ Reboot to Launch Install"
+#echo "##########################################"
+#echo " "
+#echo " "
+
+#crontab -l; echo "#@reboot sleep 60 && /bin/bash /home/pi/setup.sh >/dev/null 2>&1" | crontab -
+
 echo " "
 echo " "
 echo "##########################################"
@@ -142,7 +152,7 @@ echo "##########################################"
 echo " "
 echo " "
 
-crontab -l; echo "#@reboot sleep 60 && /bin/bash /home/pi/setup.sh >/dev/null 2>&1" | crontab -
+sudo crontab -l; echo "#@reboot sleep 120 && /bin/bash /home/pi/install.sh >/dev/null 2>&1" | crontab -
 
 echo " "
 echo " "

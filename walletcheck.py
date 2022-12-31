@@ -87,14 +87,14 @@ def check_balance():
 
 
 # Check if the file exists
-if not os.path.exists("btcbalance.txt"):
+if not os.path.exists("/home/pi/Bots/btcbalance.txt"):
     # Create the file if it does not exist
-    open("btcbalance.txt", "a").close()
+    open("/home/pi/Bots/btcbalance.txt", "a").close()
 
 # Check if file btc ballance is empty if yes Initialize 0,0
-if os.stat("btcbalance.txt").st_size == 0:
+if os.stat("/home/pi/Bots/btcbalance.txt").st_size == 0:
     # Write to the file if it is empty
-    with open("btcbalance.txt", "w") as f:
+    with open("/home/pi/Bots/btcbalance.txt", "w") as f:
         f.write("0,0")
 
 while True:

@@ -61,7 +61,7 @@ echo " "
 
 sudo rm -r /usr/share/keyrings/tailscale-archive-keyring.gpg
 sudo rm -r /etc/apt/sources.list.d/tailscale.list
-sudo rm -r /etc/apt/sources.list.d/tailscale.list.save
+#sudo rm -r /etc/apt/sources.list.d/tailscale.list.save
 sudo apt remove apt-transport-https -y
 sudo apt purge tailscale -y
 

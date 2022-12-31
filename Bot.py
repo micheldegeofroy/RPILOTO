@@ -26,6 +26,7 @@ output = stream.readlines()
 flag1 = False
 flag2 = False
 flag3 = False
+flag4 = False
 #
 #  GPIO READALL
 #  +-----+-----+-------------------+------+---+---Pi 4B--+---+------+--------------------+-----+-----+

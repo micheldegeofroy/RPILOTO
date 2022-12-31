@@ -7,7 +7,7 @@ import threading
 flag = False
 
 #Replace with https://www.blockonomics.co API key
-api_key = 'KR9NNX9cXq9KIiowcoDWaHKHsVakW1ZNoH0zWied5S8'
+api_key = 'replacewithyourapikey'
 
 # Replace 1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa with the actual address of your Bitcoin wallet yourbtcwalletaddress 
 wallet_address = '1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa'

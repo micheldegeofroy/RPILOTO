@@ -61,11 +61,11 @@ echo "Your Telegram Bot Token is: $TOKEN"
 
 # Read the btcaddress  from file and print it
 ADD=$(tail -n +3 botdata.txt | head -n 1)
-echo "Your Wallet Address is: $TOKEN"
+echo "Your Wallet Address is: $ADD"
 
 # Read the btcaddress  from file and print it
 API=$(tail -n +3 botdata.txt | head -n 1)
-echo "Your Wallet Address is: $TOKEN"
+echo "Your Wallet Address is: $API"
 
 echo " "
 echo " "

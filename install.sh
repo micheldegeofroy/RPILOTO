@@ -75,7 +75,7 @@ sudo rm setup.sh
 echo " "
 echo " "
 echo "##########################################"
-echo "Update & Uprade Aptitude Install jq & python #4"
+echo "Update & Upgrade Aptitude Install jq & python #4"
 echo "Install jq & python3 & pip"
 echo "##########################################"
 echo " "

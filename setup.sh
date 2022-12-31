@@ -49,16 +49,6 @@ sudo localedef -f UTF-8 -i en_US en_US.UTF-8
 sudo sed -i 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/g' /etc/locale.gen
 sudo sed -i 's/en_GB.UTF-8 UTF-8/# en_GB.UTF-8 UTF-8/g' /etc/locale.gen
 
-#echo " "
-#echo " "
-#echo "##########################################"
-#echo "Download Install File"
-#echo "##########################################"
-#echo " "
-#echo " "
-
-#sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/install.sh"
-
 echo " "
 echo " "
 echo "##########################################"

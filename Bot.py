@@ -98,16 +98,13 @@ flag4 = False
 
 # LED
 
-
 def on(pin):
     GPIO.output(pin, GPIO.HIGH)
     return
 
-
 def off(pin):
     GPIO.output(pin, GPIO.LOW)
     return
-
 
 # Set up GPIO output channel
 GPIO.setmode(GPIO.BOARD)
@@ -116,16 +113,16 @@ GPIO.setup(11, GPIO.OUT)
 GPIO.setup(12, GPIO.OUT)
 
 #Replace with https://www.blockonomics.co API key
-api_key = 'KR9NNX9cXq9KIiowcoDWaHKHsVakW1ZNoH0zWied5S8'
+api_key = 'replacewithyourapikey'
 
 # Replace YOUR_BTC_WALLET_ADDRESS with the actual address of your Bitcoin wallet yourbtcwalletaddress 1LdJ4nyxrJqNB1oyr76rYerb2KDZk9wAvo
 wallet_address = '1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa'
 
 # Replace this with your bot token
-TOKEN = '5564114282:AAGSjjJkjNH7RB-4dUH-aJW1pMmquFEq-m8'
+TOKEN = 'replacewithyourbottoken'
 
 # Replace with the chat ID of the Admin you want to send the message to
-ADMIN_ID = 90423887
+ADMIN_ID = replacewithadminchatid
 
 MESSAGE = 'BTC Loto BOT is back online!'
 

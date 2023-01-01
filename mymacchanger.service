@@ -1,0 +1,12 @@
+[Unit]
+Description=mymacchanger.py
+
+[Service]
+Type=oneshot
+#ExecStart=/bin/bash /home/pi/mymacchanger.py
+ExecStart=/usr/bin/python3 /home/pi/mymacchanger.py
+RemainAfterExit=true
+StandardOutput=journal
+
+[Install]
+WantedBy=multi-user.target

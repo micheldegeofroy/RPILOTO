@@ -84,6 +84,9 @@ Ounce install is finished go to your bot and write
 sudo tailscale status
 clink on link to authorize tailscales
 
+
+ssh pi@BTCLOTO.local
+
 ############ UNINSTALL ##############################################################################################
 
 To uninstall 

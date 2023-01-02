@@ -247,7 +247,7 @@ sudo pip install python-telegram-bot
 sudo pip install telepot
 sudo pip3 install --upgrade RPi.GPIO
 
-sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/script.py"
+#sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/script.py"
 
 sudo python3 script.py
 

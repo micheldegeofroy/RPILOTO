@@ -247,13 +247,11 @@ sudo pip install python-telegram-bot
 sudo pip install telepot
 sudo pip3 install --upgrade RPi.GPIO
 
-#sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/script.py"
 
-sudo python3 script.py
 
-sudo rm -r script.py
 
-sudo mkdir /home/pi/Bots/
+
+sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/script.py"
 
 sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/Bot.py" -P /home/pi/Bots/
 
@@ -281,9 +279,17 @@ sed -i "s/replacewithyourbottoken/$replace_value2/g" /home/pi/Bots/walletcheck.p
 sed -i "s/replacewithadminchatid/$replace_value1/g" /home/pi/Bots/walletcheck.py 
 sed -i "s/1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa/$replace_value3/g" /home/pi/Bots/walletcheck.py 
 
+# Replace the target value in the script.py script with the replacement values from botdata.txt
+sed -i "s/replacewithyourbottoken/$replace_value2/g" /home/pi/script.py
+
+sudo python3 script.py
+
+sudo rm -r script.py
+
+sudo mkdir /home/pi/Bots/
 
 # Confirm that the replacement has been made
-echo "The Admin User Chat ID, Bot Token and BTC address have been set in Bot.py & walletcheck.py file."
+echo "The Admin User Chat ID, Bot Token and BTC address have been set in script.py & Bot.py & walletcheck.py files."
 
 sudo systemctl enable bot.service
 sudo systemctl start bot.service

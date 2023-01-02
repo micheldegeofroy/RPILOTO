@@ -6,6 +6,7 @@ sudo nano /var/log/syslog
 sudo tail -n 100 -f /var/log/syslog
 sudo tail -n 100 -f /var/log/messages
 systemctl status cron
+grep CRON /var/log/syslog
 sudo journalctl -xe
 journalctl -p 0
 
@@ -20,17 +21,30 @@ journalctl -p 0
  
 BOT
 sudo systemctl stop bot.service
+sudo systemctl start bot.service
 sudo systemctl restart bot.service
 sudo systemctl status bot.service
-sudo systemctl daemon-reload
 sudo systemctl enable bot.service
-sudo systemctl start bot.service
+sudo systemctl stop wallet.service
+sudo systemctl start wallet.service
+sudo systemctl restart wallet.service
+sudo systemctl status wallet.service
+sudo systemctl enable wallet.service
+sudo systemctl daemon-reload
 sudo nano /Bots/Bot.py
+
+MAC CHANGER
+sudo systemctl stop mymacchanger.service
+sudo systemctl start mymacchanger.service
+sudo systemctl restart mymacchanger.service
+sudo systemctl status mymacchanger.service
+sudo systemctl enable mymacchanger.service
+sudo systemctl daemon-reload
   
 BTC
 sudo tail -n 100 -f /mnt/hdd/debug.log
 bitcoin-cli getblockchaininfo
-  
+ 
 OTHER
 To reload this Splash Screen: sudo run-parts --lsbsysinit /etc/update-motd.d
 To edit the Web Monitor script: sudo nano /var/www/html/index.php

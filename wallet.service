@@ -4,6 +4,7 @@ After=multi-user.target
 [Service]
 Type=simple
 Restart=always
+ExecStartPost=/bin/sleep 60
 ExecStart=/usr/bin/python3 /home/pi/Bots/walletcheck.py
 [Install]
 WantedBy=multi-user.target

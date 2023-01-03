@@ -76,14 +76,14 @@ def check_balance():
     previous_balance_btc = previous_balance_from_file / 100000000
 
     # Compare the current balance to the previous balance
-    if current_balance_btc != previous_balance_btc:
+    if current_balance_from_file != previous_balance_from_file:
         thread = threading.Thread(target=blink_led)
         thread.start()
         change = current_balance_btc - previous_balance_btc
         text = f"The balance of the BTC wallet has CHANGED !!! The previous value was {previous_balance_btc} BTC and the current value is {current_balance_btc} BTC The change in balance is {change} BTC"
         requests.get(f"https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={ADMIN_ID}&text={text}")
     else:
-        requests.get(f"https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={ADMIN_ID}&text=The balance of the BTC wallet has NOT changed it is: {current_balance_btc} BTC the previous value was also: {previous_balance_btc} BTC")
+        requests.get(f"https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={ADMIN_ID}&text=The balance of the BTC wallet has NOT changed it is: {current_balance_btc} BTC")
 
 
 # Check if the file exists

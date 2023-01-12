@@ -256,7 +256,7 @@ def message_received(update, context):
         elif command == '/walletcheck':
             # Set the flag to True
             flag4 = True
-            context.bot.send_message(chat_id, 'enter your bitcoin wallet address')
+            context.bot.send_message(chat_id, 'Enter your bitcoin wallet address')
         elif flag4:
             wallet_address2 = command
             balance = check_wallet_balance(wallet_address2, api_key)

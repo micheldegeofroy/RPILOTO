@@ -119,7 +119,7 @@ echo "##########################################"
 echo " "
 echo " "
 
-sudo crontab -l; echo "#@reboot sleep 120 && /bin/bash /home/pi/install.sh >/dev/null 2>&1" | crontab -
+sudo crontab -l; echo "@reboot sleep 120 && /bin/bash /home/pi/install.sh >/dev/null 2>&1" | crontab -
 
 echo " "
 echo " "

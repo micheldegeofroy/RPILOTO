@@ -83,9 +83,7 @@ echo " "
 echo " "
 
 sudo apt install php7.4 -y
-
 sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/index.php" -P /var/www/html/
-
 sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/miner.php" -P /var/www/html/
 
 echo " "
@@ -129,16 +127,13 @@ echo " "
 
 sudo echo "#Watchdog On" | sudo tee -a /boot/config.txt
 sudo echo "dtparam=watchdog=on" | sudo tee -a /boot/config.txt
-
 sudo apt install watchdog -y
-
 sudo echo "watchdog-device = /dev/watchdog" | sudo tee -a /etc/watchdog.conf
 sudo echo "watchdog-timeout = 15" | sudo tee -a /etc/watchdog.conf
 sudo echo "max-load-1 = 24" | sudo tee -a /etc/watchdog.conf
 
 sudo systemctl enable watchdog
 sudo systemctl start watchdog
-#sudo systemctl status watchdog
 
 echo " "
 echo " "
@@ -162,7 +157,6 @@ echo " "
 
 sudo echo "# Disable Bluetooth" | sudo tee -a /boot/config.txt
 sudo echo "dtoverlay=disable-bt" | sudo tee -a /boot/config.txt
-
 sudo systemctl disable hciuart.service 
 sudo systemctl disable bluetooth.service
 
@@ -175,9 +169,7 @@ echo " "
 echo " "
 
 sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/mymacchanger.py"
-
 sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/mymacchanger.service" -P /etc/systemd/system/
-
 sudo systemctl enable mymacchanger.service
 sudo systemctl start mymacchanger.service
  
@@ -194,6 +186,8 @@ sudo pip3 install requests
 sudo pip install python-telegram-bot
 sudo pip install telepot
 sudo pip3 install --upgrade RPi.GPIO
+
+sudo mkdir /home/pi/Bots/
 
 sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/script.py"
 sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/Bot.py" -P /home/pi/Bots/
@@ -223,10 +217,7 @@ sed -i "s/1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa/$replace_value3/g" /home/pi/Bots/wa
 sed -i "s/replacewithyourbottoken/$replace_value2/g" /home/pi/script.py
 
 sudo python3 script.py
-
 sudo rm -r script.py
-
-sudo mkdir /home/pi/Bots/
 
 # Confirm that the replacement has been made
 echo "The Admin User Chat ID, Bot Token and BTC address have been set in script.py & Bot.py & walletcheck.py files."
@@ -239,25 +230,12 @@ sudo systemctl start wallet.service
 echo " "
 echo " "
 echo "##########################################"
-echo "Heartbeat Telegram #15"
-echo "##########################################"
-echo " "
-echo " "
-
-sudo crontab -l > file; echo '30 8 * * * curl -s -X POST https://api.telegram.org/replacealsowithyourbottoken/sendMessage -d chat_id=90423887 -d text="BTC Loto is Alive !"' >> file; crontab file
-
-sudo crontab -l
-
-echo " "
-echo " "
-echo "##########################################"
 echo "SSH Custom Login Splash Screen #16"
 echo "##########################################"
 echo " "
 echo " "
 
 sudo rm -r /etc/motd
-
 sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/motd" -P /etc/
 
 echo " "
@@ -273,17 +251,6 @@ mkdir -p /etc/update-motd.d/
 sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/ssh-welcome" -P /etc/update-motd.d/
 
 sudo chmod +x /etc/update-motd.d/ssh-welcome
-#sudo run-parts --lsbsysinit /etc/update-motd.d
-
-echo " "
-echo " "
-echo "##########################################"
-echo "Uninstall Script #18"
-echo "##########################################"
-echo " "
-echo " "
-
-sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/uninstall.sh"
 
 echo " "
 echo " "

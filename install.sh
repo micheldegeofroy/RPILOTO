@@ -171,6 +171,7 @@ echo " "
 
 sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/mymacchanger.py" -P /home/pi/
 sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/mymacchanger.service" -P /etc/systemd/system/
+sudo chmod +x /home/pi/mymacchanger.py
 sudo systemctl enable mymacchanger.service
 sudo systemctl start mymacchanger.service
  

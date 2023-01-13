@@ -9,16 +9,16 @@ import subprocess
 flag = False
 
 #Replace with https://www.blockonomics.co API key
-api_key = 'KR9NNX9cXq9KIiowcoDWaHKHsVakW1ZNoH0zWied5S8'
+api_key = 'replacewithyourapikey'
 
 # Replace 1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa with the actual address of your Bitcoin wallet yourbtcwalletaddress 
 wallet_address = '1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa'
 
 # Replace this with your telegram bot bot token
-TOKEN = '5564114282:AAGSjjJkjNH7RB-4dUH-aJW1pMmquFEq-m8'
+TOKEN = 'replacewithyourbottoken'
 
 # Replace with the chat ID of the telegram Admin
-ADMIN_ID = 90423887 
+ADMIN_ID = replacewithadminchatid
 
 # LED
 def on(pin):

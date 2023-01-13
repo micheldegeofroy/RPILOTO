@@ -84,6 +84,8 @@ Ounce install is finished go to your bot and write
 sudo tailscale status
 clink on link to authorize tailscales
 
+pi tunnel
+curl -s pitunnel.com/get/R9zRUByvvQ | sudo bash
 
 ssh pi@BTCLOTO.local
 

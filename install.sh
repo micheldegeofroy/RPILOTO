@@ -106,6 +106,9 @@ echo "##########################################"
 echo " "
 echo " "
 
+udo apt update -y
+sudo apt upgrade -y
+
 sudo pip install glances
 
 echo " "
@@ -115,6 +118,9 @@ echo "Install Speed Test #9"
 echo "##########################################"
 echo " "
 echo " "
+
+udo apt update -y
+sudo apt upgrade -y
 
 sudo pip install speedtest-cli
 
@@ -128,6 +134,10 @@ echo " "
 
 sudo echo "#Watchdog On" | sudo tee -a /boot/config.txt
 sudo echo "dtparam=watchdog=on" | sudo tee -a /boot/config.txt
+
+udo apt update -y
+sudo apt upgrade -y
+
 sudo apt install watchdog -y
 sudo echo "watchdog-device = /dev/watchdog" | sudo tee -a /etc/watchdog.conf
 sudo echo "watchdog-timeout = 15" | sudo tee -a /etc/watchdog.conf
@@ -182,11 +192,18 @@ echo "##########################################"
 echo " "
 echo " "
 
+sudo apt update -y
+sudo apt upgrade -y
+
 sudo pip install bitcoin
 sudo pip3 install requests
 sudo pip install python-telegram-bot
+sudo pip install --upgrade python-telegram-bot
 sudo pip install telepot
+sudo pip3 install RPi.GPIO
 sudo pip3 install --upgrade RPi.GPIO
+
+sudo apt autoremove -y
 
 sudo mkdir /home/pi/Bots/
 

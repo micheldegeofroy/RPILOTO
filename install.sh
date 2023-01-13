@@ -30,23 +30,9 @@
 #
 #ssh-keygen -R YOURDEVICEIP
 #
-#nano install.sh
+#execute the following cmd and follow the instructions when prompted
 #
-#copy this code in file save and close (ctrl X , y , return)
-#
-# ###############################
-# Set root password
-# ###############################
-#
-#Then create a root password
-#sudo passwd root
-#
-# ###############################
-# This needs to be run as root !
-# ###############################
-#
-#su
-#
+#sudo wget https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/loader.sh && sudo bash loader.sh
 #
 # ###############################
 # Execute basic install

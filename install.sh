@@ -132,6 +132,12 @@ curl -fsSL https://pkgs.tailscale.com/stable/raspbian/bullseye.tailscale-keyring
 sudo apt update -y
 sudo apt install tailscale -y
 
+# Start Tailscale
+sudo systemctl start tailscaled
+
+# Enable Tailscale to start on boot
+sudo systemctl enable tailscaled
+
 echo " "
 echo " "
 echo "##########################################"

@@ -62,15 +62,40 @@ Alternatively, you can use a website like "https://t.me/my_id_bot" to get your T
 
 Go to https://www.bitaddress.org/
 
+Then
+
 Generate entropy by moving your mouse around 
 
+Then
+
 Print out the screen (print button on top right)
+
+Then
 
 Copy your public address (some thing like this 13zANmpcAJRRSjTC7JP3zA4GDBjASZ7YRK)
 
 Do not share or loose the print out 
 
 !!! You will need your public Bitcoin address to compleye install
+
+############ GET API ##############################################################################################
+
+Go to https://www.blockonomics.co and sign up
+
+Then
+
+On left menu click on stores and copy the API key (something like this KR9NNX9cXq9KIiowcoDWaHKHsVakW1ZNoH0zWied5S3) 
+
+############ PRE INSTALL CHECK LIST ###############################################################################
+
+You should now have your:
+
+BOT TOKEN
+CHAT ID
+BITCOIN PUPLIC ADDRESS
+API KEY
+
+AND A BIG CUP OF COFFEE :)
 
 ############ INSTALL ##############################################################################################
 
@@ -101,10 +126,10 @@ Ounce logged in run the below cmd
 
 sudo wget https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/loader.sh && sudo bash loader.sh
 
-Then go have a cup of coffee the RPI will reboot several times takes about 30 mins
+Then go have a cup of coffee the RPI will reboot several times takes about 30 mins to finish install
 
 Ounce install is finished your Bot will be fully operational as well as your 
-web interface which can be reached at http://IPOFDEVICE/index.php
+web interface which you can view at http://IPOFDEVICE/index.php
 
 ############ EXTRAS ###############################################################################################
 

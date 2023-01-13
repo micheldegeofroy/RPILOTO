@@ -65,5 +65,6 @@ To edit the Login Welcome script: sudo nano /etc/update-motd.d/ssh-welcome
 To launch Glances: glances
 To Add to this splash screen edit with sudo nano  /etc/motd
 To launch Speed Test speedtest-cli --simple
+To find all service files /etc/systemd/system
 
 

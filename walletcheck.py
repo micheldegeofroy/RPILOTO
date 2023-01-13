@@ -3,20 +3,22 @@ import time
 import os
 import RPi.GPIO as GPIO
 import threading
+import datetime
+import subprocess
 
 flag = False
 
 #Replace with https://www.blockonomics.co API key
-api_key = 'replacewithyourapikey'
+api_key = 'KR9NNX9cXq9KIiowcoDWaHKHsVakW1ZNoH0zWied5S8'
 
 # Replace 1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa with the actual address of your Bitcoin wallet yourbtcwalletaddress 
 wallet_address = '1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa'
 
 # Replace this with your telegram bot bot token
-TOKEN = 'replacewithyourbottoken'
+TOKEN = '5564114282:AAGSjjJkjNH7RB-4dUH-aJW1pMmquFEq-m8'
 
 # Replace with the chat ID of the telegram Admin
-ADMIN_ID = replacewithadminchatid
+ADMIN_ID = 90423887 
 
 # LED
 def on(pin):
@@ -45,6 +47,14 @@ def blink_led():
         time.sleep(0.5)
 
 def check_balance():
+    
+    # Get the current date and time
+    now = datetime.datetime.now()
+    print(f"Current date and time: {now}")
+
+    # Get the uptime
+    uptime = subprocess.run(["uptime"], stdout=subprocess.PIPE)
+
     # Make a request to the blockonomics API to get the current balance of the Bitcoin wallet
     url = f'https://www.blockonomics.co/api/balance'
     headers = {'Authorization': f'Bearer {api_key}', 'Content-Type': 'application/json'}
@@ -83,7 +93,7 @@ def check_balance():
         text = f"The balance of the BTC wallet has CHANGED !!! The previous value was {previous_balance_btc} BTC and the current value is {current_balance_btc} BTC The change in balance is {change} BTC"
         requests.get(f"https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={ADMIN_ID}&text={text}")
     else:
-        requests.get(f"https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={ADMIN_ID}&text=The balance of the BTC wallet has NOT changed it is: {current_balance_btc} BTC")
+        requests.get(f"https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={ADMIN_ID}&text=BTC wallet  UNCHANGED @ {current_balance_btc} BTC INFO: {uptime.stdout.decode()}")
 
 
 # Check if the file exists
@@ -99,4 +109,4 @@ if os.stat("/home/pi/Bots/btcbalance.txt").st_size == 0:
 
 while True:
     check_balance()
-    time.sleep(600)
+    time.sleep(86400)

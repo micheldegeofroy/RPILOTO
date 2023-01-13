@@ -164,7 +164,7 @@ sudo systemctl disable bluetooth.service
 echo " "
 echo " "
 echo "##########################################"
-echo "Install macchanger #13"
+echo "Install mymacchanger #13"
 echo "##########################################"
 echo " "
 echo " "
@@ -173,7 +173,6 @@ sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/myma
 sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/mymacchanger.service" -P /etc/systemd/system/
 sudo chmod +x /home/pi/mymacchanger.py
 sudo systemctl enable mymacchanger.service
-sudo systemctl start mymacchanger.service
  
 echo " "
 echo " "

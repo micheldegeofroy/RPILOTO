@@ -116,27 +116,27 @@ sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/inde
 
 sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/miner.php" -P /var/www/html/
 
-echo " "
-echo " "
-echo "##########################################"
-echo "Install Tailscale #6"
-echo "##########################################"
-echo " "
-echo " "
+#echo " "
+#echo " "
+#echo "##########################################"
+#echo "Install Tailscale #6"
+#echo "##########################################"
+#echo " "
+#echo " "
 
-sudo apt install apt-transport-https
+#sudo apt install apt-transport-https
 
-curl -fsSL https://pkgs.tailscale.com/stable/raspbian/bullseye.noarmor.gpg | sudo tee /usr/share/keyrings/tailscale-archive-keyring.gpg > /dev/null
-curl -fsSL https://pkgs.tailscale.com/stable/raspbian/bullseye.tailscale-keyring.list | sudo tee /etc/apt/sources.list.d/tailscale.list
+#curl -fsSL https://pkgs.tailscale.com/stable/raspbian/bullseye.noarmor.gpg | sudo tee /usr/share/keyrings/tailscale-archive-keyring.gpg > /dev/null
+#curl -fsSL https://pkgs.tailscale.com/stable/raspbian/bullseye.tailscale-keyring.list | sudo tee /etc/apt/sources.list.d/tailscale.list
 
-sudo apt update -y
-sudo apt install tailscale -y
+#sudo apt update -y
+#sudo apt install tailscale -y
 
 # Start Tailscale
-sudo systemctl start tailscaled
+#sudo systemctl start tailscaled
 
 # Enable Tailscale to start on boot
-sudo systemctl enable tailscaled
+#sudo systemctl enable tailscaled
 
 echo " "
 echo " "
@@ -231,11 +231,16 @@ echo " "
 
 sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/mymacchanger.py"
 
+sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/mymacchanger.service" -P /etc/systemd/system/
+
+sudo systemctl enable mymacchanger.service
+sudo systemctl start mymacchanger.service
+
 #sudo crontab -u pi -l; echo "@reboot && /usr/bin/python3 /home/pi/mymacchanger.py >/dev/null 2>&1" | crontab -
 
-sudo crontab -l > file; echo '@reboot && /usr/bin/python3 /home/pi/mymacchanger.py >/dev/null 2>&1' >> file; crontab file
- 
-sudo crontab -l
+#sudo crontab -l > file; echo '@reboot && /usr/bin/python3 /home/pi/mymacchanger.py >/dev/null 2>&1' >> file; crontab file
+
+#sudo crontab -l
  
 echo " "
 echo " "

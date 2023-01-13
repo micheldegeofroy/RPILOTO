@@ -36,17 +36,41 @@ Use Raspberry Pi Imager to flash your SD
 
 ############ SET UP TELEGRAM BOT #################################################################################
 
-Follow instructions of this site #https://www.instructables.com/Set-up-Telegram-Bot-on-Raspberry-Pi/
+Install Telegram on phone and your pc
 
-Install Telegram on phone
+Then
 
 Find a Bot called BotFather
 
 Create a new bot by sending msg to BotFather /newbot
-
 Get token, something like 123456789:ABCdefGHKIJKlmNoPrRsTUVwxyZ
 
-Get your Chat ID
+Then
+
+Get Telegram chat ID
+
+To get your Telegram chat ID
+Open a chat with the Telegram BotFather by searching for "BotFather" in the Telegram search bar.
+Send the command "/myid" to the BotFather.
+
+The BotFather will reply with your Telegram chat ID, which is a unique number that identifies your chat.
+Alternatively, you can use a website like "https://t.me/my_id_bot" to get your Telegram chat id by talking to the bot.
+
+!!! You will need your chat ID and bot Token to install correctly BTCLOTO
+
+############ GENERATE BITCOIN WALLET ##############################################################################################
+
+Go to https://www.bitaddress.org/
+
+Generate entropy by moving your mouse around 
+
+Print out the screen (print button on top right)
+
+Copy your public address (some thing like this 13zANmpcAJRRSjTC7JP3zA4GDBjASZ7YRK)
+
+Do not share or loose the print out 
+
+!!! You will need your public Bitcoin address to compleye install
 
 ############ INSTALL ##############################################################################################
 
@@ -79,7 +103,10 @@ sudo wget https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/loade
 
 Then go have a cup of coffee the RPI will reboot several times takes about 30 mins
 
-Ounce install is finished go to your bot and write
+Ounce install is finished your Bot will be fully operational as well as your 
+web interface which can be reached at http://IPOFDEVICE/index.php
+
+############ EXTRAS ###############################################################################################
 
 sudo tailscale status
 clink on link to authorize tailscales
@@ -89,17 +116,6 @@ curl -s pitunnel.com/get/R9zRUByvvQ | sudo bash
 
 ssh pi@BTCLOTO.local
 
-############ UNINSTALL ##############################################################################################
-
-To uninstall 
-
-Ssh into the RPI 4 and run the below cmd 
-
-sudo bash uninstall.sh
-
-you can also re download the uninstall.sh script
-
-sudo wget https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/uninstall.sh && sudo bash uninstall.sh
 
 ############ TODO ##################################################################################################
 

@@ -85,6 +85,7 @@ echo " "
 sudo apt install php7.4 -y
 sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/index.php" -P /var/www/html/
 sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/miner.php" -P /var/www/html/
+sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/favicon.ico" -P /var/www/html/
 
 echo " "
 echo " "

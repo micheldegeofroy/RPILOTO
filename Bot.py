@@ -14,6 +14,7 @@ import re
 import os
 import threading
 import requests
+import bitcoin
 
 os.system('pwd')
 os.system('cd ~')
@@ -27,6 +28,7 @@ flag1 = False
 flag2 = False
 flag3 = False
 flag4 = False
+flag5 = False
 #
 #  GPIO READALL
 #  +-----+-----+-------------------+------+---+---Pi 4B--+---+------+--------------------+-----+-----+
@@ -144,6 +146,60 @@ def get_btc_value(wallet_address, api_key):
     url = f'https://min-api.cryptocompare.com/data/price?fsym=BTC&tsyms=USD&api_key={api_key}'
     r = requests.get(url)
 
+    # Function make btc address ############ this neeeds to be checked when BTC CORE IS RUNNING ANY SYNCED
+#def make_btc_address(update):
+    # Generate a private key
+    #private_key = subprocess.run(["openssl", "ecparam", "-genkey", "-name", "secp256k1"], capture_output=True).stdout
+     # Derive the compressed public key from the private key
+    #public_key = subprocess.run(["openssl", "ec", "-inform", "DER", "-pubout", "-outform", "DER", "-conv_form", "compressed", "-in", "-"], input=private_key, capture_output=True).stdout
+    # generate bitcoin address from the public key
+    #addresspub = bitcoin.pubkey_to_address(public_key)
+    # generate bitcoin address from the public key
+    #addresspriv = bitcoin.pubkey_to_address(private_key)
+    #return f"New Public Key:\n {addresspub}\n \n New Private Key:\n {addresspriv}"
+
+def make_btc_address():
+    # Generate a private key
+    private_key = bitcoin.random_key()
+
+    # Derive the public key and address
+    public_key = bitcoin.privkey_to_pubkey(private_key)
+    address = bitcoin.pubkey_to_address(public_key)
+
+    # Generate a WIF private key
+    wif_private_key = bitcoin.encode_privkey(private_key, 'wif')
+
+    return f"New Public Key: {public_key}\n \nNew Public Address: \n{address}\n \nWIF Private Key: {wif_private_key}\n\nCheck at www.bitaddress.org"
+
+# Function checks validity of WIF btc address
+def check_private_key(check_address2):
+    try:
+        # Use the validateaddress() function to check if the given address is valid
+        address_info = bitcoin.rpc.call('validateaddress', [check_address2])
+        if address_info['isvalid']:
+            message = f'{check_address2} is a valid bitcoin address'
+        else:
+            message = f'{check_address2} is not a valid bitcoin address'
+    except:
+        message = f'An error occurred while checking {check_address2} probably Bitcoin Core is not running'
+    return message
+
+
+# Function for /btc
+def get_btc_price():
+    # Make a request to the CryptoCompare API to get the latest BTC price in USD
+    r = requests.get(
+        'https://min-api.cryptocompare.com/data/price?fsym=BTC&tsyms=USD')
+    btc_price = r.json()['USD']
+
+    return btc_price
+
+# Function for /walletusd
+def get_btc_value(wallet_address, api_key):
+    # Make a request to the CryptoCompare API to get the current value of the Bitcoin wallet
+    url = f'https://min-api.cryptocompare.com/data/price?fsym=BTC&tsyms=USD&api_key={api_key}'
+    r = requests.get(url)
+
     # Get the current value of BTC in USD
     btc_value = int(r.json()['USD'])
 
@@ -186,6 +242,7 @@ def send_btc_value(bot, chat_id, wallet_address, api_key):
     # Get the current value of the Bitcoin wallet
     btc_value = get_btc_value(wallet_address, api_key)
 
+    # Send a message to the user with the current value of the Bitcoin wallet in usd
     message = f'The current value of your BTC wallet is ${btc_value:.0f} USD'
     bot.send_message(chat_id=chat_id, text=message)
 
@@ -250,13 +307,17 @@ def message_received(update, context):
         global flag2
         global flag3
         global flag4
+        global flag5
         if command == '/who':
             run = subprocess.run(['whoami'], capture_output=True)
+            context.bot.send_message(chat_id, run.stdout.decode())
+        elif command == '/tailsup':
+            run = subprocess.run(['sudo tailscale up'], capture_output=True)
             context.bot.send_message(chat_id, run.stdout.decode())
         elif command == '/walletcheck':
             # Set the flag to True
             flag4 = True
-            context.bot.send_message(chat_id, 'Enter your bitcoin wallet address')
+            context.bot.send_message(chat_id, 'Enter a bitcoin wallet address')
         elif flag4:
             wallet_address2 = command
             balance = check_wallet_balance(wallet_address2, api_key)
@@ -267,10 +328,28 @@ def message_received(update, context):
             send_btc_balance(bot, chat_id, wallet_address, api_key)
         elif command == '/walletusd':
             send_btc_value(bot, chat_id, wallet_address, api_key)
+        elif command == '/generate': 
+            btc_gen = make_btc_address()
+            context.bot.send_message(
+                chat_id,btc_gen)  
+        elif command == '/checkadd':
+            # Set the flag to True
+            flag5 = True
+            context.bot.send_message(chat_id, 'Enter the private key to check')
+        elif flag5:
+            check_address2 = command
+            check = check_private_key(check_address2)
+            context.bot.send_message(chat_id, check)
+            # Reset the flag to False
+            flag5 = False
         elif command == '/btc':
             btc_price = get_btc_price()
             context.bot.send_message(
                 chat_id, f'The current price of BTC in USD is: ${btc_price:.0f} USD')
+        elif command == '/mywallet':
+            my_wallet = wallet_address 
+            context.bot.send_message(
+                chat_id, f'The public address of your wallet is:{my_wallet}')
         elif command == '/ping':
             # Set the flag to True
             flag1 = True
@@ -316,6 +395,10 @@ def message_received(update, context):
             run = subprocess.run(
                 ['cat', '/proc/device-tree/model'], capture_output=True)
             context.bot.send_message(chat_id, run.stdout.decode())
+        elif command == '/time':
+            run = subprocess.run(
+                ['date'], capture_output=True)
+            context.bot.send_message(chat_id, run.stdout.decode())
         elif command == '/uptime':
             run = subprocess.run(['uptime', '-p'], capture_output=True)
             context.bot.sendMessage(chat_id, run.stdout.decode()[2:])
@@ -334,7 +417,7 @@ def message_received(update, context):
             context.bot.sendMessage(
                 chat_id, text='Volts Used: ' + run.stdout.decode('utf-8'))
         elif command == '/speed':
-            context.bot.send_message(chat_id, 'Be Patient')
+            context.bot.send_message(chat_id, 'Be Patient Speed Test Started')
             run = subprocess.run(['speedtest-cli --simple'],
                                  shell=True, capture_output=True)
             context.bot.sendMessage(
@@ -349,6 +432,9 @@ def message_received(update, context):
                 ["""vmstat 1 2 | tail -1 | awk '{print $13}' | tr -d '\n'"""], shell=True, capture_output=True)
             context.bot.sendMessage(
                 chat_id, text='CPU% : ' + run.stdout.decode('utf-8')[:3] + '%')
+        elif command == '/macchange':
+            run = subprocess.run(
+                ['sudo python3 /home/pi/mymacchanger.py'], shell=True, capture_output=True)
         elif command == '/eth0':
             run = subprocess.run(
                 ["""ip link show eth0 | awk '/ether/ {print $2}'"""], shell=True, capture_output=True)
@@ -400,20 +486,25 @@ def message_received(update, context):
             context.bot.sendMessage(chat_id, '/help: Shows you all the commands available\n '
                                     '/reboot: Reboots the device\n '
                                     '/shutdown: Shuts down the device\n '
+                                    '/time: Shows the device time\n '
                                     '/startminer: Starts the BTC miner\n '
                                     '/stopminer: Stops the BTC miner\n '
                                     '/btc: Shows the current value of BTC in USD\n '
                                     '/wallet: Shows the current balance of your BTC wallet\n'
+                                    '/mywallet: Shows the current wallet public address\n'
                                     '/walletusd: Shows the current value in USD of your wallet\n '
                                     '/walletcheck: Checks the wallet balance of your choice\n'
+                                    '/generate: Generates Public / Private key set\n' 
+                                    '/checkadd: Checks Validity of BTC Address\n'
                                     '/fanon: Turns the fan on\n '
                                     '/fanoff: Turns the fan off\n '
                                     '/ledon: Turns LED on\n '
                                     '/ledoff: Turns LED off\n '
                                     '/blinkon: Turns LED on Blinking mode\n '
                                     '/blinkoff: Turns LED off Blinking mode\n '
-                                    '/eth0: Shows Eth0 Mac\n '
-                                    '/wlan0: Shows Wlan0 Mac\n '
+                                    '/eth0: Shows Eth0 Mac address\n '
+                                    '/wlan0: Shows Wlan0 Mac address\n '
+                                    '/macchange: Changes the wlan Mac address\n'
                                     '/ping: Promts for ping IP or Domain & gives you results\n '
                                     '/sudo: Prompts for sudo cmd and then executes it\n '
                                     '/htop: Runs htop limited to top processes\n '
@@ -427,36 +518,36 @@ def message_received(update, context):
                                     '/volts: Shows energy usage of device \n '
                                     '/speed: Runs a speed test \n '
                                     '/cpughz: Shows Ghz cpu usage \n '
-                                    '/cpughz: Shows cpu usage in percentage \n '
+                                    '/cpu: Shows cpu usage in percentage \n '
                                     '/wanip: Shows public IP \n '
                                     '/lanip: Shows local network IP \n '
                                     '/temp: Shows device temperature \n '
                                     )
         elif command == '/help':
             context.bot.sendMessage(chat_id,
-                                    '/start /help /guide /reboot /shutdown /startminer /stopminer /walletcheck /btc '
-                                    '/wallet /walletusd /fanon /fanoff /ledon /ledoff /blinkon /blinkoff /eth0 /wlan0 '
-                                    '/ping /sudo /htop /sync /model /uptime /where /who /hd /hdex '
+                                    '/start /help /guide /reboot /shutdown /time /startminer /stopminer /walletcheck /btc '
+                                    '/wallet /mywallet /generate /checkadd /walletusd /fanon /fanoff /ledon /ledoff /blinkon /blinkoff /eth0 /wlan0 '
+                                    '/macchange /ping /sudo /htop /sync /model /uptime /where /who /hd /hdex '
                                     '/volts /speed /cpughz /cpu /wanip /lanip /temp '
                                     )
         elif command == '/start':
             context.bot.sendMessage(chat_id,
-                                    '/start /help / guide /reboot /shutdown /startminer /stopminer /walletcheck /btc '
-                                    '/wallet /walletusd /fanon /fanoff /ledon /ledoff /blinkon /blinkoff /eth0 /wlan0 '
-                                    '/ping /sudo /htop /sync /model /uptime /where /who /hd /hdex '
+                                    '/start /help / guide /reboot /shutdown /time /startminer /stopminer /walletcheck /btc '
+                                    '/wallet /mywallet /generate /checkadd /walletusd /fanon /fanoff /ledon /ledoff /blinkon /blinkoff /eth0 /wlan0 '
+                                    '/macchange /ping /sudo /htop /sync /model /uptime /where /who /hd /hdex '
                                     '/volts /speed /cpughz /cpu /wanip /lanip /temp '
                                     )
         elif command == '/reboot':
-            context.bot.sendMessage(chat_id, 'Rebooting Now ')
+            context.bot.sendMessage(chat_id, 'Rebooting Now !')
             os.system('sudo reboot')
         elif command == '/shutdown':
             context.bot.sendMessage(chat_id, 'Shutting Down Now !')
             os.system('sudo shutdown')
         elif command == '/startminer':
-            context.bot.sendMessage(chat_id, 'Miner Started')
+            context.bot.sendMessage(chat_id, 'Miner Started !')
             os.system('sudo systemctl start bfgminer.service')
         elif command == '/stopminer':
-            context.bot.sendMessage(chat_id, 'Miner Stopped')
+            context.bot.sendMessage(chat_id, 'Miner Stopped !')
             os.system('sudo systemctl stop bfgminer.service')
         else:
             context.bot.send_message(chat_id, 'Try /help')
@@ -469,4 +560,3 @@ dispatcher = updater.dispatcher
 dispatcher.add_handler(MessageHandler(Filters.text, message_received))
 updater.start_polling()
 updater.idle()
-

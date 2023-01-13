@@ -42,7 +42,18 @@ sudo systemctl restart mymacchanger.service
 sudo systemctl status mymacchanger.service
 sudo systemctl enable mymacchanger.service
 sudo systemctl daemon-reload
-  
+
+TAILS
+sudo systemctl stop tailscaled
+sudo systemctl start tailscaled
+sudo systemctl restart tailscaled
+sudo systemctl status tailscaled
+sudo systemctl enable tailscaled
+sudo systemctl disable tailscaled
+sudo systemctl daemon-reload
+sudo sudo tailscale up
+sudo sudo tailscale status
+
 BTC
 sudo tail -n 100 -f /mnt/hdd/debug.log
 bitcoin-cli getblockchaininfo

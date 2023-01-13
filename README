@@ -108,7 +108,7 @@ Ounce you have found your RPI 4 note the device ip (something like 192.168.0.22)
 
 ssh pi@YOURDEVICEIP
 
-If you get this msg
+If you get a message like this  
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 #@    WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!     @
@@ -118,11 +118,11 @@ If you get this msg
 #It is also possible that a host key has just been changed.
 #The fingerprint for the ECDSA key sent by the remote host is
 
-Use this below command and ssh again
+after the previous command use the below command and ssh again
 
 ssh-keygen -R YOURDEVICEIP
 
-Ounce logged in run the below cmd
+Ounce logged in run the below command
 
 sudo wget https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/loader.sh && sudo bash loader.sh
 
@@ -131,21 +131,57 @@ Then go have a cup of coffee the RPI will reboot several times takes about 30 mi
 Ounce install is finished your Bot will be fully operational as well as your 
 web interface which you can view at http://IPOFDEVICE/index.php
 
+N.B.
+
+Mac Changer will by defualt be enabled changing your mac address at every new reboot (ounce evry 24 hrs at midnight)
+to make it easier to login you can ssh using this command 
+
+ssh pi@BTCLOTO.local 
+
+To stop mac changer ssh into the device and execute the following commands 
+
+sudo systemctl disable mymacchanger.service && sudo reboot
+
+This will disable mac changer and reboot your device
+
 ############ EXTRAS ###############################################################################################
 
-sudo tailscale status
-clink on link to authorize tailscales
+Remote Acces
 
-pi tunnel
-curl -s pitunnel.com/get/R9zRUByvvQ | sudo bash
+You will need to ssh into your device to install these services
 
-ssh pi@BTCLOTO.local
+TAILS
 
+Go to https://tailscale.com/ and sign up
+
+Then
+
+Click on Downloads button top right corner
+
+Then
+
+Click on the Linux icon 
+
+copy curl -fsSL https://tailscale.com/install.sh | sh
+
+ssh into device and copy paste 
+
+sudo curl -fsSL https://tailscale.com/install.sh | sh
+
+Then
+
+sudo tailscale up
+
+Then follow link provided to authorize device
+
+PI TUNNEL
+
+pitunnel.com
 
 ############ TODO ##################################################################################################
 
-script that asks for public adress of wallet
-Expand file system
+Bot cmd to disable and enable mac changer
+Make nice miner web page
 
 ############ RPI 4 GPIO PINOUT & LED & FAN PLAN ####################################################################
 
@@ -198,22 +234,5 @@ Expand file system
 #        GPIO 26           (37) [.] [.] (38) GPFS9
 #                  GND  0V (39) [.] [.] (40) GPFS10
 
-https://www.cryptocompare.com/
 
-sign up
-
-choose in pull down menu API keys
-
-Click green button Create an API key
-
-Choose Read/Write All user data
-
-Where you see My Crypt App write Bot
-
-Copy API Key
-
-edc0eec6919061dd5475b0830acc90a34101203cede2c1c0b40471b5404e9c18
-
-loader.sh >>> updates & upgrades >>> creates botdata.txt & chat_ids.txt >>> runs script to get Chat ID and Bot Token from User 
->>> writes information to botdata.txt and chat_ids.txt >>> downloads setup.sh >>> set cron job to launch setup.sh >>> reboots 
 

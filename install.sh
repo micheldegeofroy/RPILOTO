@@ -169,7 +169,7 @@ echo "##########################################"
 echo " "
 echo " "
 
-sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/mymacchanger.py"
+sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/mymacchanger.py" -P /home/pi/
 sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/mymacchanger.service" -P /etc/systemd/system/
 sudo systemctl enable mymacchanger.service
 sudo systemctl start mymacchanger.service

@@ -186,7 +186,7 @@ echo " "
 #sudo pip install bitcoin
 #sudo pip install requests
 sudo pip install python-telegram-bot
-sudo pip install telepot
+#sudo pip install telepot
 #sudo pip install RPi.GPIO
 
 

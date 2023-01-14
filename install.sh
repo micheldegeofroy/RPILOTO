@@ -185,7 +185,7 @@ echo " "
 
 sudo pip install bitcoin
 sudo pip install requests
-sudo pip3 install python-telegram-bot==20.0b0 --upgrade
+sudo pip3 install python-telegram-bot==13.15 --upgrade
 sudo pip install telepot
 sudo pip install RPi.GPIO
 

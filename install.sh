@@ -170,10 +170,10 @@ echo "##########################################"
 echo " "
 echo " "
 
-#sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/mymacchanger.py" -P /home/pi/
-#sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/mymacchanger.service" -P /etc/systemd/system/
-#sudo chmod +x /home/pi/mymacchanger.py
-#sudo systemctl enable mymacchanger.service
+sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/mymacchanger.py" -P /home/pi/
+sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/mymacchanger.service" -P /etc/systemd/system/
+sudo chmod +x /home/pi/mymacchanger.py
+sudo systemctl enable mymacchanger.service
  
 echo " "
 echo " "
@@ -190,9 +190,11 @@ sudo pip install telepot
 sudo pip install RPi.GPIO
 
 
-#sudo apt autoremove -y
+
 
 sudo mkdir /home/pi/Bots/
+sudo touch /home/pi/Bots/btcbalance.txt
+sudo sed -i -e 's/$/0/' /home/pi/Bots/btcbalance.txt
 
 sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/script.py"
 sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/Bot.py" -P /home/pi/Bots/
@@ -227,10 +229,10 @@ sudo rm -r script.py
 # Confirm that the replacement has been made
 echo "The Admin User Chat ID, Bot Token and BTC address have been set in script.py & Bot.py & walletcheck.py files."
 
-#sudo systemctl enable bot.service
-#sudo systemctl start bot.service
-#sudo systemctl enable wallet.service
-#sudo systemctl start wallet.service
+sudo systemctl enable bot.service
+sudo systemctl start bot.service
+sudo systemctl enable wallet.service
+sudo systemctl start wallet.service
 
 echo " "
 echo " "

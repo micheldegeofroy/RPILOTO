@@ -185,7 +185,7 @@ echo " "
 
 sudo pip install bitcoin
 sudo pip install requests
-sudo pip3 install python-telegram-bot==12.0.0b1 —upgrade
+sudo pip3 install python-telegram-bot==20.0b0 --upgrade
 sudo pip install telepot
 sudo pip install RPi.GPIO
 
@@ -227,10 +227,10 @@ sudo rm -r script.py
 # Confirm that the replacement has been made
 echo "The Admin User Chat ID, Bot Token and BTC address have been set in script.py & Bot.py & walletcheck.py files."
 
-sudo systemctl enable bot.service
-sudo systemctl start bot.service
-sudo systemctl enable wallet.service
-sudo systemctl start wallet.service
+#sudo systemctl enable bot.service
+#sudo systemctl start bot.service
+#sudo systemctl enable wallet.service
+#sudo systemctl start wallet.service
 
 echo " "
 echo " "

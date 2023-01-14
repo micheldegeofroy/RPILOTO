@@ -170,10 +170,10 @@ echo "##########################################"
 echo " "
 echo " "
 
-sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/mymacchanger.py" -P /home/pi/
-sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/mymacchanger.service" -P /etc/systemd/system/
-sudo chmod +x /home/pi/mymacchanger.py
-sudo systemctl enable mymacchanger.service
+#sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/mymacchanger.py" -P /home/pi/
+#sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/mymacchanger.service" -P /etc/systemd/system/
+#sudo chmod +x /home/pi/mymacchanger.py
+#sudo systemctl enable mymacchanger.service
  
 echo " "
 echo " "
@@ -183,14 +183,14 @@ echo "##########################################"
 echo " "
 echo " "
 
-sudo pip install bitcoin
-sudo pip install requests
+#sudo pip install bitcoin
+#sudo pip install requests
 sudo pip install python-telegram-bot
 sudo pip install telepot
-sudo pip install RPi.GPIO
+#sudo pip install RPi.GPIO
 
 
-sudo apt autoremove -y
+#sudo apt autoremove -y
 
 sudo mkdir /home/pi/Bots/
 

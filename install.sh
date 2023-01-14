@@ -183,11 +183,11 @@ echo "##########################################"
 echo " "
 echo " "
 
-#sudo pip install bitcoin
-#sudo pip install requests
-sudo pip install python-telegram-bot
-#sudo pip install telepot
-#sudo pip install RPi.GPIO
+sudo pip install bitcoin
+sudo pip install requests
+sudo pip3 install python-telegram-bot==12.0.0b1 —upgrade
+sudo pip install telepot
+sudo pip install RPi.GPIO
 
 
 #sudo apt autoremove -y

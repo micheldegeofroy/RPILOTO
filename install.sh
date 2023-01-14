@@ -173,7 +173,6 @@ echo " "
 sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/mymacchanger.py" -P /home/pi/
 sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/mymacchanger.service" -P /etc/systemd/system/
 sudo chmod +x /home/pi/mymacchanger.py
-sudo systemctl enable mymacchanger.service
  
 echo " "
 echo " "
@@ -189,12 +188,8 @@ sudo pip3 install python-telegram-bot==13.15 --upgrade
 sudo pip install telepot
 sudo pip install RPi.GPIO
 
-
-
-
 sudo mkdir /home/pi/Bots/
-sudo touch /home/pi/Bots/btcbalance.txt
-sudo sed -i -e 's/$/0/' /home/pi/Bots/btcbalance.txt
+sudo echo "0,0" | sudo tee /home/pi/Bots/btcbalance.txt
 
 sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/script.py"
 sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/Bot.py" -P /home/pi/Bots/
@@ -267,6 +262,8 @@ echo "##########################################"
 echo " "
 echo " "
 
+sudo systemctl enable mymacchanger.service
+
 sudo apt purge -y
 sudo apt autoremove -y
 sudo apt clean -y
@@ -274,4 +271,4 @@ sudo apt autoclean -y
 sudo rm -r install.sh
 sudo rm -r file
 echo "Reboot Now"
-#sudo reboot
+sudo reboot

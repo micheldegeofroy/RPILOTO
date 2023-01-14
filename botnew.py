@@ -2,8 +2,6 @@
 # -*- coding: utf-8 -*-
 
 import time
-# import random
-# import datetime
 import telepot
 from telepot.loop import MessageLoop
 import telegram
@@ -310,10 +308,6 @@ def message_received(update, context):
             context.bot.send_message(chat_id, 'FAN turned on', on(12))
         elif command == '/fanoff':
             context.bot.send_message(chat_id, 'FAN turned off', off(12))
-        elif command == '/model':
-            run = subprocess.run(
-                ['cat', '/proc/device-tree/model'], capture_output=True)
-            context.bot.send_message(chat_id, run.stdout.decode())
         elif command == '/time':
             run = subprocess.run(
                 ['date'], capture_output=True)
@@ -399,56 +393,6 @@ def message_received(update, context):
                                     text='Blockchain Sync is at: '
                                     + run.stdout.decode('utf-8')[:4]
                                     + '%')
-        elif command == '/Fuck':
-            context.bot.sendMessage(chat_id, 'Are you from NYC ?')
-        elif command == '/guide':
-            context.bot.sendMessage(chat_id, '/help: Shows you all the commands available\n '
-                                    '/reboot: Reboots the device\n '
-                                    '/shutdown: Shuts down the device\n '
-                                    '/time: Shows the device time\n '
-                                    '/startminer: Starts the BTC miner\n '
-                                    '/stopminer: Stops the BTC miner\n '
-                                    '/btc: Shows the current value of BTC in USD\n '
-                                    '/wallet: Shows the current balance of your BTC wallet\n'
-                                    '/mywallet: Shows the current wallet public address\n'
-                                    '/walletusd: Shows the current value in USD of your wallet\n '
-                                    '/walletcheck: Checks the wallet balance of your choice\n'
-                                    '/generate: Generates Public / Private key set\n' 
-                                    '/checkadd: Checks Validity of BTC Address\n'
-                                    '/fanon: Turns the fan on\n '
-                                    '/fanoff: Turns the fan off\n '
-                                    '/ledon: Turns LED on\n '
-                                    '/ledoff: Turns LED off\n '
-                                    '/blinkon: Turns LED on Blinking mode\n '
-                                    '/blinkoff: Turns LED off Blinking mode\n '
-                                    '/eth0: Shows Eth0 Mac address\n '
-                                    '/wlan0: Shows Wlan0 Mac address\n '
-                                    '/macchange: Changes the wlan Mac address\n'
-                                    '/ping: Promts for ping IP or Domain & gives you results\n '
-                                    '/sudo: Prompts for sudo cmd and then executes it\n '
-                                    '/htop: Runs htop limited to top processes\n '
-                                    '/sync: Shows Blockchain Sync state in percentage \n '
-                                    '/model: Shows device model \n '
-                                    '/uptime: Shows device uptime \n '
-                                    '/where: Shows country location of device based on ip \n '
-                                    '/who: Shows user \n '
-                                    '/hd: Shows percent usage of SD card \n '
-                                    '/hdex: Shows percent usage exterior usb connected HD \n '
-                                    '/volts: Shows energy usage of device \n '
-                                    '/speed: Runs a speed test \n '
-                                    '/cpughz: Shows Ghz cpu usage \n '
-                                    '/cpu: Shows cpu usage in percentage \n '
-                                    '/wanip: Shows public IP \n '
-                                    '/lanip: Shows local network IP \n '
-                                    '/temp: Shows device temperature \n '
-                                    )
-        elif command == '/help':
-            context.bot.sendMessage(chat_id,
-                                    '/start /help /guide /reboot /shutdown /time /startminer /stopminer /walletcheck /btc '
-                                    '/wallet /mywallet /generate /checkadd /walletusd /fanon /fanoff /ledon /ledoff /blinkon /blinkoff /eth0 /wlan0 '
-                                    '/macchange /ping /sudo /htop /sync /model /uptime /where /who /hd /hdex '
-                                    '/volts /speed /cpughz /cpu /wanip /lanip /temp '
-                                    )
         elif command == '/start':
             context.bot.sendMessage(chat_id,
                                     '/start /help / guide /reboot /shutdown /time /startminer /stopminer /walletcheck /btc '
@@ -459,15 +403,8 @@ def message_received(update, context):
         elif command == '/reboot':
             context.bot.sendMessage(chat_id, 'Rebooting Now !')
             os.system('sudo reboot')
-        elif command == '/shutdown':
-            context.bot.sendMessage(chat_id, 'Shutting Down Now !')
-            os.system('sudo shutdown')
-        elif command == '/startminer':
-            context.bot.sendMessage(chat_id, 'Miner Started !')
-            os.system('sudo systemctl start bfgminer.service')
-        elif command == '/stopminer':
-            context.bot.sendMessage(chat_id, 'Miner Stopped !')
-            os.system('sudo systemctl stop bfgminer.service')
+
+
         else:
             context.bot.send_message(chat_id, 'Try /help')
     else:
@@ -478,4 +415,4 @@ updater = Updater(token=TOKEN, use_context=True)
 dispatcher = updater.dispatcher
 dispatcher.add_handler(MessageHandler(Filters.text, message_received))
 updater.start_polling()
-updater.idle(
+updater.idle()

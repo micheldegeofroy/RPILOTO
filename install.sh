@@ -55,7 +55,7 @@ echo " "
 echo " "
 
 crontab -r
-sudo rm loader.sh
+sudo rm setup.sh
 
 echo " "
 echo " "

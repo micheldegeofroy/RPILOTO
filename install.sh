@@ -182,11 +182,10 @@ echo "##########################################"
 echo " "
 echo " "
 
-sudo pip install bitcoin
-sudo pip install requests
+sudo pip3 install bitcoin
+sudo pip3 install requests
 sudo pip3 install python-telegram-bot==13.15 --upgrade
-sudo pip install telepot
-sudo pip install RPi.GPIO
+sudo pip3 install telepot
 
 sudo mkdir /home/pi/Bots/
 sudo echo "0,0" | sudo tee /home/pi/Bots/btcbalance.txt

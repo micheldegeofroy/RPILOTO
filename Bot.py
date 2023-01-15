@@ -23,7 +23,6 @@ output = stream.readlines()
 
 flag1 = False
 flag2 = False
-flag3 = False
 flag4 = False
 flag5 = False
 
@@ -193,7 +192,6 @@ def message_received(update, context):
 
         global flag1
         global flag2
-        global flag3
         global flag4
         global flag5
         if command == '/who':

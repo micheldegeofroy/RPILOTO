@@ -182,7 +182,6 @@ def check_private_key(check_address2):
         message = f'An error occurred while checking {check_address2} probably Bitcoin Core is not running'
     return message
 
-
 # Function for /btc
 def get_btc_price():
     # Make a request to the CryptoCompare API to get the latest BTC price in USD
@@ -308,9 +307,6 @@ def message_received(update, context):
         global flag5
         if command == '/who':
             run = subprocess.run(['whoami'], capture_output=True)
-            context.bot.send_message(chat_id, run.stdout.decode())
-        elif command == '/tailsup':
-            run = subprocess.run(['sudo tailscale up'], capture_output=True)
             context.bot.send_message(chat_id, run.stdout.decode())
         elif command == '/walletcheck':
             # Set the flag to True

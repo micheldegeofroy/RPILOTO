@@ -2,8 +2,6 @@
 # -*- coding: utf-8 -*-
 
 import time
-# import random
-# import datetime
 import telepot
 from telepot.loop import MessageLoop
 import telegram
@@ -532,7 +530,7 @@ def message_received(update, context):
                                     )
         elif command == '/start':
             context.bot.sendMessage(chat_id,
-                                    '/start /help / guide /reboot /shutdown /time /startminer /stopminer /walletcheck /btc '
+                                    '/start /help /guide /reboot /shutdown /time /startminer /stopminer /walletcheck /btc '
                                     '/wallet /mywallet /generate /checkadd /walletusd /fanon /fanoff /ledon /ledoff /blinkon /blinkoff /eth0 /wlan0 '
                                     '/macchange /ping /sudo /htop /sync /model /uptime /where /who /hd /hdex '
                                     '/volts /speed /cpughz /cpu /wanip /lanip /temp '

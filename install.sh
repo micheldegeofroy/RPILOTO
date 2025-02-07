@@ -89,6 +89,7 @@ echo "##########################################################################
 echo "Set Bot Token,Chat ID, BTC Address, API key"
 echo "################################################################################"
 
+# Create necessary files
 sudo touch botdata.txt
 sudo touch chat_ids.txt
 sudo touch tails.txt
@@ -100,61 +101,45 @@ DEFAULT_BTC_ADDRESS="bc1qwjc5v4n20v6qalhm4dcf8jfdgn0ehqjglunmj4"
 DEFAULT_API_KEY="KR9NNX9cXq9KIiowcoDWaHKHsVakW1ZNoH0zWied5S8"
 DEFAULT_TAILS_KEY="kCe74HTc6711CNTRL-BVMPN56nvv6wE6Hu3GEht6CXbbybwHZz"
 
-# Ask the user for Telegram Chat ID (default if empty)
+# Ask user input with defaults
 read -p "What is your Telegram Chat ID? (Press Enter for default: $DEFAULT_CHAT_ID): " chat_id
 chat_id=${chat_id:-$DEFAULT_CHAT_ID}
 
-# Ask the user for Telegram Bot Token (default if empty)
 read -p "What is your Telegram Bot Token? (Press Enter for default: $DEFAULT_TOKEN): " token
 token=${token:-$DEFAULT_TOKEN}
 
-# Ask the user for Wallet Address (default if empty)
 read -p "What is your BTC Wallet Address? (Press Enter for default: $DEFAULT_BTC_ADDRESS): " btcaddress
 btcaddress=${btcaddress:-$DEFAULT_BTC_ADDRESS}
 
-# Ask the user for Blockonomics API Key (default if empty)
 read -p "What is your Blockonomics.co API Key? (Press Enter for default: $DEFAULT_API_KEY): " apikey
 apikey=${apikey:-$DEFAULT_API_KEY}
 
-# Ask the user for Tailscale Key (default if empty)
 read -p "What is your Tailscale Key? (Press Enter for default: $DEFAULT_TAILS_KEY): " tailskey
-apikey=${apikey:-$DEFAULT_TAILS_KEY}
+tailskey=${tailskey:-$DEFAULT_TAILS_KEY}  # ✅ Corrected variable assignment
 
 # Store values in files
-echo "$chat_id" | sudo tee -a chat_ids.txt botdata.txt > /dev/null
+echo "$chat_id" | sudo tee chat_ids.txt botdata.txt > /dev/null
 echo "$token" | sudo tee -a botdata.txt > /dev/null
 echo "$btcaddress" | sudo tee -a botdata.txt > /dev/null
 echo "$apikey" | sudo tee -a botdata.txt > /dev/null
-echo "$tailskey" | sudo tee -a tails.txt > /dev/null
+echo "$tailskey" | sudo tee tails.txt > /dev/null  # ✅ Correctly store Tailscale key
 
-# Read and display stored values
+# Read stored values
 ID=$(sed -n '1p' botdata.txt)
 TOKEN=$(sed -n '2p' botdata.txt)
 ADD=$(sed -n '3p' botdata.txt)
 API=$(sed -n '4p' botdata.txt)
-AUTH=$(sed -n '1p' tails.txt)
+AUTH=$(head -n 1 tails.txt)  # ✅ Corrected to read from tails.txt
 
-# Read the telegram chat ID file and print it
-ID=$(head -n 1 botdata.txt)
+# Print stored values
 echo "Your Telegram Admin Chat ID is: $ID"
-
-# Read the telegram token from file and print it
-TOKEN=$(tail -n +2 botdata.txt | head -n 1)
 echo "Your Telegram Bot Token is: $TOKEN"
-
-# Read the btcaddress  from file and print it
-ADD=$(tail -n +3 botdata.txt | head -n 1)
 echo "Your Wallet Address is: $ADD"
+echo "Your Blockonomics API Key is: $API"
+echo "Your Tailscale Key is: $AUTH"
 
-# Read the btcaddress  from file and print it
-API=$(tail -n +4 botdata.txt | head -n 1)
-echo "Your Wallet Address is: $API"
+echo "✅ Setting Bot Token, Chat ID, BTC Address, API key, and Tailscale Key successful"
 
-# Read the Tailscale key from file and print it
-AUTH=$(tail -n +1 botdata.txt | head -n 1)
-echo "Your Tailscale Key: $AUTH"
-
-echo "✅ Setting Bot Token,Chat ID, BTC Address, API key successfull"
 
 echo "################################################################################"
 echo "Fix Language Local"
@@ -220,17 +205,20 @@ echo "##########################################################################
 echo "Install Tailscale"
 echo "################################################################################"
 
-sudo wget https://github.com/micheldegeofroy/Tailscale/raw/refs/heads/main/tailscale_1.80.0_armhf.deb
-apt-get download iptables:armhf
-sudo apt-get install -f
+# Download Tailscale package
+sudo wget -O tailscale_1.80.0_armhf.deb "https://github.com/micheldegeofroy/Tailscale/raw/refs/heads/main/tailscale_1.80.0_armhf.deb"
+# Download iptables dependency for ARM
+sudo apt-get download iptables:armhf
+# Install dependencies and Tailscale package
+sudo apt-get install -f -y
 sudo dpkg -i tailscale_1.80.0_armhf.deb
-sudo tailscale up --authkey=tskey-auth-"$PRE_AUTH_KEY"
-
+# Enable IP forwarding
 echo 'net.ipv4.ip_forward = 1' | sudo tee -a /etc/sysctl.conf
 echo 'net.ipv6.conf.all.forwarding = 1' | sudo tee -a /etc/sysctl.conf
 sudo sysctl -p
-sudo tailscale up --advertise-exit-node
-sudo systemctl enable tailscaled
+# Start and enable Tailscale (corrected syntax)
+sudo tailscale up --advertise-exit-node --authkey="tskey-auth-$AUTH"
+sudo systemctl enable --now tailscaled
 
 #echo "✅ Your Raspberry Pi is now connected to Tailscale with IP: $TAILSCALE_IP"
 #sudo tailscale up --authkey=tskey-auth-"kCe74HTc6711CNTRL-BVMPN56nvv6wE6Hu3GEht6CXbbybwHZz"

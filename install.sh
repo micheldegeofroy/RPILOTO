@@ -66,13 +66,25 @@ echo "##########################################"
 echo " "
 echo " "
 
-sudo apt update -y
-sudo apt upgrade -y
+sudo apt update && sudo apt upgrade -y
 sudo apt install python3 -y
 sudo apt install python3-pip -y
 sudo apt install jq -y
 sudo apt install pip -y
 sudo apt install git -y
+
+echo "##########################################"
+echo "Install Bitcoind"
+echo "##########################################"
+
+wget https://bitcoin.org/bin/bitcoin-core-27.0/bitcoin-27.0-aarch64-linux-gnu.tar.gz
+tar -xvf bitcoin-27.0-aarch64-linux-gnu.tar.gz
+sudo mv bitcoin-27.0/bin/* /usr/local/bin/
+
+bitcoind --version
+mkdir -p ~/.bitcoin
+
+sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/bitcoin.conf" -P ~/.bitcoin/
 
 echo " "
 echo " "

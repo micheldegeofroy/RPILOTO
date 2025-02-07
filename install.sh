@@ -77,9 +77,8 @@ echo "##########################################"
 echo "Install Bitcoind"
 echo "##########################################"
 
-sudo wget https://bitcoin.org/bin/bitcoin-core-27.0/bitcoin-27.0-aarch64-linux-gnu.tar.gz
-
-sudo wget https://bitcoin.org/bin/bitcoin-core-27.0/bitcoin-27.0-aarch64-linux-gnu.tar.gz
+sudo wget https://github.com/micheldegeofroy/RPILOTO/blob/main/bitcoin-27.0-aarch64-linux-gnu.tar.gz
+#sudo wget https://bitcoin.org/bin/bitcoin-core-27.0/bitcoin-27.0-aarch64-linux-gnu.tar.gz
 sudo tar -xvf bitcoin-27.0-aarch64-linux-gnu.tar.gz
 sudo mv bitcoin-27.0/bin/* /usr/local/bin/
 

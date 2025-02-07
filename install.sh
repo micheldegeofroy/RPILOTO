@@ -205,13 +205,15 @@ echo "##########################################################################
 echo "Install Tailscale"
 echo "################################################################################"
 
-# Download Tailscale package
+# Update package lists
+sudo apt update
+# Install iptables dependency before installing Tailscale
+sudo apt install -y iptables
+# Download and install Tailscale package
 sudo wget -O tailscale_1.80.0_armhf.deb "https://github.com/micheldegeofroy/Tailscale/raw/refs/heads/main/tailscale_1.80.0_armhf.deb"
-# Download iptables dependency for ARM
-sudo apt-get download iptables:armhf
-# Install dependencies and Tailscale package
-sudo apt-get install -f -y
 sudo dpkg -i tailscale_1.80.0_armhf.deb
+# Fix any missing dependencies
+sudo apt install -f -y
 # Enable IP forwarding
 echo 'net.ipv4.ip_forward = 1' | sudo tee -a /etc/sysctl.conf
 echo 'net.ipv6.conf.all.forwarding = 1' | sudo tee -a /etc/sysctl.conf
@@ -220,10 +222,9 @@ sudo sysctl -p
 sudo tailscale up --advertise-exit-node --authkey="tskey-auth-$AUTH"
 sudo systemctl enable --now tailscaled
 
-#echo "✅ Your Raspberry Pi is now connected to Tailscale with IP: $TAILSCALE_IP"
+echo "✅ Your Raspberry Pi is now connected to Tailscale with IP: $TAILSCALE_IP"
 #sudo tailscale up --authkey=tskey-auth-"kCe74HTc6711CNTRL-BVMPN56nvv6wE6Hu3GEht6CXbbybwHZz"
 #sudo systemctl status tailscaled
-
 
 echo "################################################################################"
 echo "Install Bitcoind"

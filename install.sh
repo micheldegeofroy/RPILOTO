@@ -213,8 +213,6 @@ sudo mkdir -p /mnt/BTC
 sudo mount /dev/sda2 /mnt/BTC
 # Add entry to /etc/fstab without opening nano manually
 echo "/dev/sda2   /mnt/BTC   ext4   defaults,noatime   0   2" | sudo tee -a /etc/fstab
-# Verify that the entry has been added
-cat /etc/fstab
 
 echo "✅ Mount SSD successfull"
 

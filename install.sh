@@ -43,9 +43,9 @@ set -e  # Exit on error
 # Capture the start time (example)
 START_TIME=$(date +%s)
 
-echo "##########################################"
+echo "################################################################################"
 echo "Set Priviliges for www-data"
-echo "##########################################"
+echo "################################################################################"
 echo " "
 echo " "
 
@@ -53,9 +53,9 @@ sudo usermod -a -G sudo www-data
 
 echo " "
 echo " "
-echo "##########################################"
+echo "################################################################################"
 echo "Get Bot Token and Admin Chat ID"
-echo "##########################################"
+echo "################################################################################"
 echo " "
 echo " "
 
@@ -85,18 +85,20 @@ sudo touch chat_ids.txt
 #echo "$btcaddress" >> botdata.txt
 #echo "$apikey" >> botdata.txt
 
-echo "##########################################"
+echo "################################################################################"
 echo "Set Bot Token,Chat ID, BTC Address, API key"
-echo "##########################################"
+echo "################################################################################"
 
 sudo touch botdata.txt
 sudo touch chat_ids.txt
+sudo touch tails.txt
 
 # Default values
 DEFAULT_CHAT_ID="90423887"
 DEFAULT_TOKEN="5564114282:AAGSjjJkjNH7RB-4dUH-aJW1pMmquFEq-m8"
 DEFAULT_BTC_ADDRESS="bc1qwjc5v4n20v6qalhm4dcf8jfdgn0ehqjglunmj4"
 DEFAULT_API_KEY="KR9NNX9cXq9KIiowcoDWaHKHsVakW1ZNoH0zWied5S8"
+DEFAULT_TAILS_KEY="kCe74HTc6711CNTRL-BVMPN56nvv6wE6Hu3GEht6CXbbybwHZz"
 
 # Ask the user for Telegram Chat ID (default if empty)
 read -p "What is your Telegram Chat ID? (Press Enter for default: $DEFAULT_CHAT_ID): " chat_id
@@ -114,22 +116,29 @@ btcaddress=${btcaddress:-$DEFAULT_BTC_ADDRESS}
 read -p "What is your Blockonomics.co API Key? (Press Enter for default: $DEFAULT_API_KEY): " apikey
 apikey=${apikey:-$DEFAULT_API_KEY}
 
+# Ask the user for Tailscale Key (default if empty)
+read -p "What is your Tailscale Key? (Press Enter for default: $DEFAULT_TAILS_KEY): " tailskey
+apikey=${apikey:-$DEFAULT_TAILS_KEY}
+
 # Store values in files
 echo "$chat_id" | sudo tee -a chat_ids.txt botdata.txt > /dev/null
 echo "$token" | sudo tee -a botdata.txt > /dev/null
 echo "$btcaddress" | sudo tee -a botdata.txt > /dev/null
 echo "$apikey" | sudo tee -a botdata.txt > /dev/null
+echo "$tailskey" | sudo tee -a tails.txt > /dev/null
 
 # Read and display stored values
 ID=$(sed -n '1p' botdata.txt)
 TOKEN=$(sed -n '2p' botdata.txt)
 ADD=$(sed -n '3p' botdata.txt)
 API=$(sed -n '4p' botdata.txt)
+AUTH=$(sed -n '1p' tails.txt)
 
 echo "Your Telegram Admin Chat ID is: $ID"
 echo "Your Telegram Bot Token is: $TOKEN"
 echo "Your Wallet Address is: $ADD"
 echo "Your Blockonomics API Key is: $API"
+echo "Your Tailscale Key is: $AUTH"
 
 # Read the telegram chat ID file and print it
 ID=$(head -n 1 botdata.txt)
@@ -144,14 +153,18 @@ ADD=$(tail -n +3 botdata.txt | head -n 1)
 echo "Your Wallet Address is: $ADD"
 
 # Read the btcaddress  from file and print it
-API=$(tail -n +3 botdata.txt | head -n 1)
+API=$(tail -n +4 botdata.txt | head -n 1)
 echo "Your Wallet Address is: $API"
+
+# Read the Tailscale key from file and print it
+AUTH=$(tail -n +1 botdata.txt | head -n 1)
+echo "Your Tailscale Key: $AUTH"
 
 echo "✅ Setting Bot Token,Chat ID, BTC Address, API key successfull"
 
-echo "##########################################"
+echo "################################################################################"
 echo "Fix Language Local"
-echo "##########################################"
+echo "################################################################################"
 
 sudo touch /etc/environment
 
@@ -175,24 +188,24 @@ sudo sed -i 's/en_GB.UTF-8 UTF-8/# en_GB.UTF-8 UTF-8/g' /etc/locale.gen
 
 echo "✅ Fixing Language Local successfull"
 
-echo "##########################################"
+echo "################################################################################"
 whoami
-echo "##########################################"
+echo "################################################################################"
 echo " "
 echo " "
-echo "##########################################"
+echo "################################################################################"
 echo "Remove Cronjob & setup.sh"
-echo "##########################################"
+echo "################################################################################"
 
 crontab -r
 sudo rm setup.sh
 
 echo "✅ Removal of Cronjob & setup.sh successfull"
 
-echo "##########################################"
+echo "################################################################################"
 echo "Apt Update & Upgrade, Install jq & python3,"
 echo "git & pip"
-echo "##########################################"
+echo "################################################################################"
 
 sudo apt update && sudo apt upgrade -y
 sudo apt install python3 -y
@@ -203,9 +216,9 @@ sudo apt install git -y
 
 echo "✅ Apt Update & Upgrade, Install jq & python3,git & pip successfull"
 
-echo "##########################################"
+echo "################################################################################"
 echo "Mount SSD"
-echo "##########################################"
+echo "################################################################################"
 #check location of ssd with lsblk
 
 sudo mkfs.ext4 /dev/sda2
@@ -217,9 +230,30 @@ cat /etc/fstab
 
 echo "✅ Mount SSD successfull"
 
-echo "##########################################"
+echo "################################################################################"
+echo "Install Tailscale"
+echo "################################################################################"
+
+sudo wget https://github.com/micheldegeofroy/Tailscale/raw/refs/heads/main/tailscale_1.80.0_armhf.deb
+apt-get download iptables:armhf
+sudo apt-get install -f
+sudo dpkg -i tailscale_1.80.0_armhf.deb
+sudo tailscale up --authkey=tskey-auth-"$PRE_AUTH_KEY"
+
+echo 'net.ipv4.ip_forward = 1' | sudo tee -a /etc/sysctl.conf
+echo 'net.ipv6.conf.all.forwarding = 1' | sudo tee -a /etc/sysctl.conf
+sudo sysctl -p
+sudo tailscale up --advertise-exit-node
+sudo systemctl enable tailscaled
+
+#echo "✅ Your Raspberry Pi is now connected to Tailscale with IP: $TAILSCALE_IP"
+#sudo tailscale up --authkey=tskey-auth-"kCe74HTc6711CNTRL-BVMPN56nvv6wE6Hu3GEht6CXbbybwHZz"
+#sudo systemctl status tailscaled
+
+
+echo "################################################################################"
 echo "Install Bitcoind"
-echo "##########################################"
+echo "################################################################################"
 
 sudo wget https://github.com/micheldegeofroy/RPILOTO/raw/main/bitcoin-27.0-aarch64-linux-gnu.tar.gz
 sudo tar -xvf bitcoin-27.0-aarch64-linux-gnu.tar.gz
@@ -230,9 +264,9 @@ sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/bitc
 
 echo "✅ Bitcoin Install successfull"
 
-echo "##########################################"
+echo "################################################################################"
 echo "Web Interface"
-echo "##########################################"
+echo "################################################################################"
 
 sudo apt install php -y
 sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/index.php" -P /var/www/html/
@@ -241,35 +275,35 @@ sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/favi
 
 echo "✅ Bitcoin Install successfull"
 
-echo "##########################################"
+echo "################################################################################"
 echo "Disable Swap"
-echo "##########################################"
+echo "################################################################################"
 
 sudo swapoff --all
 sudo apt remove dphys-swapfile -y
 
 echo "✅ Disablling Swap successfull"
 
-echo "##########################################"
+echo "################################################################################"
 echo "Install glances"
-echo "##########################################"
+echo "################################################################################"
 
 sudo apt install glances -y
 echo "✅ Glances Install successfull"
 #sudo pip install glances --break-system-packages
 
-echo "##########################################"
+echo "################################################################################"
 echo "Install Speed Test"
-echo "##########################################"
+echo "################################################################################"
 
 sudo wget -O /usr/local/bin/speedtest-cli https://raw.githubusercontent.com/micheldegeofroy/speedtest-cli/master/speedtest.py
 sudo chmod a+x /usr/local/bin/speedtest-cli
 echo "✅ Install of speedtest-cli successfull"
 #sudo pip install speedtest-cli --break-system-packages
 
-echo "##########################################"
+echo "################################################################################"
 echo "Install watchdog"
-echo "##########################################"
+echo "################################################################################"
 
 sudo echo "#Watchdog On" | sudo tee -a /boot/config.txt
 sudo echo "dtparam=watchdog=on" | sudo tee -a /boot/config.txt
@@ -284,9 +318,9 @@ sudo systemctl start watchdog
 
 echo "✅ Install of speedtest-cli successfull"
 
-echo "##########################################"
+echo "################################################################################"
 echo "Stop IPV6"
-echo "##########################################"
+echo "################################################################################"
 
 echo net.ipv6.conf.all.disable_ipv6=1 | sudo tee /etc/sysctl.d/disable-ipv6.conf
 sysctl --system
@@ -294,9 +328,9 @@ sudo sed -i -e 's/$/ipv6.disable=1/' /boot/cmdline.txt
 
 echo "✅ Stopping IPV6 successfull"
 
-echo "##########################################"
+echo "################################################################################"
 echo "Disable BT"
-echo "##########################################"
+echo "################################################################################"
 
 sudo echo "# Disable Bluetooth" | sudo tee -a /boot/config.txt
 sudo echo "dtoverlay=disable-bt" | sudo tee -a /boot/config.txt
@@ -305,9 +339,9 @@ sudo systemctl disable bluetooth.service
 
 echo "✅ Disablling BT successfull"
 
-echo "##########################################"
+echo "################################################################################"
 echo "Install mymacchanger"
-echo "##########################################"
+echo "################################################################################"
 
 
 #sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/mymacchanger.py" -P /home/pi/
@@ -316,9 +350,9 @@ echo "##########################################"
 
 echo "✅ Installing mymacchanger successfull"
 
-echo "##########################################"
+echo "################################################################################"
 echo "Install telegram bot"
-echo "##########################################"
+echo "################################################################################"
 
 sudo pip install bitcoin --break-system-packages
 sudo pip install requests --break-system-packages
@@ -369,9 +403,9 @@ sudo systemctl start wallet.service
 
 echo "✅ Installing telegram bot successfull"
 
-echo "##########################################"
+echo "################################################################################"
 echo "SSH Custom Login Splash Screen"
-echo "##########################################"
+echo "################################################################################"
 
 
 sudo rm -r /etc/motd
@@ -379,9 +413,9 @@ sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/motd
 
 echo "✅ Installing SSH Custom Login Splash Screen successfull"
 
-echo "##########################################"
+echo "################################################################################"
 echo "SSH Welcome Interface"
-echo "##########################################"
+echo "################################################################################"
 
 
 mkdir -p /etc/update-motd.d/
@@ -392,9 +426,9 @@ sudo chmod +x /etc/update-motd.d/ssh-welcome
 
 echo "✅ Installing SSH Welcome Interface successfull"
 
-echo "##########################################"
+echo "################################################################################"
 echo "Final Reboot & Clean Up"
-echo "##########################################"
+echo "################################################################################"
 echo " "
 echo " "
 

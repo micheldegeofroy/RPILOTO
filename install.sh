@@ -77,8 +77,10 @@ echo "##########################################"
 echo "Install Bitcoind"
 echo "##########################################"
 
-wget https://bitcoin.org/bin/bitcoin-core-27.0/bitcoin-27.0-aarch64-linux-gnu.tar.gz
-tar -xvf bitcoin-27.0-aarch64-linux-gnu.tar.gz
+sudo wget https://bitcoin.org/bin/bitcoin-core-27.0/bitcoin-27.0-aarch64-linux-gnu.tar.gz
+
+sudo wget https://bitcoin.org/bin/bitcoin-core-27.0/bitcoin-27.0-aarch64-linux-gnu.tar.gz
+sudo tar -xvf bitcoin-27.0-aarch64-linux-gnu.tar.gz
 sudo mv bitcoin-27.0/bin/* /usr/local/bin/
 
 bitcoind --version
@@ -186,9 +188,9 @@ echo "##########################################"
 echo " "
 echo " "
 
-sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/mymacchanger.py" -P /home/pi/
-sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/mymacchanger.service" -P /etc/systemd/system/
-sudo chmod +x /home/pi/mymacchanger.py
+#sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/mymacchanger.py" -P /home/pi/
+#sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/mymacchanger.service" -P /etc/systemd/system/
+#sudo chmod +x /home/pi/mymacchanger.py
  
 echo " "
 echo " "

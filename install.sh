@@ -86,6 +86,7 @@ mkdir -p ~/.bitcoin
 
 sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/bitcoin.conf" -P ~/.bitcoin/
 
+echo "✅ Bitcoin Install successfull"
 echo " "
 echo " "
 echo "##########################################"

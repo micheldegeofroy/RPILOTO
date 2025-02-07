@@ -134,12 +134,6 @@ ADD=$(sed -n '3p' botdata.txt)
 API=$(sed -n '4p' botdata.txt)
 AUTH=$(sed -n '1p' tails.txt)
 
-echo "Your Telegram Admin Chat ID is: $ID"
-echo "Your Telegram Bot Token is: $TOKEN"
-echo "Your Wallet Address is: $ADD"
-echo "Your Blockonomics API Key is: $API"
-echo "Your Tailscale Key is: $AUTH"
-
 # Read the telegram chat ID file and print it
 ID=$(head -n 1 botdata.txt)
 echo "Your Telegram Admin Chat ID is: $ID"
@@ -191,16 +185,6 @@ echo "✅ Fixing Language Local successfull"
 echo "################################################################################"
 whoami
 echo "################################################################################"
-echo " "
-echo " "
-echo "################################################################################"
-echo "Remove Cronjob & setup.sh"
-echo "################################################################################"
-
-crontab -r
-sudo rm setup.sh
-
-echo "✅ Removal of Cronjob & setup.sh successfull"
 
 echo "################################################################################"
 echo "Apt Update & Upgrade, Install jq & python3,"

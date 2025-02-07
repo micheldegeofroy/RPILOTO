@@ -32,7 +32,7 @@
 #
 #execute the following cmd and follow the instructions when prompted
 #
-#sudo wget https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/installnew.sh
+#sudo wget https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/install.sh && sudo bash install.sh
 #
 # ###############################
 # Execute basic install

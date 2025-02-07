@@ -38,7 +38,11 @@
 # Execute basic install
 # ###############################
 #
-#
+set -e  # Exit on error
+
+# Capture the start time (example)
+START_TIME=$(date +%s)
+
 echo " "
 echo " "
 echo "##########################################"
@@ -105,47 +109,37 @@ sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/inde
 sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/miner.php" -P /var/www/html/
 sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/favicon.ico" -P /var/www/html/
 
-echo " "
-echo " "
+echo "✅ Bitcoin Install successfull"
+
 echo "##########################################"
 echo "Disable Swap"
 echo "##########################################"
-echo " "
-echo " "
 
 sudo swapoff --all
 sudo apt remove dphys-swapfile -y
 
-echo " "
-echo " "
+echo "✅ Disablling Swap successfull"
+
 echo "##########################################"
-echo "Install glances #8"
+echo "Install glances"
 echo "##########################################"
-echo " "
-echo " "
+
 sudo apt install glances -y
 echo "✅ Glances Install successfull"
 #sudo pip install glances --break-system-packages
 
-echo " "
-echo " "
 echo "##########################################"
-echo "Install Speed Test #9"
+echo "Install Speed Test"
 echo "##########################################"
-echo " "
-echo " "
+
 sudo wget -O /usr/local/bin/speedtest-cli https://raw.githubusercontent.com/micheldegeofroy/speedtest-cli/master/speedtest.py
 sudo chmod a+x /usr/local/bin/speedtest-cli
 echo "✅ Install of speedtest-cli successfull"
 #sudo pip install speedtest-cli --break-system-packages
 
-echo " "
-echo " "
 echo "##########################################"
-echo "Install watchdog #10"
+echo "Install watchdog"
 echo "##########################################"
-echo " "
-echo " "
 
 sudo echo "#Watchdog On" | sudo tee -a /boot/config.txt
 sudo echo "dtparam=watchdog=on" | sudo tee -a /boot/config.txt
@@ -158,50 +152,43 @@ sudo echo "max-load-1 = 24" | sudo tee -a /etc/watchdog.conf
 sudo systemctl enable watchdog
 sudo systemctl start watchdog
 
-echo " "
-echo " "
+echo "✅ Install of speedtest-cli successfull"
+
 echo "##########################################"
-echo "Stop IPV6 #11"
+echo "Stop IPV6"
 echo "##########################################"
-echo " "
-echo " "
 
 echo net.ipv6.conf.all.disable_ipv6=1 | sudo tee /etc/sysctl.d/disable-ipv6.conf
 sysctl --system
 sudo sed -i -e 's/$/ipv6.disable=1/' /boot/cmdline.txt
 
-echo " "
-echo " "
+echo "✅ Stopping IPV6 successfull"
+
 echo "##########################################"
-echo "Disable BT #12"
+echo "Disable BT"
 echo "##########################################"
-echo " "
-echo " "
 
 sudo echo "# Disable Bluetooth" | sudo tee -a /boot/config.txt
 sudo echo "dtoverlay=disable-bt" | sudo tee -a /boot/config.txt
 sudo systemctl disable hciuart.service 
 sudo systemctl disable bluetooth.service
 
-echo " "
-echo " "
+echo "✅ Disablling BT successfull"
+
 echo "##########################################"
-echo "Install mymacchanger #13"
+echo "Install mymacchanger"
 echo "##########################################"
-echo " "
-echo " "
+
 
 #sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/mymacchanger.py" -P /home/pi/
 #sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/mymacchanger.service" -P /etc/systemd/system/
 #sudo chmod +x /home/pi/mymacchanger.py
- 
-echo " "
-echo " "
+
+echo "✅ Installing mymacchanger successfull"
+
 echo "##########################################"
-echo "Install telegram bot #14"
+echo "Install telegram bot"
 echo "##########################################"
-echo " "
-echo " "
 
 sudo pip install bitcoin --break-system-packages
 sudo pip install requests --break-system-packages
@@ -250,24 +237,22 @@ sudo systemctl start bot.service
 sudo systemctl enable wallet.service
 sudo systemctl start wallet.service
 
-echo " "
-echo " "
+echo "✅ Installing telegram bot successfull"
+
 echo "##########################################"
-echo "SSH Custom Login Splash Screen #16"
+echo "SSH Custom Login Splash Screen"
 echo "##########################################"
-echo " "
-echo " "
+
 
 sudo rm -r /etc/motd
 sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/motd" -P /etc/
 
-echo " "
-echo " "
+echo "✅ Installing SSH Custom Login Splash Screen successfull"
+
 echo "##########################################"
-echo "SSH Welcome Interface #17"
+echo "SSH Welcome Interface"
 echo "##########################################"
-echo " "
-echo " "
+
 
 mkdir -p /etc/update-motd.d/
 
@@ -275,21 +260,43 @@ sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/ssh-
 
 sudo chmod +x /etc/update-motd.d/ssh-welcome
 
-echo " "
-echo " "
+echo "✅ Installing SSH Welcome Interface successfull"
+
 echo "##########################################"
-echo "Final Reboot & Clean Up #19"
+echo "Final Reboot & Clean Up"
 echo "##########################################"
 echo " "
 echo " "
 
-sudo systemctl enable mymacchanger.service
+#sudo systemctl enable mymacchanger.service
 
+sudo rm -r file
 sudo apt purge -y
 sudo apt autoremove -y
-sudo apt clean -y
+sudo apt clean
 sudo apt autoclean -y
-sudo rm -r install.sh
-sudo rm -r file
-echo "Reboot Now"
-sudo reboot
+
+(sleep 60 && sudo reboot) &
+echo "Deleting the install script..."
+rm -- "$0" || { echo "Error deleting the install script"; exit 1; }
+echo "Install script deleted."
+
+# Capture the end time
+END_TIME=$(date +%s)
+
+# Calculate the execution time in seconds
+EXECUTION_TIME=$((END_TIME - START_TIME))
+
+# Convert seconds to hours, minutes, and seconds
+HOURS=$((EXECUTION_TIME / 3600))
+MINUTES=$(( (EXECUTION_TIME % 3600) / 60 ))
+SECONDS=$((EXECUTION_TIME % 60))
+
+# Format the output
+echo "Execution time: ${HOURS} hr/s ${MINUTES} min/s ${SECONDS} sec/s"
+
+echo "################################################################################"
+echo "Script execution time: $EXECUTION_TIME seconds."
+echo "################################################################################"
+
+sudo journalctl -p err -b

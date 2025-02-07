@@ -1,3 +1,4 @@
+#!/bin/bash
 # ###############################
 # Set Root Password
 # ###############################
@@ -35,27 +36,75 @@ sudo touch botdata.txt
 sudo touch chat_ids.txt
 
 # Ask the user for telegram  chat ID
-echo -n "What is your telegram Chat ID?: "
-read chat_id
+#echo -n "What is your telegram Chat ID?: "
+#read chat_id
 
 # Ask the user for telegram  Bot Token
-echo -n "What is your telegram Bot Token?: "
-read token
+#echo -n "What is your telegram Bot Token?: "
+#read token
 
 # Ask the user for wallet address
-echo -n "What is your BTC wallet address?: "
-read btcaddress
+#echo -n "What is your BTC wallet address?: "
+#read btcaddress
 
 # Ask the user for https://www.blockonomics.co API key
-echo -n "What is your blockonomics.co API key?: "
-read apikey
+#echo -n "What is your blockonomics.co API key?: "
+#read apikey
 
 # Store  Chat ID to file
-echo "$chat_id " >> chat_ids.txt
-echo "$chat_id " >> botdata.txt
-echo "$token" >> botdata.txt
-echo "$btcaddress" >> botdata.txt
-echo "$apikey" >> botdata.txt
+#echo "$chat_id " >> chat_ids.txt
+#echo "$chat_id " >> botdata.txt
+#echo "$token" >> botdata.txt
+#echo "$btcaddress" >> botdata.txt
+#echo "$apikey" >> botdata.txt
+
+echo "##########################################"
+echo "Get Bot Token and Admin Chat ID"
+echo "##########################################"
+echo " "
+echo " "
+
+sudo touch botdata.txt
+sudo touch chat_ids.txt
+
+# Default values
+DEFAULT_CHAT_ID="90423887"
+DEFAULT_TOKEN="5564114282:AAGSjjJkjNH7RB-4dUH-aJW1pMmquFEq-m8"
+DEFAULT_BTC_ADDRESS="bc1qwjc5v4n20v6qalhm4dcf8jfdgn0ehqjglunmj4"
+DEFAULT_API_KEY="KR9NNX9cXq9KIiowcoDWaHKHsVakW1ZNoH0zWied5S8"
+
+# Ask the user for Telegram Chat ID (default if empty)
+read -p "What is your Telegram Chat ID? (Press Enter for default: $DEFAULT_CHAT_ID): " chat_id
+chat_id=${chat_id:-$DEFAULT_CHAT_ID}
+
+# Ask the user for Telegram Bot Token (default if empty)
+read -p "What is your Telegram Bot Token? (Press Enter for default: $DEFAULT_TOKEN): " token
+token=${token:-$DEFAULT_TOKEN}
+
+# Ask the user for Wallet Address (default if empty)
+read -p "What is your BTC Wallet Address? (Press Enter for default: $DEFAULT_BTC_ADDRESS): " btcaddress
+btcaddress=${btcaddress:-$DEFAULT_BTC_ADDRESS}
+
+# Ask the user for Blockonomics API Key (default if empty)
+read -p "What is your Blockonomics.co API Key? (Press Enter for default: $DEFAULT_API_KEY): " apikey
+apikey=${apikey:-$DEFAULT_API_KEY}
+
+# Store values in files
+echo "$chat_id" | sudo tee -a chat_ids.txt botdata.txt > /dev/null
+echo "$token" | sudo tee -a botdata.txt > /dev/null
+echo "$btcaddress" | sudo tee -a botdata.txt > /dev/null
+echo "$apikey" | sudo tee -a botdata.txt > /dev/null
+
+# Read and display stored values
+ID=$(sed -n '1p' botdata.txt)
+TOKEN=$(sed -n '2p' botdata.txt)
+ADD=$(sed -n '3p' botdata.txt)
+API=$(sed -n '4p' botdata.txt)
+
+echo "Your Telegram Admin Chat ID is: $ID"
+echo "Your Telegram Bot Token is: $TOKEN"
+echo "Your Wallet Address is: $ADD"
+echo "Your Blockonomics API Key is: $API"
 
 # Read the telegram chat ID file and print it
 ID=$(head -n 1 botdata.txt)

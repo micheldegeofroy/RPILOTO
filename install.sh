@@ -205,11 +205,15 @@ echo "Mount SSD"
 echo "################################################################################"
 #check location of ssd with lsblk
 
-sudo mkfs.ext4 /dev/sda2
+# Force format the partition to ext4 without confirmation
+sudo mkfs.ext4 -F /dev/sda2
+# Create the mount point
 sudo mkdir -p /mnt/BTC
+# Mount the partition
 sudo mount /dev/sda2 /mnt/BTC
-sudo nano /etc/fstab
-echo "/dev/sda1   /mnt/bitcoin   ext4   defaults,noatime   0   2" | sudo tee -a /etc/fstab
+# Add entry to /etc/fstab without opening nano manually
+echo "/dev/sda2   /mnt/BTC   ext4   defaults,noatime   0   2" | sudo tee -a /etc/fstab
+# Verify that the entry has been added
 cat /etc/fstab
 
 echo "✅ Mount SSD successfull"

@@ -105,8 +105,9 @@ echo "Install glances #8"
 echo "##########################################"
 echo " "
 echo " "
-
-sudo pip install glances --break-system-packages
+sudo apt install glances -y
+echo "✅ Glances Install successfull"
+#sudo pip install glances --break-system-packages
 
 echo " "
 echo " "
@@ -115,8 +116,10 @@ echo "Install Speed Test #9"
 echo "##########################################"
 echo " "
 echo " "
-
-sudo pip install speedtest-cli --break-system-packages
+sudo wget -O /usr/local/bin/speedtest-cli https://raw.githubusercontent.com/micheldegeofroy/speedtest-cli/master/speedtest.py
+sudo chmod a+x /usr/local/bin/speedtest-cli
+echo "✅ Install of speedtest-cli successfull"
+#sudo pip install speedtest-cli --break-system-packages
 
 echo " "
 echo " "

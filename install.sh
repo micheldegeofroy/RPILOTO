@@ -46,25 +46,19 @@ whoami
 echo "##########################################"
 echo " "
 echo " "
-echo " "
-echo " "
 echo "##########################################"
-echo "Remove Cronjob & setup.sh #3"
+echo "Remove Cronjob & setup.sh"
 echo "##########################################"
-echo " "
-echo " "
 
 crontab -r
 sudo rm setup.sh
 
-echo " "
-echo " "
+echo "✅ Removal of Cronjob & setup.sh successfull"
+
 echo "##########################################"
-echo "Update & Upgrade Aptitude Install jq & python #4"
-echo "Install jq & python3 & pip"
+echo "Apt Update & Upgrade, Install jq & python3,"
+echo "git & pip"
 echo "##########################################"
-echo " "
-echo " "
 
 sudo apt update && sudo apt upgrade -y
 sudo apt install python3 -y
@@ -73,28 +67,38 @@ sudo apt install jq -y
 sudo apt install pip -y
 sudo apt install git -y
 
+echo "✅ Apt Update & Upgrade, Install jq & python3,git & pip successfull"
+
+echo "##########################################"
+echo "Mount SSD"
+echo "##########################################"
+#check location of ssd with lsblk
+
+sudo mkfs.ext4 /dev/sda2
+sudo mkdir -p /mnt/BTC
+sudo mount /dev/sda2 /mnt/BTC
+sudo nano /etc/fstab
+echo "/dev/sda1   /mnt/bitcoin   ext4   defaults,noatime   0   2" | sudo tee -a /etc/fstab
+cat /etc/fstab
+
+echo "✅ Mount SSD successfull"
+
 echo "##########################################"
 echo "Install Bitcoind"
 echo "##########################################"
 
 sudo wget https://github.com/micheldegeofroy/RPILOTO/raw/main/bitcoin-27.0-aarch64-linux-gnu.tar.gz
-#sudo wget https://bitcoin.org/bin/bitcoin-core-27.0/bitcoin-27.0-aarch64-linux-gnu.tar.gz
 sudo tar -xvf bitcoin-27.0-aarch64-linux-gnu.tar.gz
 sudo mv bitcoin-27.0/bin/* /usr/local/bin/
-
 bitcoind --version
 mkdir -p ~/.bitcoin
-
 sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/bitcoin.conf" -P ~/.bitcoin/
 
 echo "✅ Bitcoin Install successfull"
-echo " "
-echo " "
+
 echo "##########################################"
-echo "Web Interface #5"
+echo "Web Interface"
 echo "##########################################"
-echo " "
-echo " "
 
 sudo apt install php -y
 sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/index.php" -P /var/www/html/
@@ -104,7 +108,7 @@ sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/favi
 echo " "
 echo " "
 echo "##########################################"
-echo "Disable Swap #7"
+echo "Disable Swap"
 echo "##########################################"
 echo " "
 echo " "

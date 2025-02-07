@@ -82,7 +82,7 @@ echo "##########################################"
 echo " "
 echo " "
 
-sudo apt install php7.4 -y
+sudo apt install php -y
 sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/index.php" -P /var/www/html/
 sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/miner.php" -P /var/www/html/
 sudo wget "https://raw.githubusercontent.com/micheldegeofroy/RPILOTO/master/favicon.ico" -P /var/www/html/
@@ -106,7 +106,7 @@ echo "##########################################"
 echo " "
 echo " "
 
-sudo pip install glances
+sudo pip install glances --break-system-packages
 
 echo " "
 echo " "
@@ -116,7 +116,7 @@ echo "##########################################"
 echo " "
 echo " "
 
-sudo pip install speedtest-cli
+sudo pip install speedtest-cli --break-system-packages
 
 echo " "
 echo " "
@@ -182,11 +182,11 @@ echo "##########################################"
 echo " "
 echo " "
 
-sudo pip install bitcoin
-sudo pip install requests
-sudo pip3 install python-telegram-bot==13.15 --upgrade
-sudo pip install telepot
-sudo pip install RPi.GPIO
+sudo pip install bitcoin --break-system-packages
+sudo pip install requests --break-system-packages
+sudo pip3 install python-telegram-bot==13.15 --upgrade --break-system-packages
+sudo pip install telepot --break-system-packages
+sudo pip install RPi.GPIO --break-system-packages
 
 sudo mkdir /home/pi/Bots/
 sudo echo "0,0" | sudo tee /home/pi/Bots/btcbalance.txt

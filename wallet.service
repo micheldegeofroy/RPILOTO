@@ -1,10 +1,14 @@
 [Unit]
 Description=Telegram Bot Service2
-After=multi-user.target
+After=network.target
+
 [Service]
-Type=simple
-Restart=always
-ExecStartPost=/bin/sleep 60
+User=pi
+Group=pi
+WorkingDirectory=/home/pi/Bots
 ExecStart=/usr/bin/python3 /home/pi/Bots/walletcheck.py
+Restart=always
+RestartSec=10
+
 [Install]
 WantedBy=multi-user.target
